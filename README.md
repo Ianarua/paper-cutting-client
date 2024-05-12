@@ -1,6 +1,6 @@
 # paper-cutting
 
-## 姿色纸缘-剪纸云展馆(后台后端)
+## 姿色纸缘-剪纸云展馆(后台)
 
 # 如何启动项目
 1.找到document中的sql文件运行,运行前建一个paper-cutting数据库

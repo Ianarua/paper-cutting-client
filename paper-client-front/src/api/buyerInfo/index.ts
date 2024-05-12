@@ -20,8 +20,8 @@ export function getShowInfo () {
  */
 export async function postChangeInfo (personalInfoDataIn: IPersonalInfoIn) {
     const { buyerHobby, buyerAutograph, picUrl } = personalInfoDataIn;
-    const { resourcePath, resourceBase64 } = postResourceImg(picUrl);
-    return changeInformation(buyerHobby, buyerAutograph, resourcePath);
+    // const { resourcePath, resourceBase64 } = postResourceImg(picUrl);
+    return changeInformation(buyerHobby, buyerAutograph, '');
 }
 
 /**

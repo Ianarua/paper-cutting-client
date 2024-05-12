@@ -10,6 +10,7 @@ import SignUp from '../views/SignUp';
 import SetUp from '../views/SetUp';
 import Address from '@/views/Adress';
 import Settle from '@/views/Settle';
+import Order from '@/views/Order';
 
 /*
     只配置stack
@@ -79,6 +80,11 @@ const router: IRouter[] = [
         name: 'Settle',
         title: '结算',
         component: Settle
+    },
+    {
+        name: 'Order',
+        title: '我的订单',
+        component: Order
     }
 ];
 

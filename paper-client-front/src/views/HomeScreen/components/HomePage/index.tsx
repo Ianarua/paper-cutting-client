@@ -26,19 +26,28 @@ const HomePage = () => {
         }
     ];
     const [projectBlockData, setProjectBlockData] = useState<IProjectBlock[]>([]);
+    // 应该查询哪个分页的数据
+    let [pageNum, setPageNum] = useState(0);
     useEffect(() => {
-        !(async function () {
-            const res: any = await getRecommendGoods(1, 6);
-            setProjectBlockData(res.list);
-        })();
-    }, []);
+        console.log('aaaaaaaa');
+
+        async function fetchApi () {
+            const res: any = await getRecommendGoods(pageNum, 6);
+            setProjectBlockData(prevData => [...prevData, ...res.list]);
+        }
+
+        fetchApi().then(r => {
+            console.log(r);
+        });
+    }, [pageNum]);
 
     function _contentViewScroll (e: any) {
         const offsetY = e.nativeEvent.contentOffset.y; //滑动距离
         const contentSizeHeight = e.nativeEvent.contentSize.height; //scrollView contentSize高度
         const oriageScrollHeight = e.nativeEvent.layoutMeasurement.height; //scrollView高度
         if (offsetY + oriageScrollHeight >= contentSizeHeight) {
-            console.log('上传滑动到底部事件');
+            setPageNum(prevState => prevState + 1);
+            console.log('上传滑动到底部事件', pageNum);
         }
     }
 

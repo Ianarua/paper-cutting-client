@@ -157,7 +157,12 @@ const MineScreen = () => {
                     <View style={ styles.order }>
                         <View style={ styles.orderTop }>
                             <Text style={ { color: '#000', fontWeight: 'bold' } }>我的订单</Text>
-                            <Text style={ { fontSize: 12 } }>查看全部 { '>' } </Text>
+                            <Pressable
+                                // @ts-ignore
+                                onPress={ () => navigation.navigate('Order') }
+                            >
+                                <Text style={ { fontSize: 12 } }>查看全部 { '>' } </Text>
+                            </Pressable>
                         </View>
                         <View style={ styles.orderInner }>
                             {
@@ -175,7 +180,12 @@ const MineScreen = () => {
                     <View style={ styles.recommend }>
                         <View style={ styles.recommendTop }>
                             <Text style={ { color: '#000', fontSize: 18, fontWeight: 'bold' } }>精品推荐</Text>
-                            <Text>查看全部 { '>' }</Text>
+                            <Pressable
+                                // @ts-ignore
+                                onPress={ () => navigation.navigate('首页') }
+                            >
+                                <Text>查看全部 { '>' }</Text>
+                            </Pressable>
                         </View>
                         <View style={ styles.recommendInner }>
                             {

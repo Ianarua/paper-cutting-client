@@ -11,8 +11,9 @@ public enum OrderStatusEnum {
     REFUND_SERVICE(4,"退款/售后");
 
     @EnumValue
-    private Integer orderStatusId;
     @JsonValue
+    private Integer orderStatusId;
+
     private String orderStatusName;
 
     OrderStatusEnum(Integer orderStatusId, String orderStatusName) {

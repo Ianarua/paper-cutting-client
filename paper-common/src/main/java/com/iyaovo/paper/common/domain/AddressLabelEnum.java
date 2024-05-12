@@ -11,8 +11,9 @@ public enum AddressLabelEnum {
     FRIEND(4,"朋友");
 
     @EnumValue
-    private Integer addressLabelId;
     @JsonValue
+    private Integer addressLabelId;
+
     private String addressLabelName;
 
     AddressLabelEnum(Integer addressLabelId, String addressLabelName) {

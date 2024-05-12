@@ -59,6 +59,7 @@ public class OrderInfo extends BaseEntity {
     * 订单状态
     */
    @TableField("order_status")
+   @Schema(defaultValue = "订单状态(0待付款依此类推)")
    private OrderStatusEnum orderStatus;
 
    /**

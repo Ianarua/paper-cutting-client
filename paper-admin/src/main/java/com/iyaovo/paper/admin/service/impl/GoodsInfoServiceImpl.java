@@ -14,6 +14,7 @@
 package com.iyaovo.paper.admin.service.impl;
 
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -131,20 +132,22 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoMapper, GoodsInfo
    private List<GoodsInfoVo> goodsInfoToGoodsInfoVo(List<GoodsInfo> goodsInfoList){
       List<GoodsInfoVo> goodsInfoVoList = new ArrayList<GoodsInfoVo>();
       goodsInfoList.forEach(goodsInfo ->{
-         //entity转为vo
-         GoodsInfoVo goodsInfoVo = new GoodsInfoVo(goodsInfo.getGoodsId(),goodsInfo.getGoodsName(),goodsInfo.getGoodsIntroduction(),ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH+goodsInfo.getPicUrl()), goodsInfo.getPrice(),
-                 goodsInfo.getPromotionPrice(),goodsInfo.getSoldNumber(),goodsInfo.getTotalNumber(),goodsInfo.getGoodsCategoryId());
-         //把店铺信息封装到vo
-         goodsInfoVo.setShopInfo(shopInfoMapper.selectById(goodsInfo.getShopId()));
+         if(!ObjectUtil.isEmpty(goodsInfo)) {
+            //entity转为vo
+            GoodsInfoVo goodsInfoVo = new GoodsInfoVo(goodsInfo.getGoodsId(), goodsInfo.getGoodsName(), goodsInfo.getGoodsIntroduction(), ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH + goodsInfo.getPicUrl()), goodsInfo.getPrice(),
+                    goodsInfo.getPromotionPrice(), goodsInfo.getSoldNumber(), goodsInfo.getTotalNumber(), goodsInfo.getGoodsCategoryId());
+            //把店铺信息封装到vo
+            goodsInfoVo.setShopInfo(shopInfoMapper.selectById(goodsInfo.getShopId()));
 
-         QueryWrapper<GoodsCategory> categorySecondQueryWrapper = new QueryWrapper<GoodsCategory>();
-         categorySecondQueryWrapper.eq("goods_category_id",goodsInfo.getGoodsCategoryId());
-         GoodsCategory goodsSecondCategory = goodsCategoryMapper.selectOne(categorySecondQueryWrapper);
-         QueryWrapper<GoodsCategory> categoryFirstQueryWrapper = new QueryWrapper<GoodsCategory>();
-         categoryFirstQueryWrapper.eq("goods_category_id",goodsSecondCategory.getCategorySuperiorId());
-         GoodsCategory goodsFirstCategory = goodsCategoryMapper.selectOne(categoryFirstQueryWrapper);
-        goodsInfoVo.setSuperiorCategoryId(goodsFirstCategory.getGoodsCategoryId());
-         goodsInfoVoList.add(goodsInfoVo);
+            QueryWrapper<GoodsCategory> categorySecondQueryWrapper = new QueryWrapper<GoodsCategory>();
+            categorySecondQueryWrapper.eq("goods_category_id", goodsInfo.getGoodsCategoryId());
+            GoodsCategory goodsSecondCategory = goodsCategoryMapper.selectOne(categorySecondQueryWrapper);
+            QueryWrapper<GoodsCategory> categoryFirstQueryWrapper = new QueryWrapper<GoodsCategory>();
+            categoryFirstQueryWrapper.eq("goods_category_id", goodsSecondCategory.getCategorySuperiorId());
+            GoodsCategory goodsFirstCategory = goodsCategoryMapper.selectOne(categoryFirstQueryWrapper);
+            goodsInfoVo.setSuperiorCategoryId(goodsFirstCategory.getGoodsCategoryId());
+            goodsInfoVoList.add(goodsInfoVo);
+         }
       });
       return goodsInfoVoList;
    }

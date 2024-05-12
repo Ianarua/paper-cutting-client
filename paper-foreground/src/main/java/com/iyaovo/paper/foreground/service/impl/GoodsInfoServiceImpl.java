@@ -26,6 +26,7 @@ import com.iyaovo.paper.foreground.domain.entity.CartInfo;
 import com.iyaovo.paper.foreground.domain.entity.GoodsCollection;
 import com.iyaovo.paper.foreground.domain.entity.GoodsInfo;
 import com.iyaovo.paper.foreground.domain.entity.GoodsViews;
+import com.iyaovo.paper.foreground.domain.vo.CartGoodsVo;
 import com.iyaovo.paper.foreground.domain.vo.GoodsInfoVo;
 import com.iyaovo.paper.foreground.mapper.*;
 import com.iyaovo.paper.foreground.service.IBuyerInfoService;
@@ -91,46 +92,53 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoMapper, GoodsInfo
    private List<GoodsInfoVo> goodsInfoToGoodsInfoVo(List<GoodsInfo> goodsInfoList){
       List<GoodsInfoVo> goodsInfoVoList = new ArrayList<GoodsInfoVo>();
       goodsInfoList.forEach(goodsInfo ->{
-         //entity转为vo
-         GoodsInfoVo goodsInfoVo = new GoodsInfoVo(goodsInfo.getGoodsId(),goodsInfo.getGoodsName(),goodsInfo.getGoodsIntroduction(),ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH+goodsInfo.getPicUrl()), goodsInfo.getPrice(),
-                 goodsInfo.getPromotionPrice(),goodsInfo.getSoldNumber(),goodsInfo.getTotalNumber());
-         QueryWrapper<GoodsCollection> goodsCollectionQueryWrapper = new QueryWrapper<>();
-         goodsCollectionQueryWrapper.eq("goods_id",goodsInfo.getGoodsId())
-                 .eq("buyer_id",iBuyerInfoService.getBuyerInfo().getBuyerId());
-         GoodsCollection goodsCollection = goodsCollectionMapper.selectOne(goodsCollectionQueryWrapper);
-         if(ObjectUtil.isEmpty(goodsCollection)){
-            goodsInfoVo.setIsCollection(false);
-         }else{
-            goodsInfoVo.setIsCollection(true);
+         if(!ObjectUtil.isEmpty(goodsInfo)){
+            //entity转为vo
+            GoodsInfoVo goodsInfoVo = new GoodsInfoVo(goodsInfo.getGoodsId(),goodsInfo.getGoodsName(),goodsInfo.getGoodsIntroduction(),ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH+goodsInfo.getPicUrl()), goodsInfo.getPrice(),
+                    goodsInfo.getPromotionPrice(),goodsInfo.getSoldNumber(),goodsInfo.getTotalNumber());
+            QueryWrapper<GoodsCollection> goodsCollectionQueryWrapper = new QueryWrapper<>();
+            goodsCollectionQueryWrapper.eq("goods_id",goodsInfo.getGoodsId())
+                    .eq("buyer_id",iBuyerInfoService.getBuyerInfo().getBuyerId());
+            GoodsCollection goodsCollection = goodsCollectionMapper.selectOne(goodsCollectionQueryWrapper);
+            if(ObjectUtil.isEmpty(goodsCollection)){
+               goodsInfoVo.setIsCollection(false);
+            }else{
+               goodsInfoVo.setIsCollection(true);
+            }
+            //判断商品是否被加入购物车
+            QueryWrapper<CartInfo> cartInfoQueryWrapper = new QueryWrapper<>();
+            cartInfoQueryWrapper.eq("goods_id",goodsInfo.getGoodsId())
+                    .eq("buyer_id",iBuyerInfoService.getBuyerInfo().getBuyerId());
+            CartInfo cartInfo = cartInfoMapper.selectOne(cartInfoQueryWrapper);
+            if(ObjectUtil.isEmpty(cartInfo)){
+               goodsInfoVo.setIsJoinCart(false);
+            }else{
+               goodsInfoVo.setIsJoinCart(true);
+            }
+            //把店铺信息封装到vo
+            goodsInfoVo.setShopInfo(shopInfoMapper.selectById(goodsInfo.getShopId()));
+            goodsInfoVoList.add(goodsInfoVo);
          }
-         //判断商品是否被加入购物车
-         QueryWrapper<CartInfo> cartInfoQueryWrapper = new QueryWrapper<>();
-         cartInfoQueryWrapper.eq("goods_id",goodsInfo.getGoodsId())
-                 .eq("buyer_id",iBuyerInfoService.getBuyerInfo().getBuyerId());
-         CartInfo cartInfo = cartInfoMapper.selectOne(cartInfoQueryWrapper);
-         if(ObjectUtil.isEmpty(cartInfo)){
-            goodsInfoVo.setIsJoinCart(false);
-         }else{
-            goodsInfoVo.setIsJoinCart(true);
-         }
-         //把店铺信息封装到vo
-         goodsInfoVo.setShopInfo(shopInfoMapper.selectById(goodsInfo.getShopId()));
-         goodsInfoVoList.add(goodsInfoVo);
       });
       return goodsInfoVoList;
    }
 
    @Override
-   public List<GoodsInfoVo> showCartGoods() {
+   public List<CartGoodsVo> showCartGoods() {
       QueryWrapper<GoodsInfoVo> goodsInfoVoQueryWrapper = new QueryWrapper<>();
       QueryWrapper<CartInfo> cartInfoQueryWrapper = new QueryWrapper<>();
       cartInfoQueryWrapper.eq("buyer_id",iBuyerInfoService.getBuyerInfo().getBuyerId());
       List<CartInfo> cartInfoList = cartInfoMapper.selectList(cartInfoQueryWrapper);
-      List<GoodsInfo> goodsInfoList = new ArrayList<>();
+      List<CartGoodsVo> cartGoodsVos = new ArrayList<>();
       cartInfoList.forEach(cartInfo -> {
-         goodsInfoList.add(goodsInfoMapper.selectById(cartInfo.getGoodsId()));
+         GoodsInfo goodsInfo = goodsInfoMapper.selectById(cartInfo.getGoodsId());
+         List<GoodsInfo> goodsInfoList = new ArrayList<>();
+         goodsInfoList.add(goodsInfo);
+         GoodsInfoVo goodsInfoVo = goodsInfoToGoodsInfoVo(goodsInfoList).get(0);
+         CartGoodsVo cartGoodsVo = goodsInfoVoToCartGoodsVo(goodsInfoVo,cartInfo.getCartId(),cartInfo.getGoodsNumber());
+         cartGoodsVos.add(cartGoodsVo);
       });
-      return goodsInfoToGoodsInfoVo(goodsInfoList);
+      return cartGoodsVos;
    }
 
    @Override
@@ -155,5 +163,11 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoMapper, GoodsInfo
       }
    }
 
+   private CartGoodsVo goodsInfoVoToCartGoodsVo(GoodsInfoVo goodsInfoVo, Integer cartId, Integer goodsNumber){
+      CartGoodsVo cartGoodsVo = new CartGoodsVo(goodsInfoVo.getGoodsId(), goodsInfoVo.getGoodsName(), goodsInfoVo.getGoodsIntroduction(),
+              goodsInfoVo.getPicUrl(),goodsInfoVo.getPrice(),goodsInfoVo.getPromotionPrice(),
+              goodsInfoVo.getSoldNumber(),goodsInfoVo.getTotalNumber(),cartId,goodsNumber);
+      return cartGoodsVo;
+   }
 }
 

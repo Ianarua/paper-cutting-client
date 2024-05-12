@@ -17,6 +17,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.iyaovo.paper.common.api.CommonPage;
 import com.iyaovo.paper.foreground.domain.dto.IdsParam;
 import com.iyaovo.paper.foreground.domain.entity.GoodsInfo;
+import com.iyaovo.paper.foreground.domain.vo.CartGoodsVo;
 import com.iyaovo.paper.foreground.domain.vo.GoodsInfoVo;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public interface IGoodsInfoService extends IService<GoodsInfo> {
                                                     Integer pageNum,
                                                     Integer pageSize);
 
-   List<GoodsInfoVo> showCartGoods();
+   List<CartGoodsVo> showCartGoods();
 
    List<GoodsInfoVo> showSettleGoods(IdsParam idsParam);
 

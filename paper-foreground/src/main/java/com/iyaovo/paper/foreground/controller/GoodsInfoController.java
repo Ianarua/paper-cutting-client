@@ -16,6 +16,7 @@ package com.iyaovo.paper.foreground.controller;
 import com.iyaovo.paper.common.api.CommonPage;
 import com.iyaovo.paper.common.api.CommonResult;
 import com.iyaovo.paper.foreground.domain.dto.IdsParam;
+import com.iyaovo.paper.foreground.domain.vo.CartGoodsVo;
 import com.iyaovo.paper.foreground.domain.vo.GoodsInfoVo;
 import com.iyaovo.paper.foreground.service.IGoodsInfoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -78,7 +79,7 @@ public class GoodsInfoController {
     */
    @GetMapping("/cart")
    @Operation(summary = "展示购物车商品")
-   public CommonResult<List<GoodsInfoVo>> showCartGoods() {
+   public CommonResult<List<CartGoodsVo>> showCartGoods() {
       return CommonResult.success(iGoodsInfoService.showCartGoods());
    }
 

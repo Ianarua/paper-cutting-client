@@ -285,32 +285,34 @@ public class BuyerInfoServiceImpl extends ServiceImpl<BuyerInfoMapper,BuyerInfo>
     private List<GoodsInfoVo> goodsInfoToGoodsInfoVo(List<GoodsInfo> goodsInfoList){
         List<GoodsInfoVo> goodsInfoVoList = new ArrayList<GoodsInfoVo>();
         goodsInfoList.forEach(goodsInfo ->{
-            //entity转为vo
-            GoodsInfoVo goodsInfoVo = new GoodsInfoVo(goodsInfo.getGoodsId(),goodsInfo.getGoodsName(),goodsInfo.getGoodsIntroduction(), ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH+goodsInfo.getPicUrl()), goodsInfo.getPrice(),
-                    goodsInfo.getPromotionPrice(),goodsInfo.getSoldNumber(),goodsInfo.getTotalNumber());
-            //判断商品是否被收藏
-            QueryWrapper<GoodsCollection> goodsCollectionQueryWrapper = new QueryWrapper<>();
-            goodsCollectionQueryWrapper.eq("goods_id",goodsInfo.getGoodsId())
-                    .eq("buyer_id",getBuyerInfo().getBuyerId());
-            GoodsCollection goodsCollection = goodsCollectionMapper.selectOne(goodsCollectionQueryWrapper);
-            if(ObjectUtil.isEmpty(goodsCollection)){
-                goodsInfoVo.setIsCollection(false);
-            }else{
-                goodsInfoVo.setIsCollection(true);
+            if(!ObjectUtil.isEmpty(goodsInfo)) {
+                //entity转为vo
+                GoodsInfoVo goodsInfoVo = new GoodsInfoVo(goodsInfo.getGoodsId(), goodsInfo.getGoodsName(), goodsInfo.getGoodsIntroduction(), ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH + goodsInfo.getPicUrl()), goodsInfo.getPrice(),
+                        goodsInfo.getPromotionPrice(), goodsInfo.getSoldNumber(), goodsInfo.getTotalNumber());
+                //判断商品是否被收藏
+                QueryWrapper<GoodsCollection> goodsCollectionQueryWrapper = new QueryWrapper<>();
+                goodsCollectionQueryWrapper.eq("goods_id", goodsInfo.getGoodsId())
+                        .eq("buyer_id", getBuyerInfo().getBuyerId());
+                GoodsCollection goodsCollection = goodsCollectionMapper.selectOne(goodsCollectionQueryWrapper);
+                if (ObjectUtil.isEmpty(goodsCollection)) {
+                    goodsInfoVo.setIsCollection(false);
+                } else {
+                    goodsInfoVo.setIsCollection(true);
+                }
+                //判断商品是否被加入购物车
+                QueryWrapper<CartInfo> cartInfoQueryWrapper = new QueryWrapper<>();
+                cartInfoQueryWrapper.eq("goods_id", goodsInfo.getGoodsId())
+                        .eq("buyer_id", getBuyerInfo().getBuyerId());
+                CartInfo cartInfo = cartInfoMapper.selectOne(cartInfoQueryWrapper);
+                if (ObjectUtil.isEmpty(cartInfo)) {
+                    goodsInfoVo.setIsJoinCart(false);
+                } else {
+                    goodsInfoVo.setIsJoinCart(true);
+                }
+                //把店铺信息封装到vo
+                goodsInfoVo.setShopInfo(shopInfoMapper.selectById(goodsInfo.getShopId()));
+                goodsInfoVoList.add(goodsInfoVo);
             }
-            //判断商品是否被加入购物车
-            QueryWrapper<CartInfo> cartInfoQueryWrapper = new QueryWrapper<>();
-            cartInfoQueryWrapper.eq("goods_id",goodsInfo.getGoodsId())
-                    .eq("buyer_id",getBuyerInfo().getBuyerId());
-            CartInfo cartInfo = cartInfoMapper.selectOne(cartInfoQueryWrapper);
-            if(ObjectUtil.isEmpty(cartInfo)){
-                goodsInfoVo.setIsJoinCart(false);
-            }else{
-                goodsInfoVo.setIsJoinCart(true);
-            }
-            //把店铺信息封装到vo
-            goodsInfoVo.setShopInfo(shopInfoMapper.selectById(goodsInfo.getShopId()));
-            goodsInfoVoList.add(goodsInfoVo);
         });
         return goodsInfoVoList;
     }

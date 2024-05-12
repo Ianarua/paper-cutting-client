@@ -65,33 +65,35 @@ public class ShopInfoServiceImpl extends ServiceImpl<ShopInfoMapper, ShopInfo> i
       List<GoodsInfo> goodsInfoList = goodsInfoPage.getRecords();
       List<GoodsInfoVo> goodsInfoVoList = new ArrayList<GoodsInfoVo>();
       goodsInfoList.forEach(goodsInfo ->{
-         //entity转为vo
-         GoodsInfoVo goodsInfoVo = new GoodsInfoVo(goodsInfo.getGoodsId(),goodsInfo.getGoodsName(),goodsInfo.getGoodsIntroduction(),
-                 ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH+goodsInfo.getPicUrl()), goodsInfo.getPrice(),
-                 goodsInfo.getPromotionPrice(),goodsInfo.getSoldNumber(),goodsInfo.getTotalNumber());
-         QueryWrapper<GoodsCollection> goodsCollectionQueryWrapper = new QueryWrapper<>();
-         goodsCollectionQueryWrapper.eq("goods_id",goodsInfo.getGoodsId())
-                 .eq("buyer_id",iBuyerInfoService.getBuyerInfo().getBuyerId());
-         GoodsCollection goodsCollection = goodsCollectionMapper.selectOne(goodsCollectionQueryWrapper);
-         if(ObjectUtil.isEmpty(goodsCollection)){
-            goodsInfoVo.setIsCollection(false);
-         }else{
-            goodsInfoVo.setIsCollection(true);
-         }
-         //判断商品是否被加入购物车
-         QueryWrapper<CartInfo> cartInfoQueryWrapper = new QueryWrapper<>();
-         cartInfoQueryWrapper.eq("goods_id",goodsInfo.getGoodsId())
-                 .eq("buyer_id",iBuyerInfoService.getBuyerInfo().getBuyerId());
-         CartInfo cartInfo = cartInfoMapper.selectOne(cartInfoQueryWrapper);
-         if(ObjectUtil.isEmpty(cartInfo)){
-            goodsInfoVo.setIsJoinCart(false);
-         }else{
-            goodsInfoVo.setIsJoinCart(true);
-         }
-         //把店铺信息封装到vo
-         goodsInfoVo.setShopInfo(shopInfoMapper.selectById(goodsInfo.getShopId()));
+         if(!ObjectUtil.isEmpty(goodsInfo)){
+            //entity转为vo
+            GoodsInfoVo goodsInfoVo = new GoodsInfoVo(goodsInfo.getGoodsId(),goodsInfo.getGoodsName(),goodsInfo.getGoodsIntroduction(),
+                    ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH+goodsInfo.getPicUrl()), goodsInfo.getPrice(),
+                    goodsInfo.getPromotionPrice(),goodsInfo.getSoldNumber(),goodsInfo.getTotalNumber());
+            QueryWrapper<GoodsCollection> goodsCollectionQueryWrapper = new QueryWrapper<>();
+            goodsCollectionQueryWrapper.eq("goods_id",goodsInfo.getGoodsId())
+                    .eq("buyer_id",iBuyerInfoService.getBuyerInfo().getBuyerId());
+            GoodsCollection goodsCollection = goodsCollectionMapper.selectOne(goodsCollectionQueryWrapper);
+            if(ObjectUtil.isEmpty(goodsCollection)){
+               goodsInfoVo.setIsCollection(false);
+            }else{
+               goodsInfoVo.setIsCollection(true);
+            }
+            //判断商品是否被加入购物车
+            QueryWrapper<CartInfo> cartInfoQueryWrapper = new QueryWrapper<>();
+            cartInfoQueryWrapper.eq("goods_id",goodsInfo.getGoodsId())
+                    .eq("buyer_id",iBuyerInfoService.getBuyerInfo().getBuyerId());
+            CartInfo cartInfo = cartInfoMapper.selectOne(cartInfoQueryWrapper);
+            if(ObjectUtil.isEmpty(cartInfo)){
+               goodsInfoVo.setIsJoinCart(false);
+            }else{
+               goodsInfoVo.setIsJoinCart(true);
+            }
+            //把店铺信息封装到vo
+            goodsInfoVo.setShopInfo(shopInfoMapper.selectById(goodsInfo.getShopId()));
 
-         goodsInfoVoList.add(goodsInfoVo);
+            goodsInfoVoList.add(goodsInfoVo);
+         }
       });
       Page<GoodsInfoVo> goodsInfoVoPage = new Page<>(pageNum,pageSize,goodsInfoPage.getTotal());
       goodsInfoVoPage.setPages(goodsInfoPage.getPages());

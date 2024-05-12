@@ -13,11 +13,13 @@
  */
 package com.iyaovo.paper.admin.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.iyaovo.paper.admin.domain.dto.ShopInfoParam;
+import com.iyaovo.paper.admin.domain.entity.GoodsInfo;
 import com.iyaovo.paper.admin.domain.entity.ShopInfo;
 import com.iyaovo.paper.admin.domain.entity.UmsAdminShopRelation;
 import com.iyaovo.paper.admin.domain.vo.ShopInfoVo;
@@ -27,6 +29,7 @@ import com.iyaovo.paper.admin.mapper.UmsAdminShopRelationMapper;
 import com.iyaovo.paper.admin.service.IShopInfoService;
 import com.iyaovo.paper.admin.service.UmsAdminService;
 import com.iyaovo.paper.common.constant.Constants;
+import com.iyaovo.paper.common.exception.Asserts;
 import com.iyaovo.paper.common.util.ImageToBase64Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,6 +52,8 @@ public class ShopInfoServiceImpl extends ServiceImpl<ShopInfoMapper, ShopInfo> i
 
    private final UmsAdminService umsAdminService;
    private final UmsAdminShopRelationMapper umsAdminShopRelationMapper;
+
+
 
 //   @Override
 //   public List<GoodsInfo> showGoodsByShopId(Integer shopId, Integer pageNum, Integer pageSize) {
@@ -73,11 +78,17 @@ public class ShopInfoServiceImpl extends ServiceImpl<ShopInfoMapper, ShopInfo> i
 
    @Override
    public int createShop(ShopInfoParam shopInfoParam) {
-      int insert = shopInfoMapper.insert(new ShopInfo(null, shopInfoParam.getShopName(), shopInfoParam.getPicUrl()));
       QueryWrapper<ShopInfo> shopInfoQueryWrapper = new QueryWrapper<ShopInfo>();
       shopInfoQueryWrapper.eq("shop_name",shopInfoParam.getShopName());
-      umsAdminShopRelationMapper.insert(new UmsAdminShopRelation(null,umsAdminService.getUmsAdmin().getId(),shopInfoMapper.selectOne(shopInfoQueryWrapper).getShopId()));
-      return insert;
+      ShopInfo shopInfo = shopInfoMapper.selectOne(shopInfoQueryWrapper);
+      if(ObjectUtil.isEmpty(shopInfo)){
+         int insert = shopInfoMapper.insert(new ShopInfo(null, shopInfoParam.getShopName(), shopInfoParam.getPicUrl()));
+         umsAdminShopRelationMapper.insert(new UmsAdminShopRelation(null,umsAdminService.getUmsAdmin().getId(),shopInfoMapper.selectOne(shopInfoQueryWrapper).getShopId()));
+         return insert;
+      }else{
+         Asserts.fail("店铺名重复");
+         return 0;
+      }
    }
 
    @Override
@@ -88,12 +99,26 @@ public class ShopInfoServiceImpl extends ServiceImpl<ShopInfoMapper, ShopInfo> i
 
    @Override
    public int deleteShop(Integer id) {
-      return shopInfoMapper.deleteById(id);
+      //删除店铺
+      int result = shopInfoMapper.deleteById(id);
+      //同时删除店铺内的商品
+      QueryWrapper queryWrapper = new QueryWrapper<>();
+      queryWrapper.eq("shop_id",id);
+      goodsInfoMapper.delete(queryWrapper);
+      return result;
    }
 
    @Override
    public int deleteShop(List<Integer> ids) {
-      return shopInfoMapper.deleteBatchIds(ids);
+      //删除店铺
+      int result = shopInfoMapper.deleteBatchIds(ids);
+      //同时删除店铺内的商品
+      ids.forEach(id->{
+         QueryWrapper queryWrapper = new QueryWrapper<>();
+         queryWrapper.eq("shop_id",id);
+         goodsInfoMapper.delete(queryWrapper);
+      });
+      return result;
    }
 
    @Override

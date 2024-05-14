@@ -15,7 +15,7 @@ const ShopCategory: FC = () => {
         <AddBackgroundHOC>
             <View style={ styles.content }>
                 <View style={ styles.title }>
-                    <MyText text={ shopCategoryData?.goodCategoryName } styles={ { color: '#84321c', fontWeight: 'bold' } }/>
+                    <MyText text={ shopCategoryData.goodCategoryName } styles={ { color: '#84321c', fontWeight: 'bold' } }/>
                 </View>
                 <View style={ styles.mainInner }>
                     {

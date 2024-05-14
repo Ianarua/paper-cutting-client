@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import router from '../router';
-import { login, register } from '@/api/login.ts';
-import request from '@/utils/request.ts';
-import storage from '@/utils/storage.ts';
-import { LogBox } from 'react-native';
 
 /*
     只遍历Stack

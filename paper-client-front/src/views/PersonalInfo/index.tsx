@@ -70,6 +70,7 @@ const PersonalInfo = () => {
                     <View style={ styles.buyerItem }>
                         <Text style={ styles.buyerText }>用户名称: </Text>
                         <TextInput
+                            maxLength={ 10 }
                             style={ styles.buyerTextInput }
                             value={ personalInfoDataIn.buyerName }
                             editable={ isEdit }
@@ -79,6 +80,7 @@ const PersonalInfo = () => {
                     <View style={ styles.buyerItem }>
                         <Text style={ styles.buyerText }>爱好: </Text>
                         <TextInput
+                            maxLength={ 10 }
                             style={ styles.buyerTextInput }
                             value={ personalInfoDataIn.buyerHobby }
                             editable={ isEdit }
@@ -88,6 +90,7 @@ const PersonalInfo = () => {
                     <View style={ styles.buyerItem }>
                         <Text style={ styles.buyerText }>个人签名: </Text>
                         <TextInput
+                            maxLength={ 10 }
                             style={ styles.buyerTextInput }
                             value={ personalInfoDataIn.buyerAutograph }
                             editable={ isEdit }

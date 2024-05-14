@@ -132,11 +132,13 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoMapper, GoodsInfo
       List<CartGoodsVo> cartGoodsVos = new ArrayList<>();
       cartInfoList.forEach(cartInfo -> {
          GoodsInfo goodsInfo = goodsInfoMapper.selectById(cartInfo.getGoodsId());
-         List<GoodsInfo> goodsInfoList = new ArrayList<>();
-         goodsInfoList.add(goodsInfo);
-         GoodsInfoVo goodsInfoVo = goodsInfoToGoodsInfoVo(goodsInfoList).get(0);
-         CartGoodsVo cartGoodsVo = goodsInfoVoToCartGoodsVo(goodsInfoVo,cartInfo.getCartId(),cartInfo.getGoodsNumber());
-         cartGoodsVos.add(cartGoodsVo);
+         if(!ObjectUtil.isEmpty(goodsInfo)){
+            List<GoodsInfo> goodsInfoList = new ArrayList<>();
+            goodsInfoList.add(goodsInfo);
+            GoodsInfoVo goodsInfoVo = goodsInfoToGoodsInfoVo(goodsInfoList).get(0);
+            CartGoodsVo cartGoodsVo = goodsInfoVoToCartGoodsVo(goodsInfoVo,cartInfo.getCartId(),cartInfo.getGoodsNumber());
+            cartGoodsVos.add(cartGoodsVo);
+         }
       });
       return cartGoodsVos;
    }

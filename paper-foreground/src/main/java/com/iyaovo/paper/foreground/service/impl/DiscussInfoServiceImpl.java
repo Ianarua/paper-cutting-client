@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.iyaovo.paper.common.api.CommonPage;
 import com.iyaovo.paper.common.constant.Constants;
+import com.iyaovo.paper.common.exception.Asserts;
 import com.iyaovo.paper.common.util.ImageToBase64Util;
 import com.iyaovo.paper.foreground.domain.dto.DiscussDto;
 import com.iyaovo.paper.foreground.domain.entity.BuyerInfo;
@@ -37,6 +38,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @ClassName: DiscussInfoServiceImpl
@@ -118,14 +120,17 @@ public class DiscussInfoServiceImpl extends ServiceImpl<DiscussInfoMapper, Discu
 
    @Override
    public void publishDiscuss(DiscussDto discussDto) {
-      discussInfoMapper.insert(new DiscussInfo(null,iBuyerInfoService.getBuyerInfo().getBuyerId(),discussDto.getParentId(),discussDto.getDiscussContent()));
-      if(discussDto.getParentId()!=0){
-         UpdateWrapper<DiscussInfo> discussInfoUpdateWrapper = new UpdateWrapper<>();
-         discussInfoUpdateWrapper.eq("discuss_id", discussDto.getParentId());
-         discussInfoUpdateWrapper.setSql("comment_number = comment_number + 1");
-         discussInfoMapper.update(null, discussInfoUpdateWrapper);
-      }
+       if(!ObjectUtil.isEmpty(discussDto.getDiscussContent())){
+           discussInfoMapper.insert(new DiscussInfo(null,iBuyerInfoService.getBuyerInfo().getBuyerId(),discussDto.getParentId(),discussDto.getDiscussContent()));
+           if(discussDto.getParentId()!=0){
+               UpdateWrapper<DiscussInfo> discussInfoUpdateWrapper = new UpdateWrapper<>();
+               discussInfoUpdateWrapper.eq("discuss_id", discussDto.getParentId());
+               discussInfoUpdateWrapper.setSql("comment_number = comment_number + 1");
+               discussInfoMapper.update(null, discussInfoUpdateWrapper);
+           }
+       }else{
+           Asserts.fail("内容不能为空");
+       }
    }
-
 }
 

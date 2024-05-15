@@ -168,7 +168,7 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoMapper, GoodsInfo
    private CartGoodsVo goodsInfoVoToCartGoodsVo(GoodsInfoVo goodsInfoVo, Integer cartId, Integer goodsNumber){
       CartGoodsVo cartGoodsVo = new CartGoodsVo(goodsInfoVo.getGoodsId(), goodsInfoVo.getGoodsName(), goodsInfoVo.getGoodsIntroduction(),
               goodsInfoVo.getPicUrl(),goodsInfoVo.getPrice(),goodsInfoVo.getPromotionPrice(),
-              goodsInfoVo.getSoldNumber(),goodsInfoVo.getTotalNumber(),cartId,goodsNumber);
+              goodsInfoVo.getSoldNumber(),goodsInfoVo.getTotalNumber(),goodsInfoVo.getShopInfo(),goodsInfoVo.getIsCollection(),goodsInfoVo.getIsJoinCart(),cartId,goodsNumber);
       return cartGoodsVo;
    }
 }

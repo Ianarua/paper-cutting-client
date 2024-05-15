@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import React from 'react';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
-import { ICommunityData } from '@/views/HomeScreen/components/CommunityPage/components/interface';
+import { ICommunityData } from '@/interface/ICommunity.ts';
 import CommentsBlock from '@/views/HomeScreen/components/CommunityPage/components/CommentsBlock';
 
 const CommunityPage = () => {

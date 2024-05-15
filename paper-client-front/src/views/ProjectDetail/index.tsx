@@ -1,4 +1,4 @@
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import TopPage from '@/components/TopPage';
@@ -9,7 +9,6 @@ import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
 
 const ProjectDetail = () => {
     const route = useRoute<RootRouteType<Views.ProjectDetail>>();
-    console.log(route.params);
     const { projectBlockData } = route.params;
     let [isJoinCart, setIsJoinCart] = useState(false);
     useEffect(() => {
@@ -31,7 +30,11 @@ const ProjectDetail = () => {
             <TopPage title="商品信息"/>
             <ScrollView style={ styles.content }>
                 <View style={ styles.inner }>
-                    <Image defaultSource={ require('@/assets/img/logo.png') } source={ projectBlockData.picUrl } style={ styles.image }/>
+                    <Image
+                        source={ { uri: `data:image/png;base64,${ projectBlockData.picUrl }` } }
+                        // source={ require('@/assets/img/logo.png') }
+                        style={ styles.image }
+                    />
                     <View style={ styles.price }>
                         <Text style={ { color: '#cd2929', fontSize: 20 } }>￥ { projectBlockData.promotionPrice }</Text>
                         <Text>已售 { projectBlockData.soldNumber } 件</Text>
@@ -68,6 +71,9 @@ const ProjectDetail = () => {
     );
 };
 export default ProjectDetail;
+const window = Dimensions.get('window');
+const width = window.width / 2.1;
+const height = width * 1.2;
 const styles = StyleSheet.create({
     content: {
         flex: 1
@@ -78,7 +84,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     image: {
-        width: '100%',
+        width: width,
+        height: height,
         objectFit: 'contain'
     },
     price: {

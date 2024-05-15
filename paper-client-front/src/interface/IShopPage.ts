@@ -6,4 +6,4 @@ export interface IShopCategory {
 }
 
 // 每个小分类的goodCategoryName
-export type IShopItem = Pick<IShopCategory, 'goodCategoryName'>
+export type IShopItem = Omit<IShopCategory, 'children'>

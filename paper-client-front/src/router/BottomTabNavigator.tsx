@@ -1,11 +1,32 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-import router from './index.tsx';
 import { StyleSheet } from 'react-native';
+import HomeScreen from '@/views/HomeScreen';
+import ShoppingScreen from '@/views/ShoppingScreen';
+import CarScreen from '@/views/CarScreen';
+import MineScreen from '@/views/MineScreen';
 
 function BottomTab () {
     const BottomTab = createBottomTabNavigator();
+    const bottomTab = [
+        {
+            name: '首页',
+            component: HomeScreen,
+        },
+        {
+            name: '商城',
+            component: ShoppingScreen
+        },
+        {
+            name: '购物车',
+            component: CarScreen
+        },
+        {
+            name: '我的',
+            component: MineScreen
+        }
+    ];
     return (
         <BottomTab.Navigator
             screenOptions={ ({ route }) => ({
@@ -42,7 +63,7 @@ function BottomTab () {
             }) }
         >
             {
-                router[0].bottomTab!.map((item, index) => {
+                bottomTab.map((item, index) => {
                     return (
                         <BottomTab.Screen
                             key={ index }

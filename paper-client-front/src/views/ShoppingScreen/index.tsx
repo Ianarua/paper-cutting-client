@@ -1,6 +1,5 @@
 import { Dimensions, Image, ImageBackground, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import MyText from '@/components/MyText';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Shadow } from 'react-native-shadow-2';
@@ -9,24 +8,23 @@ import { IShopCategory } from '@/interface/IShopPage.ts';
 import { useNavigation } from '@react-navigation/native';
 import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
 import { getWithChildrenCategory } from '@/api/Category';
+import shopCategory from '@/views/ShoppingScreen/commponents/ShopCategory';
 
 const ShoppingScreen = () => {
-    const Stack = createStackNavigator();
-    const navigation = useNavigation();
     const [searchValue, setSearchValue] = useState('');
     const [shopItemAll, setShopItemAll] = useState<IShopCategory[]>([]);
-    const [shopItemActive, setShopItemActive] = useState<IShopCategory>();
+    const [shopItemActive, setShopItemActive] = useState<IShopCategory>({
+        goodCategoryName: '',
+        goodsCategoryId: 0,
+        categorySuperiorId: 0,
+        children: []
+    });
     // 获取所有目录
     useEffect(() => {
         !(async function () {
             const res = await getWithChildrenCategory();
             // @ts-ignore   后端直接在data里面返回来了数组,
             setShopItemAll(res);
-            // 等待获取完所有目录的时候,设置active目录
-            // setShopItemAll((value) => {
-            //
-            //     return value;
-            // });
         })();
     }, []);
     // 等待获取完所有目录的时候,设置active目录
@@ -36,17 +34,19 @@ const ShoppingScreen = () => {
         }
     }, [shopItemAll]);
 
+
     function changeShopCategory (goodsCategoryId: number) {
-        console.log('点击了');
         // 设置active
         const activeItem = shopItemAll?.find(item => item.goodsCategoryId === goodsCategoryId)!;
+        console.log('点击了', activeItem.goodCategoryName);
         setShopItemActive({
             goodCategoryName: activeItem.goodCategoryName,
             goodsCategoryId: activeItem.goodsCategoryId,
             categorySuperiorId: activeItem.categorySuperiorId,
             children: activeItem.children
         });
-        navigation.navigate('商品' as never, { shopCategoryData: activeItem } as never);
+        // @ts-ignore
+        // navigation.navigate('商品', { shopCategoryData: activeItem });
     }
 
     const sideMenu = shopItemAll?.map(item => ({
@@ -91,14 +91,13 @@ const ShoppingScreen = () => {
                                     <View key={ index } style={ item.goodsCategoryId === shopItemActive?.goodsCategoryId && styles.sideMenuActive }>
                                         <IsRenderHOC
                                             isShow={ item.goodsCategoryId === shopItemActive?.goodsCategoryId }
-                                            styles={ styles.sideMenuActiveBlock }
+                                            style={ styles.sideMenuActiveBlock }
                                         >
                                             <View/>
                                         </IsRenderHOC>
                                         <Pressable
                                             style={ styles.sideMenuItem }
                                             onPress={ () => changeShopCategory(item.goodsCategoryId) }
-                                            hitSlop={ 25 }
                                         >
                                             <MyText text={ item.goodCategoryName }/>
                                         </Pressable>
@@ -109,19 +108,22 @@ const ShoppingScreen = () => {
                     </View>
 
                     <View style={ { flex: 1 } }>
-                        <Shadow distance={ 5 } offset={ [-1, 10] } startColor="#b0b0b0" style={ styles.mainInner }>
-                            <Stack.Navigator
-                                screenOptions={ {
-                                    // @ts-ignore
-                                    headerMode: 'none'
-                                } }
-                            >
-                                <Stack.Screen
-                                    name="商品"
-                                    component={ ShopCategory }
-                                    initialParams={ { shopCategoryData: shopItemActive } }
-                                />
-                            </Stack.Navigator>
+                        <Shadow distance={ 5 } offset={ [-1, 5] } style={ styles.mainInner }>
+                            {/*/!*{ isDataLoaded && (*!/*/ }
+                            {/*    <Stack.Navigator*/ }
+                            {/*        screenOptions={ {*/ }
+                            {/*            // @ts-ignore*/ }
+                            {/*            headerMode: 'none'*/ }
+                            {/*        } }*/ }
+                            {/*    >*/ }
+                            {/*        <Stack.Screen*/ }
+                            {/*            name="商品"*/ }
+                            {/*            component={ ShopCategory }*/ }
+                            {/*            initialParams={ { shopCategoryData: shopItemAll[0] } }*/ }
+                            {/*        />*/ }
+                            {/*    </Stack.Navigator>*/ }
+                            {/*/!*) }*!/*/ }
+                            <ShopCategory shopCategoryData={ shopItemActive }/>
                         </Shadow>
                     </View>
                 </View>

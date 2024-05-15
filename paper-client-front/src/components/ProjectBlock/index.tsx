@@ -8,8 +8,6 @@ import {
 import React, { FC, useEffect, useState } from 'react';
 import ProjectBlockImg from '@/components/Img';
 import MyText from '@/components/MyText';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
 import { useNavigation } from '@react-navigation/native';
 import IProjectBlock from '@/interface/IProjectBlock.ts';
 

@@ -9,7 +9,7 @@ export interface IResponse {
 }
 
 const request: AxiosInstance = axios.create({
-    baseURL: 'http://10.0.0.131:8082',
+    baseURL: 'http://192.168.0.106:8082',
     headers: {
         'Content-Type': 'application/json'
     },

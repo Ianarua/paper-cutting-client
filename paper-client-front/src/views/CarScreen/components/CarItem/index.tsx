@@ -6,6 +6,7 @@ import MyText from '@/components/MyText';
 import InputNumber from '@/components/InputNumber';
 import { postDeleteCar } from '@/api/Car';
 import useDebounce from '@/utils/useDebounce.ts';
+import ImgBase64 from '@/components/ImgBase64';
 
 interface IProps extends ICarItem {
     changeCheckedFunc: (status: boolean) => void,
@@ -31,15 +32,17 @@ const CarItem = (props: IProps) => {
     // 删除购物车该商品
     async function deleteCar () {
         await postDeleteCar(projectInfo.goodsId);
-        console.log('shanchu');
     }
+
+    useEffect(() => {
+    }, []);
 
     return (
         <View style={ styles.content }>
             <View style={ styles.header }>
-                {/*<Image source={ shopInfo.picUrl } style={ { width: 17, objectFit: 'contain' } }/>*/ }
+                {/*<Image source={ { uri: shopInfo.picUrl } } style={ { width: 17, objectFit: 'contain' } }/>*/ }
                 <View style={ styles.headerLeft }>
-                    <Text style={ { marginRight: 15 } }>{ shopInfo.shopName }</Text>
+                    <Text style={ { marginRight: 15 } }>{ shopInfo?.shopName }</Text>
                     <Image source={ require('@/assets/img/carPage/greater.png') } style={ { width: 10, objectFit: 'contain' } }/>
                 </View>
                 <Pressable
@@ -61,7 +64,10 @@ const CarItem = (props: IProps) => {
                         } }
                     />
                     <View style={ styles.innerLeftImgView }>
-                        {/*<Image source={ projectInfo.picUrl } style={ { width: '70%', height: '100%', objectFit: 'contain' } }/>*/ }
+                        <Image
+                            source={ { uri: `data:image/png;base64,${ projectInfo.picUrl }` } }
+                            style={ { width: '70%', height: '100%', objectFit: 'contain' } }
+                        />
                     </View>
                     <View style={ styles.innerLeftInfo }>
                         <MyText text={ projectInfo.goodsName } styles={ { fontSize: 15, fontWeight: 'bold' } }/>
@@ -130,7 +136,7 @@ const styles = StyleSheet.create({
     innerLeftImgView: {
         width: '50%',
         height: '70%',
-        backgroundColor: '#f1f1f1',
+        // backgroundColor: '#f1f1f1',
         marginLeft: 10,
         marginRight: 10,
         borderRadius: 10,

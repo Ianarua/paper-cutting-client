@@ -9,7 +9,7 @@ export interface IOrderBlock {
     buyerId: number;
 
     /* 订单状态 可用值:待付款,待发货,待收货,待评价,退款/售后 */
-    orderStatus: string;
+    orderStatus: number;
 
     /* 地址Id */
     receivingAddressId: number;

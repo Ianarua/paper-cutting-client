@@ -29,16 +29,12 @@ const HomePage = () => {
     // 应该查询哪个分页的数据
     let [pageNum, setPageNum] = useState(0);
     useEffect(() => {
-        console.log('aaaaaaaa');
-
         async function fetchApi () {
             const res: any = await getRecommendGoods(pageNum, 6);
             setProjectBlockData(prevData => [...prevData, ...res.list]);
         }
 
-        fetchApi().then(r => {
-            console.log(r);
-        });
+        fetchApi().then();
     }, [pageNum]);
 
     function _contentViewScroll (e: any) {

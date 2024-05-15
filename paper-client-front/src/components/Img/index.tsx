@@ -1,20 +1,36 @@
-import { Animated, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { Animated, Dimensions, StyleSheet, View } from 'react-native';
+import { FC } from 'react';
 import Image = Animated.Image;
 
 interface IProps {
-    imgUrl: ImageSourcePropType,
+    imgUrl: string,
 }
 
-const ProjectBlockImg = (props: IProps) => {
+
+const ProjectBlockImg: FC<IProps> = (props) => {
     const { imgUrl } = props;
     return (
         <View style={ styles.imgView }>
-            <Image defaultSource={ require('@/assets/img/logo.png') } source={ imgUrl } style={ styles.img }/>
+            {
+                imgUrl
+                    ? <Image
+                        source={ { uri: `data:image/png;base64,${ imgUrl }` } }
+                        // source={ require('@/assets/img/logo.png') }
+                        style={ styles.img }
+                    />
+                    : <Image
+                        source={ require('@/assets/img/logo.png') }
+                        // source={ require('@/assets/img/logo.png') }
+                        style={ styles.img }
+                    />
+            }
         </View>
     );
 };
 export default ProjectBlockImg;
+const window = Dimensions.get('window');
+const width = window.width / 2.1;
+const height = width * 1.2;
 const styles = StyleSheet.create({
     imgView: {
         // width: '100%',
@@ -29,8 +45,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#f1ece6'
     },
     img: {
-        maxWidth: '100%',
-        maxHeight: '100%',
+        width: width,
+        height: height,
         objectFit: 'contain'
     },
 });

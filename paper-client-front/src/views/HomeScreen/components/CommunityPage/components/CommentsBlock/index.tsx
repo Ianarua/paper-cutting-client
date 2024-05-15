@@ -1,8 +1,8 @@
-import { Animated, Easing, LayoutChangeEvent, StyleSheet, View } from 'react-native';
+import { Animated, StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import MyText from '@/components/MyText';
-import { ICommunityData } from '@/views/HomeScreen/components/CommunityPage/components/interface';
+import { ICommunityData } from '@/interface/ICommunity.ts';
 import Image = Animated.Image;
 import ActionShow from '@/components/ActionShow';
 import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';

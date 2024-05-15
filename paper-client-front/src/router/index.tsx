@@ -11,6 +11,8 @@ import SetUp from '../views/SetUp';
 import Address from '@/views/Adress';
 import Settle from '@/views/Settle';
 import Order from '@/views/Order';
+import AddressDetail from '@/views/Adress/components/AddressDetail';
+import ShoppingList from '@/views/ShoppingList';
 
 /*
     只配置stack
@@ -24,7 +26,7 @@ interface IRouter {
     name: string,       // 页面名字,供跳转使用
     title?: string,      // 头部标题
     component: any,
-    bottomTab?: IBottomTab[]
+    // bottomTab?: IBottomTab[]
 }
 
 const router: IRouter[] = [
@@ -32,24 +34,7 @@ const router: IRouter[] = [
         name: 'Main',
         title: '首页',
         component: Main,
-        bottomTab: [
-            {
-                name: '首页',
-                component: HomeScreen,
-            },
-            {
-                name: '商城',
-                component: ShoppingScreen
-            },
-            {
-                name: '购物车',
-                component: CarScreen
-            },
-            {
-                name: '我的',
-                component: MineScreen
-            }
-        ]
+
     },
     {
         name: 'SignUp',
@@ -60,6 +45,11 @@ const router: IRouter[] = [
         name: 'ProjectDetail',
         title: '商品信息',
         component: ProjectDetail
+    },
+    {
+        name: 'ShoppingList',
+        title: '商品列表',
+        component: ShoppingList
     },
     {
         name: 'PersonalInfo',
@@ -75,6 +65,11 @@ const router: IRouter[] = [
         name: 'Address',
         title: '收货地址',
         component: Address
+    },
+    {
+        name: 'AddressDetail',
+        title: '编辑收货地址',
+        component: AddressDetail
     },
     {
         name: 'Settle',

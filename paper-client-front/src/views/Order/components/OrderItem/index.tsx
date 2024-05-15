@@ -1,12 +1,23 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { FC } from 'react';
+import { IOrderBlock } from '@/interface/IOrderBlock.ts';
 
-const OrderItem = () => {
+interface IProps extends IOrderBlock {
+}
+
+const OrderItem: FC<IProps> = (props) => {
     return (
-        <View>
+        <View style={ styles.content }>
+            <View style={ styles.address }></View>
             <Text>OrderItem</Text>
         </View>
     );
 };
 export default OrderItem;
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    content: {
+        width: '100%'
+    },
+    address: {},
+
+});

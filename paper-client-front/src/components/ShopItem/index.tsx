@@ -1,18 +1,25 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { IShopItem } from '@/interface/IShopPage.ts';
+import { useNavigation } from '@react-navigation/native';
 
-interface IProps extends IShopItem {
+interface IProps {
+    shopItemData: IShopItem;
 }
 
 const ShopItem = (props: IProps) => {
-    const { goodCategoryName } = props;
+    const navigation = useNavigation();
+    const { goodCategoryName, goodsCategoryId } = props.shopItemData;
     return (
-        <View style={ styles.content }>
+        <Pressable
+            style={ styles.content }
+            // @ts-ignore
+            onPress={ () => navigation.navigate('ShoppingList', { goodsCategoryId }) }
+        >
             <View style={ styles.image }>
                 <Text style={ styles.imageText }>{ goodCategoryName }</Text>
             </View>
-        </View>
+        </Pressable>
     );
 };
 export default ShopItem;

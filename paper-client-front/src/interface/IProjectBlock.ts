@@ -6,7 +6,7 @@ export default interface IProjectBlock {
     goodsId: number,    // 商品id
     goodsName: string,  // 商品名字
     goodsIntroduction: string, // 商品介绍
-    picUrl: ImageSourcePropType,  // 商品图片
+    picUrl: string,  // 商品图片
     price: number,  // 市场价
     promotionPrice: number, // 当前商品价格
     soldNumber: number,  // 卖了多少笔

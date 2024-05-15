@@ -26,7 +26,7 @@ const PersonalInfo = () => {
     async function handleEditButtonPress () {
         // 当前是修改状态 -> 保存信息
         if (isEdit) {
-            // TODO 调接口
+            // 调接口
             await postChangeInfo(personalInfoDataIn);
             setIsEdit(false);
             console.log('----保存成功!');
@@ -38,7 +38,6 @@ const PersonalInfo = () => {
 
     // 修改信息文本
     function changeInput (field: string, value: string) {
-        console.log('value----', value);
         setPersonalInfoDataIn({
             ...personalInfoDataIn,
             [field]: value

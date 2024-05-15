@@ -93,9 +93,10 @@ const AddressDetail = () => {
     }
 
     // 删除按钮
-    function deleteAddressBtn () {
-        // TODO 调删除接口
-        getDeleteAddress(addressDetailData.receivingAddressId).then();
+    async function deleteAddressBtn () {
+        // 调删除接口
+        await getDeleteAddress(addressDetailData.receivingAddressId);
+        navigation.goBack();
     }
 
     return (

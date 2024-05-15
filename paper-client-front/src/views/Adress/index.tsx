@@ -19,6 +19,8 @@ const Address = () => {
                 setAddressData(res);
             })();
         }, [isFocused]);
+
+        // 控制底部input是否显示(点add就显示)
         return (
             <AddBackgroundHOC>
                 <TopPage title="我的收货地址"/>

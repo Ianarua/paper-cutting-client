@@ -13,6 +13,7 @@
  */
 package com.iyaovo.paper.foreground.domain.vo;
 
+import com.iyaovo.paper.foreground.domain.entity.ShopInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +32,40 @@ import java.util.List;
 @Slf4j
 @Data
 @AllArgsConstructor
-public class CartGoodsVo extends GoodsInfoVo{
+public class CartGoodsVo {
+
+   @Schema(defaultValue = "商品id")
+   private Integer goodsId;
+
+   @Schema(defaultValue = "商品名称")
+   private String goodsName;
+
+   @Schema(defaultValue = "商品介绍")
+   private String goodsIntroduction;
+
+   @Schema(defaultValue = "标题图片base64形式")
+   private String picUrl;
+
+   @Schema(defaultValue = "原价")
+   private BigDecimal price;
+
+   @Schema(defaultValue = "促销价格")
+   private BigDecimal promotionPrice;
+
+   @Schema(defaultValue = "已售数量")
+   private Integer soldNumber;
+
+   @Schema(defaultValue = "库存量")
+   private Integer totalNumber;
+
+   @Schema(defaultValue = "店铺")
+   private ShopInfo shopInfo;
+
+   @Schema(defaultValue = "是否被收藏")
+   private Boolean isCollection;
+
+   @Schema(defaultValue = "是否加入购物车")
+   private Boolean isJoinCart;
 
    @Schema(defaultValue = "购物车id")
    private Integer cartId;
@@ -39,13 +73,19 @@ public class CartGoodsVo extends GoodsInfoVo{
    @Schema(defaultValue = "商品数量")
    private Integer goodsNumber;
 
-
-
-   public CartGoodsVo(Integer goodsId, String goodsName, String goodsIntroduction, String picUrl, BigDecimal price,
-                      BigDecimal promotionPrice, Integer soldNumber, Integer totalNumber, Integer cartId, Integer goodsNumber) {
-      super(goodsId, goodsName, goodsIntroduction, picUrl, price, promotionPrice, soldNumber, totalNumber);
+   public CartGoodsVo(Integer goodsId, String goodsName, String goodsIntroduction, String picUrl, BigDecimal price, BigDecimal promotionPrice, Integer soldNumber, Integer totalNumber,Integer cartId,Integer goodsNumber) {
+      this.goodsId = goodsId;
+      this.goodsName = goodsName;
+      this.goodsIntroduction = goodsIntroduction;
+      this.picUrl = picUrl;
+      this.price = price;
+      this.promotionPrice = promotionPrice;
+      this.soldNumber = soldNumber;
+      this.totalNumber = totalNumber;
       this.cartId = cartId;
       this.goodsNumber = goodsNumber;
    }
+
+
 }
 

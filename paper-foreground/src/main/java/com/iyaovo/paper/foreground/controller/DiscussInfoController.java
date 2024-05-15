@@ -54,11 +54,6 @@ public class DiscussInfoController {
       return CommonResult.success(iDiscussInfoService.showDiscuss(pageNum,pageSize));
    }
 
-   @GetMapping("/show/comment/{discussId}")
-   @Operation(summary = "展示评论")
-   public CommonResult<List<DiscussCommentVo>> showDiscussComments(@PathVariable("discussId") Integer discussId) {
-      return CommonResult.success(iDiscussInfoService.showDiscussComments(discussId));
-   }
 
    @GetMapping("/like/{discussId}")
    @Operation(summary = "点赞讨论")

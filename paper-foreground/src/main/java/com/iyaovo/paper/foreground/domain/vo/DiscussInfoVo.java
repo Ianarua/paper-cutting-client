@@ -69,6 +69,12 @@ public class DiscussInfoVo {
    private String name;
 
    /**
+    * 该用户是否点赞该讨论
+    */
+   @Schema(defaultValue = "该用户是否点赞该讨论")
+   private Boolean isLike;
+
+   /**
     * 子评论
     */
    @Schema(defaultValue = "子评论list")

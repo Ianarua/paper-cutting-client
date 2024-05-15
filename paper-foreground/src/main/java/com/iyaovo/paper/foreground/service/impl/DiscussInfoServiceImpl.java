@@ -13,6 +13,7 @@
  */
 package com.iyaovo.paper.foreground.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -23,10 +24,12 @@ import com.iyaovo.paper.common.util.ImageToBase64Util;
 import com.iyaovo.paper.foreground.domain.dto.DiscussDto;
 import com.iyaovo.paper.foreground.domain.entity.BuyerInfo;
 import com.iyaovo.paper.foreground.domain.entity.DiscussInfo;
+import com.iyaovo.paper.foreground.domain.entity.DiscussLike;
 import com.iyaovo.paper.foreground.domain.vo.DiscussCommentVo;
 import com.iyaovo.paper.foreground.domain.vo.DiscussInfoVo;
 import com.iyaovo.paper.foreground.mapper.BuyerInfoMapper;
 import com.iyaovo.paper.foreground.mapper.DiscussInfoMapper;
+import com.iyaovo.paper.foreground.mapper.DiscussLikeMapper;
 import com.iyaovo.paper.foreground.service.IBuyerInfoService;
 import com.iyaovo.paper.foreground.service.IDiscussInfoService;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +54,8 @@ public class DiscussInfoServiceImpl extends ServiceImpl<DiscussInfoMapper, Discu
 
    private final IBuyerInfoService iBuyerInfoService;
 
+   private final DiscussLikeMapper discussLikeMapper;
+
    @Override
    public CommonPage<DiscussInfoVo> showDiscuss(Integer pageNum, Integer pageSize) {
       QueryWrapper<DiscussInfo> discussInfoQueryWrapper = new QueryWrapper<>();
@@ -61,8 +66,16 @@ public class DiscussInfoServiceImpl extends ServiceImpl<DiscussInfoMapper, Discu
             BuyerInfo buyerInfo = buyerInfoMapper.selectById(discussInfo.getBuyerId());
             DiscussInfoVo discussInfoVo = new DiscussInfoVo(discussInfo.getDiscussId(),discussInfo.getDiscussContent(),
                     discussInfo.getFavoriteNumber(),discussInfo.getCommentNumber(), ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH+buyerInfo.getPicUrl()),buyerInfo.getBuyerName());
-
-            //子评论
+            QueryWrapper<DiscussLike> discussLikeQueryWrapper = new QueryWrapper<>();
+            discussLikeQueryWrapper.eq("discuss_id",discussInfo.getDiscussId())
+                            .eq("buyer_id",iBuyerInfoService.getBuyerInfo().getBuyerId());
+            DiscussLike discussLike = discussLikeMapper.selectOne(discussLikeQueryWrapper);
+            if(!ObjectUtil.isEmpty(discussLike)){
+                discussInfoVo.setIsLike(true);
+            }else{
+                discussInfoVo.setIsLike(false);
+            }
+          //子评论
             QueryWrapper<DiscussInfo> discussInfoWrapper = new QueryWrapper<>();
             discussInfoWrapper.eq("parent_id",discussInfo.getDiscussId());
             List<DiscussInfo> discussInfoList = discussInfoMapper.selectList(discussInfoWrapper);
@@ -85,6 +98,7 @@ public class DiscussInfoServiceImpl extends ServiceImpl<DiscussInfoMapper, Discu
 
    @Override
    public void like(Integer discussId) {
+      discussLikeMapper.insert(new DiscussLike(null,discussId,iBuyerInfoService.getBuyerInfo().getBuyerId()));
       UpdateWrapper<DiscussInfo> discussInfoUpdateWrapper = new UpdateWrapper<>();
       discussInfoUpdateWrapper.eq("discuss_id", discussId);
       discussInfoUpdateWrapper.setSql("favorite_number = favorite_number + 1");

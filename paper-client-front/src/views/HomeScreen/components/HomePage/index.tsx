@@ -27,7 +27,7 @@ const HomePage = () => {
     ];
     const [projectBlockData, setProjectBlockData] = useState<IProjectBlock[]>([]);
     // 应该查询哪个分页的数据
-    let [pageNum, setPageNum] = useState(0);
+    let [pageNum, setPageNum] = useState(1);
     useEffect(() => {
         async function fetchApi () {
             const res: any = await getRecommendGoods(pageNum, 6);

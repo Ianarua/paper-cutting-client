@@ -5,16 +5,17 @@ import { IDiscuss } from '@/interface/IDiscuss.ts';
 import DiscussBlock from './components/DiscussBlock/index.tsx';
 import { getDiscuss } from '@/api/Discuss';
 import { useIsFocused } from '@react-navigation/native';
+import MyText from '@/components/MyText';
 
 const CommunityPage = () => {
     const [discussData, seDiscussData] = useState<IDiscuss[]>([]);
-    const [pageNum, setPageNum] = useState(0);
+    const [pageNum, setPageNum] = useState(1);
     const isFocused = useIsFocused();
 
     useEffect(() => {
         !(async function () {
             const res: any = await getDiscuss(pageNum, 10);
-            seDiscussData(res.list);
+            seDiscussData(prevState => [...prevState, ...res.list]);
         })();
     }, [pageNum, isFocused]);
 
@@ -28,6 +29,7 @@ const CommunityPage = () => {
         const forgeScrollHeight = e.nativeEvent.layoutMeasurement.height;
         if (offsetY + forgeScrollHeight >= contentSizeHeight) {
             setPageNum(prevState => prevState + 1);
+            console.log('上传滑动到底部事件', pageNum);
         }
     }
 
@@ -51,6 +53,9 @@ const CommunityPage = () => {
                         }
                     </View>
                 </View>
+                <View style={ styles.hasInBottom }>
+                    <MyText text="-----  已经到底啦  -----"/>
+                </View>
             </ScrollView>
         </AddBackgroundHOC>
     );
@@ -65,5 +70,12 @@ const styles = StyleSheet.create({
     communityInner: {
         width: '90%',
         // backgroundColor: '#fff'
+    },
+    hasInBottom: {
+        marginTop: 20,
+        marginBottom: 30,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });

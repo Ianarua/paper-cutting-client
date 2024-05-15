@@ -7,13 +7,15 @@ import { IAddress } from '@/interface/IAddress.ts';
 
 /**
  * @description 新建收货地址
- * @param receivingAddressId 收货地址id
- * @param recipientName  收件人姓名
- * @param recipientPhone 收件人电话号
- * @param recipientRegion 地区
- * @param recipientAddress 详细地址
+ * @param addressDetailData
+ * @param addressDetailData.receivingAddressId 收货地址id
+ * @param addressDetailData.recipientName  收件人姓名
+ * @param addressDetailData.recipientPhone 收件人电话号
+ * @param addressDetailData.recipientRegion 地区
+ * @param addressDetailData.recipientAddress 详细地址
  */
-export function postCreateAddress (receivingAddressId: number, recipientName: string, recipientPhone: number, recipientRegion: string, recipientAddress: string) {
+export function postCreateAddress (addressDetailData: IAddress) {
+    const { receivingAddressId, recipientName, recipientPhone, recipientRegion, recipientAddress } = addressDetailData;
     return createAddress(receivingAddressId, recipientName, recipientPhone, recipientRegion, recipientAddress);
 }
 

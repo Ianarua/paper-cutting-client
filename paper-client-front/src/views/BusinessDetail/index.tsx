@@ -30,7 +30,7 @@ const BusinessDetail = () => {
 
     // 店铺里面的商品
     const [projectList, setProjectList] = useState<IProjectBlock[]>([]);
-    const [pageNum, setPageNum] = useState(0);
+    const [pageNum, setPageNum] = useState(1);
     useEffect(() => {
         !(async function () {
             const res: any = await getShopGoods(shopId, pageNum, 8);

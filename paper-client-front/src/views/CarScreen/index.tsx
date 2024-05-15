@@ -25,7 +25,6 @@ const CarScreen = () => {
 
     useEffect(() => {
         !(async function () {
-            console.log('aaaaaaaaa');
             const res: any = await getGoodsCar();
             // 对数据进行处理,分为projectInfo和shopInfo
             setCarItemData(res.map((item: any) => {

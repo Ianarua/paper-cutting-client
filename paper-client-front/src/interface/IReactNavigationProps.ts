@@ -25,7 +25,8 @@ export type RootStackParamList = {
         projectBlockData: IProjectBlock;
     };
     [Views.AddressDetail]: {
-        addressDetailParams: IAddress
+        addressDetailParams: IAddress;
+        isAdd?: boolean
     };
     [Views.Settle]: {
         settleData: ISettleItem[]

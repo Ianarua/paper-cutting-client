@@ -56,7 +56,7 @@ public class DiscussInfoController {
 
 
    @GetMapping("/like/{discussId}")
-   @Operation(summary = "点赞讨论")
+   @Operation(summary = "点赞/取消点赞")
    public CommonResult like(@PathVariable("discussId") Integer discussId) {
       iDiscussInfoService.like(discussId);
       return CommonResult.success();

@@ -98,11 +98,22 @@ public class DiscussInfoServiceImpl extends ServiceImpl<DiscussInfoMapper, Discu
 
    @Override
    public void like(Integer discussId) {
-      discussLikeMapper.insert(new DiscussLike(null,discussId,iBuyerInfoService.getBuyerInfo().getBuyerId()));
-      UpdateWrapper<DiscussInfo> discussInfoUpdateWrapper = new UpdateWrapper<>();
-      discussInfoUpdateWrapper.eq("discuss_id", discussId);
-      discussInfoUpdateWrapper.setSql("favorite_number = favorite_number + 1");
-      discussInfoMapper.update(null, discussInfoUpdateWrapper);
+       Long buyerId = iBuyerInfoService.getBuyerInfo().getBuyerId();
+       QueryWrapper<DiscussLike> discussLikeQueryWrapper = new QueryWrapper<>();
+       discussLikeQueryWrapper.eq("discuss_id", discussId)
+                      .eq("buyer_id",buyerId);
+       DiscussLike discussLike = discussLikeMapper.selectOne(discussLikeQueryWrapper);
+       UpdateWrapper<DiscussInfo> discussInfoUpdateWrapper = new UpdateWrapper<>();
+       discussInfoUpdateWrapper.eq("discuss_id", discussId);
+       if(ObjectUtil.isEmpty(discussLike)){
+           discussLikeMapper.insert(new DiscussLike(null,discussId,buyerId));
+           discussInfoUpdateWrapper.setSql("favorite_number = favorite_number + 1");
+           discussInfoMapper.update(null, discussInfoUpdateWrapper);
+       }else{
+           discussLikeMapper.deleteById(discussLike.getLikeId());
+           discussInfoUpdateWrapper.setSql("favorite_number = favorite_number - 1 ");
+           discussInfoMapper.update(null, discussInfoUpdateWrapper);
+       }
    }
 
    @Override

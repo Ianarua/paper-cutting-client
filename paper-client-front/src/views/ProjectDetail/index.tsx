@@ -86,14 +86,15 @@ const styles = StyleSheet.create({
     image: {
         width: width,
         height: height,
-        objectFit: 'contain'
+        objectFit: 'contain',
+        marginBottom: 10
     },
     price: {
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     goodsName: {
         marginTop: 10

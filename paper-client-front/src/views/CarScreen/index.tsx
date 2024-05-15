@@ -8,6 +8,8 @@ import CarItem from '@/views/CarScreen/components/CarItem';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import { getGoodsCar, getUpdateCar } from '@/api/Car';
 import { useNavigation } from '@react-navigation/native';
+import IProjectBlock from '@/interface/IProjectBlock.ts';
+import { ISettleItem } from '@/interface/ISettleList.ts';
 
 /*
     BottomTab的购物车
@@ -36,7 +38,13 @@ const CarScreen = () => {
         })();
     }, []);
 
+    // useEffect(() => {
+    //     setIsCheckedArr(new Array(carItemData.length).fill(false));
+    //     setAddNumsArr(new Array(carItemData.length).fill(1));
+    // }, [carItemData]);
+
     useEffect(() => {
+        console.log(isCheckedArr, addNumsArr);
         // 如果检测到勾选状态改变,就放进 已勾选数组里,并改变总金额
         isCheckedArr.includes(false) && setTotalSelected(false);
         computedTotalAmount(isCheckedArr);
@@ -66,30 +74,45 @@ const CarScreen = () => {
         let total = 0;
         for (let i = 0; i < newIsCheckedArr.length; i++) {
             if (newIsCheckedArr[i]) {
-                total += carItemData[i].projectInfo.price * addNumsArr[i];
+                total += carItemData[i].projectInfo.promotionPrice * addNumsArr[i];
             }
         }
         setTotalAmount(total);
     }
 
     // 单个商品数量
-    function changeNumsFunc (changeIndex: number, changeGoodsId: number) {
+    function changeNumsFunc (changeIndex: number, cartId: number) {
         return function (nums: number) {
             const newAddNumsArr = addNumsArr.map((item, index) => {
-                if (index === changeIndex) item = nums;
-                return item;
+                return index === changeIndex ? nums : item;
             });
             setAddNumsArr(newAddNumsArr);
             // TODO 调更新数量接口
-            // getUpdateCar(changeGoodsId).then();
+            getUpdateCar(cartId, nums).then();
         };
     }
 
     // 结算按钮
     function settleFunc () {
+        const statsData: ISettleItem[] = settleStats();
+        // console.log('aaa', statsData);
         // @ts-ignore
-        navigation.navigate('Settle');
+        navigation.navigate('Settle', { settleData: statsData });
         console.log('结算');
+    }
+
+    // 统计结算商品(勾选的),包括carItemData和数量
+    function settleStats () {
+        const selectedItems: ISettleItem[] = [];
+        for (let i = 0; i < carItemData.length; i++) {
+            if (isCheckedArr[i]) {
+                selectedItems.push({
+                    ...carItemData[i],
+                    quantity: addNumsArr[i]
+                });
+            }
+        }
+        return selectedItems;
     }
 
     return (
@@ -113,7 +136,7 @@ const CarScreen = () => {
                                     projectInfo={ item.projectInfo }
                                     changeCheckedFunc={ changeCheckedFunc(index) }
                                     isCheckedPar={ isCheckedArr[index] }
-                                    changeNumsFunc={ changeNumsFunc(index, item.projectInfo.goodsId) }
+                                    changeNumsFunc={ changeNumsFunc(index, item?.projectInfo?.cartId) }
                                 />
                             );
                         })

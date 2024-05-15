@@ -78,10 +78,10 @@ const AddressDetail = () => {
         newErrors.recipientRegion = validateInput('recipientRegion', addressDetailData.recipientRegion);
         newErrors.recipientAddress = validateInput('recipientAddress', addressDetailData.recipientAddress);
         setInputErrors(newErrors);
-        // 如果 newErrors 对象中没有错误信息，则可以执行保存操作
-        if (Object.values(newErrors).every(error => !error)) {
-            postUpdateAddress(addressDetailData).then();
-        }
+        // TODO 如果 newErrors 对象中没有错误信息，则可以执行保存操作
+        // if (Object.values(newErrors).every(error => !error)) {
+        postUpdateAddress(addressDetailData).then();
+        // }
     }
 
     // 删除按钮
@@ -111,11 +111,12 @@ const AddressDetail = () => {
                                         value={ addressDetailData[field] }
                                         onChangeText={ (value) => changeInput(field, value) }
                                     />
-                                    <View style={ styles.inputError }>
-                                        <IsRenderHOC isShow={ inputErrors[field] !== '' }>
-                                            <Text style={ { color: '#ff0000', fontSize: 12 } }>{ errorMap.get(field) }</Text>
-                                        </IsRenderHOC>
-                                    </View>
+                                    {/* 取消验证 */ }
+                                    {/*<View style={ styles.inputError }>*/ }
+                                    {/*    <IsRenderHOC isShow={ inputErrors[field] !== '' }>*/ }
+                                    {/*        <Text style={ { color: '#ff0000', fontSize: 12 } }>{ errorMap.get(field) }</Text>*/ }
+                                    {/*    </IsRenderHOC>*/ }
+                                    {/*</View>*/ }
                                     {/*<Text style={ { color: '#ff0000' } }>{ errorMap.get(field) }</Text>*/ }
                                 </View>
                             </View>
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 40,
         position: 'absolute',
-        bottom: 0,
+        bottom: 5,
         display: 'flex',
         flexDirection: 'row',
     },

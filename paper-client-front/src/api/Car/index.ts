@@ -46,7 +46,7 @@ export function postSettleCar (receivingAddressId: number, cartIds: number[]) {
 /**
  * @description 通过购物车id更改商品数量
  * @param cartId 购物车id
- * @param goodsNumber 商品id
+ * @param goodsNumber 商品数量
  */
 export function getUpdateCar (cartId: number, goodsNumber: number) {
     return updateCar(cartId, goodsNumber);

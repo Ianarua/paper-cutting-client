@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import HomeTop from './components/HomeTop';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomePage from '@/views/HomeScreen/components/HomePage';
-import CommunityPage from '@/views/HomeScreen/components/CommunityPage';
+import DiscussPage from '@/views/HomeScreen/components/DiscussPage';
 import { useNavigation } from '@react-navigation/native';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 
@@ -42,7 +42,7 @@ const HomeScreen = (props: any) => {
                 />
                 <Stack.Screen
                     name="社区"
-                    component={ CommunityPage }
+                    component={ DiscussPage }
                 />
             </Stack.Navigator>
         </AddBackgroundHOC>

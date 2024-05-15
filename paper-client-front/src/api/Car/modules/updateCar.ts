@@ -4,7 +4,7 @@ export default function (cartId: number, goodsNumber: number) {
     return request({
         url: '/cart/update',
         method: 'GET',
-        data: {
+        params: {
             cartId,
             goodsNumber
         }

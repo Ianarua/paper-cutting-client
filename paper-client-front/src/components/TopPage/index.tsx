@@ -16,6 +16,8 @@ const TopPage = (props: IProps) => {
             <Pressable style={ styles.iconView } onPress={ () => navigation.goBack() }>
                 <AntDesignIcon name="left" color={ iconColor } size={ 25 }/>
             </Pressable>
+            <Text style={ { fontSize: 18, color: '#000' } }>{ title }</Text>
+            <View style={ { width: 35, height: 35 } }/>
         </View>
     );
 };

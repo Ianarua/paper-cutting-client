@@ -10,19 +10,12 @@ import ProjectBlock from '@/components/ProjectBlock';
 import MyText from '@/components/MyText';
 import { getRecommendGoods } from '@/api/ProjectInfo';
 
-const ShoppingList: FC = () => {
+const ShoppingList = () => {
     const route = useRoute<RootRouteType<Views.ShoppingList>>();
+    // TODO
     const { goodsCategoryId } = route.params;
     const [listData, setListData] = useState<IProjectBlock[]>([]);
     const [pageNum, setPageNum] = useState(1);
-    // useEffect(() => {
-    //     !(async function () {
-    //         console.log(goodsCategoryId);
-    //         const res: any = await getGoodsByCategory(goodsCategoryId);
-    //         // console.log('-------res', res.list);
-    //         setListData(res.list);
-    //     })();
-    // }, []);
 
     // 监听哪个分页数据
     useEffect(() => {

@@ -5,15 +5,18 @@ import TopPage from '@/components/TopPage';
 import { IAddress } from '@/interface/IAddress.ts';
 import { getAllAddress } from '@/api/Address';
 import AddressItem from './components/AddressItem/index.tsx';
+import { useIsFocused } from '@react-navigation/native';
 
 const Address = () => {
     const [addressData, setAddressData] = useState<IAddress[]>([]);
+    const isFocused = useIsFocused();
+
     useEffect(() => {
         !(async function () {
             const res: any = await getAllAddress();
             setAddressData(res);
         })();
-    }, []);
+    }, [isFocused]);
     return (
         <AddBackgroundHOC>
             <TopPage title="我的收货地址"/>

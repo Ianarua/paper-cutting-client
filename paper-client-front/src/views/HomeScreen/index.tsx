@@ -33,16 +33,22 @@ const HomeScreen = (props: any) => {
             <Stack.Navigator
                 screenOptions={ {
                     // @ts-ignore
-                    headerMode: 'none'
+                    headerMode: 'none',
                 } }
             >
                 <Stack.Screen
                     name="主页"
                     component={ HomePage }
+                    options={{
+                        cardStyleInterpolator: undefined,
+                    }}
                 />
                 <Stack.Screen
                     name="社区"
                     component={ DiscussPage }
+                    options={{
+                        cardStyleInterpolator: undefined,
+                    }}
                 />
             </Stack.Navigator>
         </AddBackgroundHOC>

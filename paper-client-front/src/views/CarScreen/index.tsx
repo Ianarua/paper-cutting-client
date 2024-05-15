@@ -7,7 +7,7 @@ import { ICarItem } from '@/interface/ICarPage.ts';
 import CarItem from '@/views/CarScreen/components/CarItem';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import { getGoodsCar, getUpdateCar } from '@/api/Car';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import IProjectBlock from '@/interface/IProjectBlock.ts';
 import { ISettleItem } from '@/interface/ISettleList.ts';
 
@@ -21,9 +21,11 @@ const CarScreen = () => {
     let [totalAmount, setTotalAmount] = useState(0);
     let [totalSelected, setTotalSelected] = useState(false);
     const [carItemData, setCarItemData] = useState<ICarItem[]>([]);
+    const isFocused = useIsFocused();
 
     useEffect(() => {
         !(async function () {
+            console.log('aaaaaaaaa');
             const res: any = await getGoodsCar();
             // 对数据进行处理,分为projectInfo和shopInfo
             setCarItemData(res.map((item: any) => {
@@ -36,7 +38,7 @@ const CarScreen = () => {
                 return value;
             });
         })();
-    }, []);
+    }, [isFocused]);
 
     // useEffect(() => {
     //     setIsCheckedArr(new Array(carItemData.length).fill(false));

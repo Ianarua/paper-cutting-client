@@ -9,7 +9,8 @@ export enum Views {
     ShoppingList = 'ShoppingList',
     ProjectDetail = 'ProjectDetail',
     AddressDetail = 'AddressDetail',
-    Settle = 'Settle'
+    Settle = 'Settle',
+    BusinessDetail = 'BusinessDetail'
 }
 
 export type RootStackParamList = {
@@ -28,6 +29,9 @@ export type RootStackParamList = {
     };
     [Views.Settle]: {
         settleData: ISettleItem[]
+    },
+    [Views.BusinessDetail]: {
+        shopId: number
     }
 };
 

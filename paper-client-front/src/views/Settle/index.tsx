@@ -1,7 +1,7 @@
 import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { RootRouteType, Views } from '@/interface/IReactNavigationProps.ts';
 import TopPage from '@/components/TopPage';
 import SettleItem from '@/views/Settle/components/SettleItem';
@@ -9,11 +9,14 @@ import LinearGradient from 'react-native-linear-gradient';
 import { IAddress } from '@/interface/IAddress.ts';
 import { getAllAddress } from '@/api/Address';
 import AddressItem from '@/views/Adress/components/AddressItem';
+import { getSettleGoods } from '@/api/ProjectInfo';
+import { postSettleCar } from '@/api/Car';
 
 
 const Settle: FC = () => {
     const route = useRoute<RootRouteType<Views.Settle>>();
     const { settleData } = route.params;
+    const navigation = useNavigation();
 
     // 收货地址
     const [addressData, setAddressData] = useState<IAddress[]>([]);
@@ -33,8 +36,11 @@ const Settle: FC = () => {
     }, []);
 
     // 真正结算函数
-    function settleFunc () {
-
+    async function settleFunc () {
+        const ids: number[] = settleData.map(item => item.projectInfo.cartId);
+        // 调接口
+        await postSettleCar(addressData[0].receivingAddressId, ids);
+        navigation.goBack();
     }
 
     return (

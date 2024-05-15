@@ -28,6 +28,8 @@ function CuttingIndex () {
                             options={ {
                                 // @ts-ignore
                                 headerMode: 'none',
+                                cardStyleInterpolator: undefined,
+
                             } }
                         />
                     );

@@ -30,14 +30,13 @@ const DiscussBlock = (props: IProps) => {
 
     async function likePressFunc () {
         if (isLike) {
-            // TODO 调取消
+            // 取消
             await getLikeDiscuss(discussData.discussId);
             // 已经点过,取消
             setIsLike(false);
             setFavoriteNumber(prevState => prevState - 1);
         } else {
             // 还没点,现在点
-            // TODO 调点赞
             await getLikeDiscuss(discussData.discussId);
             setIsLike(true);
             setFavoriteNumber(prevState => prevState + 1);

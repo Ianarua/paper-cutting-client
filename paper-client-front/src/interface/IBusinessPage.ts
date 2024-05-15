@@ -7,4 +7,6 @@ export interface IBusinessInfo {
     shopName: string;
     // 商家店铺id
     shopId: number;
+    // 是否收藏
+    isFavorite: boolean;
 }

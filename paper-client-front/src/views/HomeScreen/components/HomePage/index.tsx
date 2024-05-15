@@ -40,8 +40,8 @@ const HomePage = () => {
     function _contentViewScroll (e: any) {
         const offsetY = e.nativeEvent.contentOffset.y; //滑动距离
         const contentSizeHeight = e.nativeEvent.contentSize.height; //scrollView contentSize高度
-        const oriageScrollHeight = e.nativeEvent.layoutMeasurement.height; //scrollView高度
-        if (offsetY + oriageScrollHeight >= contentSizeHeight) {
+        const forgeScrollHeight = e.nativeEvent.layoutMeasurement.height; //scrollView高度
+        if (offsetY + forgeScrollHeight >= contentSizeHeight) {
             setPageNum(prevState => prevState + 1);
             console.log('上传滑动到底部事件', pageNum);
         }

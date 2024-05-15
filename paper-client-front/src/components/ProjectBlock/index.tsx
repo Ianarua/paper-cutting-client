@@ -1,7 +1,7 @@
 import {
     Dimensions,
     Pressable,
-    StyleSheet,
+    StyleSheet, Text,
     useWindowDimensions,
     View,
 } from 'react-native';
@@ -44,11 +44,13 @@ const ProjectBlock: FC<IProps> = ({ addBtn, projectBlockData }) => {
                     <View>
                         <MyText text={ projectBlockData.goodsName } styles={ { fontWeight: 'bold' } }/>
                     </View>
-                    <View>
-                        <MyText
-                            text={ `￥${ projectBlockData.promotionPrice }` }
-                            styles={ { color: '#cd2929', fontSize: 20 } }
-                        />
+                    <View style={ { display: 'flex', flexDirection: 'row', alignItems: 'center' } }>
+                        <Text style={ { color: '#cd2929', fontSize: 20, marginRight: 5 } }>
+                            { `￥${ projectBlockData.promotionPrice }` }
+                        </Text>
+                        <Text style={ { color: '#e0e0e0', fontSize: 14, textDecorationLine: 'line-through' } }>
+                            { `￥${ projectBlockData.price }` }
+                        </Text>
                     </View>
                     <View>
                         <MyText

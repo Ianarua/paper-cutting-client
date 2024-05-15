@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import TopPage from '@/components/TopPage';
-import { useRoute } from '@react-navigation/native';
+import { useIsFocused, useRoute } from '@react-navigation/native';
 import { RootRouteType, Views } from '@/interface/IReactNavigationProps.ts';
 import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
 import { useEffect, useState } from 'react';
@@ -10,6 +10,8 @@ import { getDeleteAddress, postUpdateAddress } from '@/api/Address';
 
 const AddressDetail = () => {
     const route = useRoute<RootRouteType<Views.AddressDetail>>();
+    const isFocused = useIsFocused();
+
     const { addressDetailParams } = route.params;
     const [addressDetailData, setAddressDetailData] = useState<IAddress>({
         receivingAddressId: 0,
@@ -20,7 +22,7 @@ const AddressDetail = () => {
     });
     useEffect(() => {
         setAddressDetailData(addressDetailParams);
-    }, []);
+    }, [isFocused]);
     // 报错信息
     const errorMap = new Map([
         ['recipientName', '请填写姓名'],

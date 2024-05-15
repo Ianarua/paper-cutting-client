@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
 import ProjectBlock from '@/components/ProjectBlock';
 import MyText from '@/components/MyText';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { IPersonalInfoOut } from '@/interface/IPersonalInfo.ts';
 import { getRecommendGoods } from '@/api/ProjectInfo';
 import IProjectBlock from '@/interface/IProjectBlock.ts';
@@ -47,13 +47,15 @@ const MineScreen = () => {
         shopFollowNumber: 0,
         goodsViewNumber: 0
     });
+
+    const isFocused = useIsFocused();
     useEffect(() => {
         // TODO 调个人信息接口(外)
         !(async function () {
             const res: any = await getSimpleInfo();
             setPersonalInfoDataOut(res);
         })();
-    }, []);
+    }, [isFocused]);
     // 静态信息 收藏、关注、浏览
     const headerBottom = [
         {

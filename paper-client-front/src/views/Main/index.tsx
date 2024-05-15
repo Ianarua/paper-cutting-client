@@ -1,4 +1,3 @@
-import { ImageBackground, View } from 'react-native';
 import React from 'react';
 import BottomTab from '../../router/BottomTabNavigator.tsx';
 

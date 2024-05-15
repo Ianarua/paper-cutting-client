@@ -18,10 +18,6 @@ public interface IDiscussInfoService extends IService<DiscussInfo>{
     CommonPage<DiscussInfoVo> showDiscuss(Integer pageNum,
                                           Integer pageSize);
 
-    /**
-     * 展开评论
-     */
-    List<DiscussCommentVo> showDiscussComments(Integer discussId);
 
     /**
      * 点赞

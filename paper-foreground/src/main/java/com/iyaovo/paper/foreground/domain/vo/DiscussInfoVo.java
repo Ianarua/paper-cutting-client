@@ -18,6 +18,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 /**
  * @ClassName: DiscussInfoVo
  * @Description: java类描述
@@ -57,7 +59,7 @@ public class DiscussInfoVo {
    /**
     * 评论人头像
     */
-   @Schema(defaultValue = "评论人头像")
+   @Schema(defaultValue = "评论人头像base64")
    private String picUrl;
 
    /**
@@ -66,5 +68,19 @@ public class DiscussInfoVo {
    @Schema(defaultValue = "评论人昵称")
    private String name;
 
+   /**
+    * 子评论
+    */
+   @Schema(defaultValue = "子评论list")
+   private List<DiscussCommentVo> discussCommentVos;
+
+   public DiscussInfoVo(Integer discussId, String discussContent, Integer favoriteNumber, Integer commentNumber, String picUrl, String name) {
+      this.discussId = discussId;
+      this.discussContent = discussContent;
+      this.favoriteNumber = favoriteNumber;
+      this.commentNumber = commentNumber;
+      this.picUrl = picUrl;
+      this.name = name;
+   }
 }
 

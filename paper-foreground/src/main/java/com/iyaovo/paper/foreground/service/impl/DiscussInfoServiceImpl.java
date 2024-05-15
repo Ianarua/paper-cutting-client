@@ -18,6 +18,8 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.iyaovo.paper.common.api.CommonPage;
+import com.iyaovo.paper.common.constant.Constants;
+import com.iyaovo.paper.common.util.ImageToBase64Util;
 import com.iyaovo.paper.foreground.domain.dto.DiscussDto;
 import com.iyaovo.paper.foreground.domain.entity.BuyerInfo;
 import com.iyaovo.paper.foreground.domain.entity.DiscussInfo;
@@ -58,7 +60,19 @@ public class DiscussInfoServiceImpl extends ServiceImpl<DiscussInfoMapper, Discu
       discussInfoPage.getRecords().forEach(discussInfo -> {
             BuyerInfo buyerInfo = buyerInfoMapper.selectById(discussInfo.getBuyerId());
             DiscussInfoVo discussInfoVo = new DiscussInfoVo(discussInfo.getDiscussId(),discussInfo.getDiscussContent(),
-                    discussInfo.getFavoriteNumber(),discussInfo.getCommentNumber(),buyerInfo.getPicUrl(),buyerInfo.getBuyerName());
+                    discussInfo.getFavoriteNumber(),discussInfo.getCommentNumber(), ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH+buyerInfo.getPicUrl()),buyerInfo.getBuyerName());
+
+            //子评论
+            QueryWrapper<DiscussInfo> discussInfoWrapper = new QueryWrapper<>();
+            discussInfoWrapper.eq("parent_id",discussInfo.getDiscussId());
+            List<DiscussInfo> discussInfoList = discussInfoMapper.selectList(discussInfoWrapper);
+            List<DiscussCommentVo> discussCommentVos = new ArrayList<>();
+            discussInfoList.forEach(chilrenDiscussInfo -> {
+               BuyerInfo chilrenBuyerInfo = buyerInfoMapper.selectById(chilrenDiscussInfo.getBuyerId());
+               DiscussCommentVo discussCommentVo = new DiscussCommentVo(chilrenDiscussInfo.getDiscussId(),chilrenDiscussInfo.getDiscussContent(), ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH+chilrenBuyerInfo.getPicUrl()),chilrenBuyerInfo.getBuyerName());
+               discussCommentVos.add(discussCommentVo);
+            });
+            discussInfoVo.setDiscussCommentVos(discussCommentVos);
             discussInfoVos.add(discussInfoVo);
       });
       Page<DiscussInfoVo> discussInfoVoPage = new Page<>(pageNum,pageSize,discussInfoPage.getTotal());
@@ -67,19 +81,7 @@ public class DiscussInfoServiceImpl extends ServiceImpl<DiscussInfoMapper, Discu
       return CommonPage.restPage(discussInfoVoPage);
    }
 
-   @Override
-   public List<DiscussCommentVo> showDiscussComments(Integer discussId) {
-      QueryWrapper<DiscussInfo> discussInfoQueryWrapper = new QueryWrapper<>();
-      discussInfoQueryWrapper.eq("parent_id",discussId);
-      List<DiscussInfo> discussInfoList = discussInfoMapper.selectList(discussInfoQueryWrapper);
-      List<DiscussCommentVo> discussCommentVos = new ArrayList<>();
-      discussInfoList.forEach(discussInfo -> {
-         BuyerInfo buyerInfo = buyerInfoMapper.selectById(discussInfo.getBuyerId());
-         DiscussCommentVo discussCommentVo = new DiscussCommentVo(discussInfo.getDiscussId(),discussInfo.getDiscussContent(),buyerInfo.getPicUrl(),buyerInfo.getBuyerName());
-         discussCommentVos.add(discussCommentVo);
-      });
-      return discussCommentVos;
-   }
+
 
    @Override
    public void like(Integer discussId) {

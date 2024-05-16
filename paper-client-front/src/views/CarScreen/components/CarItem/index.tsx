@@ -7,11 +7,12 @@ import InputNumber from '@/components/InputNumber';
 import { postDeleteCar } from '@/api/Car';
 import useDebounce from '@/utils/useDebounce.ts';
 import ImgBase64 from '@/components/ImgBase64';
+import IProjectBlock from '@/interface/IProjectBlock.ts';
 
 interface IProps extends ICarItem {
     changeCheckedFunc: (status: boolean) => void,
     isCheckedPar: boolean,
-    changeNumsFunc: (nums: number) => any
+    changeNumsFunc: (nums: number, projectInfo: (Omit<IProjectBlock, 'shopName' | 'shopId'> & { cartId: number })) => any
 }
 
 const CarItem = (props: IProps) => {
@@ -19,10 +20,12 @@ const CarItem = (props: IProps) => {
     const [isChecked, setIsChecked] = useState(isCheckedPar);
 
     // 修改数量函数
-    const debouncedChangeNumsFunc = useDebounce(changeNumsFunc, 300);
+    // const debouncedChangeNumsFunc = useDebounce(changeNumsFunc, 300);
 
     function changeNumsInnerFunc (val: number) {
-        debouncedChangeNumsFunc(val);
+        console.log('diaoyl');
+        // debouncedChangeNumsFunc(val);
+        changeNumsFunc(val, projectInfo);
     }
 
     useEffect(() => {
@@ -34,14 +37,12 @@ const CarItem = (props: IProps) => {
         await postDeleteCar(projectInfo.goodsId);
     }
 
-    useEffect(() => {
-    }, []);
-
     return (
         <View style={ styles.content }>
             <View style={ styles.header }>
                 {/*<Image source={ { uri: shopInfo.picUrl } } style={ { width: 17, objectFit: 'contain' } }/>*/ }
                 <View style={ styles.headerLeft }>
+                    <Image source={ require('@/assets/img/carPage/store.png') } style={ { width: 17, objectFit: 'contain', marginRight: 5 } }/>
                     <Text style={ { marginRight: 15 } }>{ shopInfo?.shopName }</Text>
                     <Image source={ require('@/assets/img/carPage/greater.png') } style={ { width: 10, objectFit: 'contain' } }/>
                 </View>
@@ -71,7 +72,7 @@ const CarItem = (props: IProps) => {
                     </View>
                     <View style={ styles.innerLeftInfo }>
                         <MyText text={ projectInfo.goodsName } styles={ { fontSize: 15, fontWeight: 'bold' } }/>
-                        <MyText text={ `￥ ${ projectInfo.price } / 件` } styles={ { color: '#f44545', fontSize: 14, fontWeight: 'bold' } }/>
+                        <MyText text={ `￥ ${ projectInfo.promotionPrice } / 件` } styles={ { color: '#f44545', fontSize: 14, fontWeight: 'bold' } }/>
                     </View>
                 </View>
                 <View style={ styles.innerRight }>

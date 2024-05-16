@@ -27,6 +27,9 @@ export interface IDiscuss {
     /* 喜欢数 */
     favoriteNumber: number;
 
+    /* 是否点过赞 */
+    isLike: boolean;
+
     /* 评论数 */
     commentNumber: number;
 
@@ -35,6 +38,9 @@ export interface IDiscuss {
 
     /* 用户名字 */
     name: string;
+
+    /* 子评论 */
+    discussCommentVos: IDiscussCommentVos[];
 }
 
-export type IComments = Omit<IDiscuss, 'favoriteNumber' | 'commentNumber'>
+export type IDiscussCommentVos = Omit<IDiscuss, 'favoriteNumber' | 'commentNumber' | 'discussCommentVos'>

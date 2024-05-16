@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import HomeTop from './components/HomeTop';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomePage from '@/views/HomeScreen/components/HomePage';
-import CommunityPage from '@/views/HomeScreen/components/CommunityPage';
+import DiscussPage from '@/views/HomeScreen/components/DiscussPage';
 import { useNavigation } from '@react-navigation/native';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 
@@ -33,16 +33,22 @@ const HomeScreen = (props: any) => {
             <Stack.Navigator
                 screenOptions={ {
                     // @ts-ignore
-                    headerMode: 'none'
+                    headerMode: 'none',
                 } }
             >
                 <Stack.Screen
                     name="主页"
                     component={ HomePage }
+                    options={{
+                        cardStyleInterpolator: undefined,
+                    }}
                 />
                 <Stack.Screen
                     name="社区"
-                    component={ CommunityPage }
+                    component={ DiscussPage }
+                    options={{
+                        cardStyleInterpolator: undefined,
+                    }}
                 />
             </Stack.Navigator>
         </AddBackgroundHOC>

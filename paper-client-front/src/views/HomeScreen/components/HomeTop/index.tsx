@@ -1,4 +1,4 @@
-import { Dimensions, ImageBackground, InputAccessoryView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import MyText from '@/components/MyText';

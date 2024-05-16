@@ -1,16 +1,19 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import TopPage from '@/components/TopPage';
-import { useRoute } from '@react-navigation/native';
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import { RootRouteType, Views } from '@/interface/IReactNavigationProps.ts';
 import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
 import { useEffect, useState } from 'react';
 import { IAddress } from '@/interface/IAddress.ts';
-import { getDeleteAddress, postUpdateAddress } from '@/api/Address';
+import { getDeleteAddress, postCreateAddress, postUpdateAddress } from '@/api/Address';
 
 const AddressDetail = () => {
     const route = useRoute<RootRouteType<Views.AddressDetail>>();
-    const { addressDetailParams } = route.params;
+    const isFocused = useIsFocused();
+    const navigation = useNavigation();
+
+    const { addressDetailParams, isAdd } = route.params;
     const [addressDetailData, setAddressDetailData] = useState<IAddress>({
         receivingAddressId: 0,
         recipientName: 'a',
@@ -20,7 +23,7 @@ const AddressDetail = () => {
     });
     useEffect(() => {
         setAddressDetailData(addressDetailParams);
-    }, []);
+    }, [isFocused]);
     // 报错信息
     const errorMap = new Map([
         ['recipientName', '请填写姓名'],
@@ -78,21 +81,27 @@ const AddressDetail = () => {
         newErrors.recipientRegion = validateInput('recipientRegion', addressDetailData.recipientRegion);
         newErrors.recipientAddress = validateInput('recipientAddress', addressDetailData.recipientAddress);
         setInputErrors(newErrors);
-        // 如果 newErrors 对象中没有错误信息，则可以执行保存操作
-        if (Object.values(newErrors).every(error => !error)) {
+        // TODO 如果 newErrors 对象中没有错误信息，则可以执行保存操作
+        // if (Object.values(newErrors).every(error => !error)) {
+        if (isAdd) {
+            postCreateAddress(addressDetailData).then();
+        } else {
             postUpdateAddress(addressDetailData).then();
         }
+        navigation.goBack();
+        // }
     }
 
     // 删除按钮
-    function deleteAddressBtn () {
-        // TODO 调删除接口
-        getDeleteAddress(addressDetailData.receivingAddressId).then();
+    async function deleteAddressBtn () {
+        // 调删除接口
+        await getDeleteAddress(addressDetailData.receivingAddressId);
+        navigation.goBack();
     }
 
     return (
         <AddBackgroundHOC>
-            <TopPage title="编辑收货地址"/>
+            <TopPage title={ isAdd ? '添加收货地址' : '编辑收货地址' }/>
             <View style={ styles.content }>
                 {
                     fieldArr.map((field, index) => {
@@ -111,11 +120,12 @@ const AddressDetail = () => {
                                         value={ addressDetailData[field] }
                                         onChangeText={ (value) => changeInput(field, value) }
                                     />
-                                    <View style={ styles.inputError }>
-                                        <IsRenderHOC isShow={ inputErrors[field] !== '' }>
-                                            <Text style={ { color: '#ff0000', fontSize: 12 } }>{ errorMap.get(field) }</Text>
-                                        </IsRenderHOC>
-                                    </View>
+                                    {/* 取消验证 */ }
+                                    {/*<View style={ styles.inputError }>*/ }
+                                    {/*    <IsRenderHOC isShow={ inputErrors[field] !== '' }>*/ }
+                                    {/*        <Text style={ { color: '#ff0000', fontSize: 12 } }>{ errorMap.get(field) }</Text>*/ }
+                                    {/*    </IsRenderHOC>*/ }
+                                    {/*</View>*/ }
                                     {/*<Text style={ { color: '#ff0000' } }>{ errorMap.get(field) }</Text>*/ }
                                 </View>
                             </View>
@@ -123,14 +133,16 @@ const AddressDetail = () => {
                     })
                 }
                 <View style={ styles.btn }>
+                    {
+                        !isAdd && <Pressable
+                            style={ styles.deleteBtn }
+                            onPress={ deleteAddressBtn }
+                        >
+                            <Text style={ { color: '#fff' } }>删除</Text>
+                        </Pressable>
+                    }
                     <Pressable
-                        style={ styles.deleteBtn }
-                        onPress={ deleteAddressBtn }
-                    >
-                        <Text style={ { color: '#fff' } }>删除</Text>
-                    </Pressable>
-                    <Pressable
-                        style={ styles.saveBtn }
+                        style={ isAdd ? [styles.saveBtn, { width: '100%' }] : styles.saveBtn }
                         onPress={ saveAddressBtn }
                     >
                         <Text style={ { color: '#fff' } }>保存</Text>
@@ -178,7 +190,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 40,
         position: 'absolute',
-        bottom: 0,
+        bottom: 5,
         display: 'flex',
         flexDirection: 'row',
     },

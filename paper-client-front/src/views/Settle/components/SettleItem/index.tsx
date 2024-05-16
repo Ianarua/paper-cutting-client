@@ -1,26 +1,14 @@
-import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { FC, useEffect, useState } from 'react';
-import { ICarItem } from '@/interface/ICarPage.ts';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import MyText from '@/components/MyText';
-import InputNumber from '@/components/InputNumber';
-import { postDeleteCar } from '@/api/Car';
-import useDebounce from '@/utils/useDebounce.ts';
-import ImgBase64 from '@/components/ImgBase64';
-import IProjectBlock from '@/interface/IProjectBlock.ts';
-import { IOrderBlock } from '@/interface/IOrderBlock.ts';
+import { ISettleItem } from '@/interface/ISettleList.ts';
+import React from 'react';
 
 interface IProps {
-    orderItemData: IOrderBlock;
+    settleData: ISettleItem;
 }
 
-const OrderItem: FC<IProps> = (props) => {
-    const { orderItemData } = props;
-
-    // 删除购物车该商品
-    // async function deleteCar () {
-    //     await postDeleteCar(projectInfo.goodsId);
-    // }
+const SettleItem = (props: IProps) => {
+    const { settleData } = props;
 
     return (
         <View style={ styles.content }>
@@ -28,26 +16,24 @@ const OrderItem: FC<IProps> = (props) => {
                 {/*<Image source={ { uri: shopInfo.picUrl } } style={ { width: 17, objectFit: 'contain' } }/>*/ }
                 <View style={ styles.headerLeft }>
                     <Image source={ require('@/assets/img/carPage/store.png') } style={ { width: 17, objectFit: 'contain', marginRight: 5 } }/>
-                    <Text style={ { marginRight: 15 } }>{ shopInfo?.shopName }</Text>
-                    <Image source={ require('@/assets/img/carPage/greater.png') } style={ { width: 10, objectFit: 'contain' } }/>
-                </View>
-                <View
-                    style={ styles.headerRight }
-                >
-                    <Text style={ { color: '#fff' } }>{ orderItemData.orderStatus }</Text>
+                    <Text style={ { marginRight: 15 } }>{ settleData.shopInfo.shopName }</Text>
+                    {/*<Image source={ require('@/assets/img/carPage/greater.png') } style={ { width: 10, objectFit: 'contain' } }/>*/ }
                 </View>
             </View>
             <View style={ styles.inner }>
                 <View style={ styles.innerLeft }>
                     <View style={ styles.innerLeftImgView }>
                         <Image
-                            source={ { uri: `data:image/png;base64,${ projectInfo.picUrl }` } }
+                            source={ { uri: `data:image/png;base64,${ settleData.projectInfo.picUrl }` } }
                             style={ { width: '70%', height: '100%', objectFit: 'contain' } }
                         />
                     </View>
                     <View style={ styles.innerLeftInfo }>
-                        <MyText text={ projectInfo.goodsName } styles={ { fontSize: 15, fontWeight: 'bold' } }/>
-                        <MyText text={ `￥ ${ projectInfo.promotionPrice } / 件` } styles={ { color: '#f44545', fontSize: 14, fontWeight: 'bold' } }/>
+                        <MyText text={ settleData.projectInfo.goodsName } styles={ { fontSize: 15, fontWeight: 'bold' } }/>
+                        <MyText
+                            text={ `￥ ${ settleData.projectInfo.promotionPrice } / 件` }
+                            styles={ { color: '#f44545', fontSize: 14, fontWeight: 'bold' } }
+                        />
                     </View>
                 </View>
                 <View style={ styles.innerRight }>
@@ -57,7 +43,7 @@ const OrderItem: FC<IProps> = (props) => {
         </View>
     );
 };
-export default OrderItem;
+export default SettleItem;
 
 const styles = StyleSheet.create({
     content: {
@@ -87,13 +73,13 @@ const styles = StyleSheet.create({
         marginLeft: 8,
         marginRight: 10
     },
-    headerRight: {
-        padding: 5,
-        paddingLeft: 10,
-        paddingRight: 10,
-        backgroundColor: '#e7775b',
-        borderRadius: 15
-    },
+    // headerRight: {
+    //     padding: 5,
+    //     paddingLeft: 10,
+    //     paddingRight: 10,
+    //     backgroundColor: '#e7775b',
+    //     borderRadius: 15
+    // },
     inner: {
         display: 'flex',
         flexDirection: 'row',
@@ -132,4 +118,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    // iconImageStyle: {
+    //     width: 20,
+    //     height: 20,
+    // },
+    // deleteBtn: {},
 });

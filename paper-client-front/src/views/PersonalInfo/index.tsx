@@ -5,6 +5,7 @@ import TopPage from '@/components/TopPage';
 import { IPersonalInfoIn } from '@/interface/IPersonalInfo.ts';
 import { getShowInfo, postChangeInfo } from '@/api/buyerInfo';
 import { AxiosResponse } from 'axios';
+import { useIsFocused } from '@react-navigation/native';
 
 const PersonalInfo = () => {
     const [personalInfoDataIn, setPersonalInfoDataIn] = useState<IPersonalInfoIn>({
@@ -14,12 +15,15 @@ const PersonalInfo = () => {
         buyerHobby: '',
         buyerAutograph: ''
     });
+
+    const isFocused = useIsFocused();
+
     useEffect(() => {
         !(async function () {
             const res: any = await getShowInfo();
             setPersonalInfoDataIn(res);
         })();
-    }, []);
+    }, [isFocused]);
     // 切换修改/保存状态
     const [isEdit, setIsEdit] = useState(false);
 

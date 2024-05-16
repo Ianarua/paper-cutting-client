@@ -23,7 +23,8 @@ const MyText = (props: IProps) => {
                 style={ styles.textStyle }
                 onPress={ () => {
                     onNavigator?.();
-                } }>
+                } }
+            >
                 { props.text }
             </Text>
         </View>

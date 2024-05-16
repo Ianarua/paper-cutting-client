@@ -2,13 +2,14 @@ import { Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, View } from
 import React, { useEffect, useState } from 'react';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import TopPage from '@/components/TopPage';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { RootRouteType, Views } from '@/interface/IReactNavigationProps.ts';
 import { postCreateCar } from '@/api/Car';
 import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
 
 const ProjectDetail = () => {
     const route = useRoute<RootRouteType<Views.ProjectDetail>>();
+    const navigation = useNavigation();
     const { projectBlockData } = route.params;
     let [isJoinCart, setIsJoinCart] = useState(false);
     useEffect(() => {
@@ -34,6 +35,7 @@ const ProjectDetail = () => {
                         source={ { uri: `data:image/png;base64,${ projectBlockData.picUrl }` } }
                         // source={ require('@/assets/img/logo.png') }
                         style={ styles.image }
+                        resizeMode={ 'cover' }
                     />
                     <View style={ styles.price }>
                         <Text style={ { color: '#cd2929', fontSize: 20 } }>￥ { projectBlockData.promotionPrice }</Text>
@@ -65,35 +67,48 @@ const ProjectDetail = () => {
                             </Pressable>
                         </IsRenderHOC>
                     </View>
+                    <View style={ styles.partition }/>
+                    <View style={ styles.businessInfo }>
+                        <Image
+                            style={ { width: 40, height: 40, backgroundColor: '#000', marginRight: 10 } }
+                            // source={ { uri: `data:image/png;base64,${ }` } }
+                        />
+                        <Pressable
+                            // @ts-ignore
+                            onPress={ () => navigation.navigate('BusinessDetail', { shopId: 1 }) }
+                        >
+                            <Text style={ { fontSize: 16, color: '#000', fontWeight: 'bold' } }>啊啊啊啊啊</Text>
+                        </Pressable>
+                    </View>
                 </View>
             </ScrollView>
         </AddBackgroundHOC>
     );
 };
 export default ProjectDetail;
-const window = Dimensions.get('window');
-const width = window.width / 2.1;
-const height = width * 1.2;
 const styles = StyleSheet.create({
     content: {
         flex: 1
     },
     inner: {
         display: 'flex',
-        padding: 5,
+        padding: 10,
         backgroundColor: '#fff'
     },
     image: {
-        width: width,
-        height: height,
-        objectFit: 'contain'
+        width: Dimensions.get('window').width,
+        height: 200,
+        // height: 100,
+        // height: height,
+        objectFit: 'contain',
+        marginBottom: 10
     },
     price: {
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     goodsName: {
         marginTop: 10
@@ -113,12 +128,26 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: '#ff8f12',
         borderRadius: 20,
+        marginBottom: 10,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
     },
     hasAddToCar: {
-        backgroundColor: '#ff5200'
+        backgroundColor: '#ff5200',
+        marginBottom: 10
+    },
+    partition: {
+        width: '100%',
+        height: 10,
+        backgroundColor: '#f2f2f2'
+    },
+    businessInfo: {
+        marginTop: 20,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 10,
     }
 });

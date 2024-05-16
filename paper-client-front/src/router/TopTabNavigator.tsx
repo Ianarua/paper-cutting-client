@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import CommunityPage from '../views/HomeScreen/components/CommunityPage';
+import CommunityPage from '../views/HomeScreen/components/DiscussPage';
 import HomePage from '../views/HomeScreen/components/HomePage';
 import router from '@/router/index.tsx';
 

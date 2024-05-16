@@ -10,19 +10,12 @@ import ProjectBlock from '@/components/ProjectBlock';
 import MyText from '@/components/MyText';
 import { getRecommendGoods } from '@/api/ProjectInfo';
 
-const ShoppingList: FC = () => {
+const ShoppingList = () => {
     const route = useRoute<RootRouteType<Views.ShoppingList>>();
+    // TODO
     const { goodsCategoryId } = route.params;
     const [listData, setListData] = useState<IProjectBlock[]>([]);
     const [pageNum, setPageNum] = useState(1);
-    // useEffect(() => {
-    //     !(async function () {
-    //         console.log(goodsCategoryId);
-    //         const res: any = await getGoodsByCategory(goodsCategoryId);
-    //         // console.log('-------res', res.list);
-    //         setListData(res.list);
-    //     })();
-    // }, []);
 
     // 监听哪个分页数据
     useEffect(() => {
@@ -38,8 +31,8 @@ const ShoppingList: FC = () => {
     function _contentViewScroll (e: any) {
         const offsetY = e.nativeEvent.contentOffset.y; //滑动距离
         const contentSizeHeight = e.nativeEvent.contentSize.height; //scrollView contentSize高度
-        const oriageScrollHeight = e.nativeEvent.layoutMeasurement.height; //scrollView高度
-        if (offsetY + oriageScrollHeight >= contentSizeHeight) {
+        const forgeScrollHeight = e.nativeEvent.layoutMeasurement.height; //scrollView高度
+        if (offsetY + forgeScrollHeight >= contentSizeHeight) {
             setPageNum(prevState => prevState + 1);
             console.log('上传滑动到底部事件', pageNum);
         }

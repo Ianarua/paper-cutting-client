@@ -12,7 +12,7 @@ export function getRecommendGoods (pageNum: number = 1, pageSize: number = 6) {
 
 /**
  * @description 展示结算商品
- * @param ids
+ * @param ids 商品ids
  */
 export function getSettleGoods (ids: number[]) {
     return settleGoods(ids);

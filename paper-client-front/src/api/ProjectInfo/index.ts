@@ -1,5 +1,6 @@
 import recommendGoods from './modules/recommendGoods.ts';
 import settleGoods from '@/api/ProjectInfo/modules/settleGoods.ts';
+import idByGoods from '@/api/ProjectInfo/modules/idByGoods.ts';
 
 /**
  @description 展示推荐物品
@@ -16,4 +17,12 @@ export function getRecommendGoods (pageNum: number = 1, pageSize: number = 6) {
  */
 export function getSettleGoods (ids: number[]) {
     return settleGoods(ids);
+}
+
+/**
+ * @description 通过id获取商品
+ * @param goodsId 商品id
+ */
+export function getIdGoods (goodsId: number) {
+    return idByGoods(goodsId);
 }

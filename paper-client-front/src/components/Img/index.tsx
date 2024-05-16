@@ -29,7 +29,7 @@ const ProjectBlockImg: FC<IProps> = (props) => {
 };
 export default ProjectBlockImg;
 const window = Dimensions.get('window');
-const width = window.width / 2.1;
+const width = window.width / 3;
 const height = width * 1.2;
 const styles = StyleSheet.create({
     imgView: {
@@ -42,11 +42,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
-        backgroundColor: '#f1ece6'
+        backgroundColor: '#fff'
+        // backgroundColor: '#f1ece6'
     },
     img: {
         width: width,
         height: height,
-        objectFit: 'contain'
+        objectFit: 'cover'
     },
 });

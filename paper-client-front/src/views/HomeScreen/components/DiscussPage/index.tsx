@@ -34,11 +34,11 @@ const CommunityPage = () => {
         }
     }
 
-    const handlePress = async () => {
-        const response = await Alert.prompt('Email', 'Please enter your email');
-
-        console.log(response); // string | undefined
-    };
+    // const handlePress = async () => {
+    //     const response = await Alert.prompt('Email', 'Please enter your email');
+    //
+    //     console.log(response); // string | undefined
+    // };
     return (
         <AddBackgroundHOC>
             <ScrollView
@@ -63,23 +63,23 @@ const CommunityPage = () => {
                     <MyText text="-----  已经到底啦  -----"/>
                 </View>
             </ScrollView>
-            <Pressable
-                style={ styles.btn }
-                // @ts-ignore
-                onPress={ () => navigation.navigate('AddressDetail', {
-                    addressDetailParams: {
-                        receivingAddressId: 0,
-                        buyerId: 0,
-                        recipientName: '',
-                        recipientPhone: '',
-                        recipientAddress: '',
-                        recipientRegion: ''
-                    },
-                    isAdd: true
-                }) }
-            >
-                <AntDesignIcon name="pluscircle" color="#84321c" size={ 50 }/>
-            </Pressable>
+            {/*<Pressable*/}
+            {/*    style={ styles.btn }*/}
+            {/*    // @ts-ignore*/}
+            {/*    onPress={ () => navigation.navigate('AddressDetail', {*/}
+            {/*        addressDetailParams: {*/}
+            {/*            receivingAddressId: 0,*/}
+            {/*            buyerId: 0,*/}
+            {/*            recipientName: '',*/}
+            {/*            recipientPhone: '',*/}
+            {/*            recipientAddress: '',*/}
+            {/*            recipientRegion: ''*/}
+            {/*        },*/}
+            {/*        isAdd: true*/}
+            {/*    }) }*/}
+            {/*>*/}
+            {/*    <AntDesignIcon name="pluscircle" color="#84321c" size={ 50 }/>*/}
+            {/*</Pressable>*/}
         </AddBackgroundHOC>
     );
 };

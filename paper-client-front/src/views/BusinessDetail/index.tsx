@@ -23,7 +23,9 @@ const BusinessDetail = () => {
     });
     useEffect(() => {
         !(async function () {
+            console.log('-----shopId', shopId);
             const res: any = await getShopInfo(shopId);
+            console.log('ressss', res);
             setBusinessData(res);
         })();
     }, [isFocused]);

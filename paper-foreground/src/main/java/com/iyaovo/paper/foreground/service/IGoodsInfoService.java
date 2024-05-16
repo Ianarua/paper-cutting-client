@@ -48,6 +48,6 @@ public interface IGoodsInfoService extends IService<GoodsInfo> {
 
    List<GoodsInfoVo> showSettleGoods(IdsParam idsParam);
 
-   void getGoodsById(Integer goodsId);
+   GoodsInfoVo getGoodsById(Integer goodsId);
 }
 

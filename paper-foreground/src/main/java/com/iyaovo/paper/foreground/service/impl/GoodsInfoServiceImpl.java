@@ -153,7 +153,7 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoMapper, GoodsInfo
    }
 
    @Override
-   public void getGoodsById(Integer goodsId) {
+   public GoodsInfoVo getGoodsById(Integer goodsId) {
       QueryWrapper<GoodsViews> goodsViewsQueryWrapper = new QueryWrapper<>();
       goodsViewsQueryWrapper.eq("goods_id",goodsId);
       GoodsViews goodsViews = goodsViewsMapper.selectOne(goodsViewsQueryWrapper);
@@ -163,6 +163,10 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoMapper, GoodsInfo
          goodsViews.setCreateTime(LocalDateTime.now());
          goodsViewsMapper.updateById(goodsViews);
       }
+      GoodsInfo goodsInfo = goodsInfoMapper.selectById(goodsId);
+      List<GoodsInfo> goodsInfoList = new ArrayList<>();
+      goodsInfoList.add(goodsInfo);
+      return goodsInfoToGoodsInfoVo(goodsInfoList).get(0);
    }
 
    private CartGoodsVo goodsInfoVoToCartGoodsVo(GoodsInfoVo goodsInfoVo, Integer cartId, Integer goodsNumber){

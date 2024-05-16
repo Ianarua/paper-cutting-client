@@ -46,9 +46,8 @@ public class GoodsInfoController {
 
    @GetMapping("/getOne/{goodsId}")
    @Operation(summary = "通过id获取商品")
-   public CommonResult getGoodsById(@PathVariable("goodsId") Integer goodsId) {
-      iGoodsInfoService.getGoodsById(goodsId);
-      return CommonResult.success();
+   public CommonResult<GoodsInfoVo> getGoodsById(@PathVariable("goodsId") Integer goodsId) {
+      return CommonResult.success(iGoodsInfoService.getGoodsById(goodsId));
    }
 
    /**

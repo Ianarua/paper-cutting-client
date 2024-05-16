@@ -22,12 +22,10 @@ import com.iyaovo.paper.common.api.CommonPage;
 import com.iyaovo.paper.common.constant.Constants;
 import com.iyaovo.paper.common.util.ImageToBase64Util;
 import com.iyaovo.paper.foreground.domain.dto.IdsParam;
-import com.iyaovo.paper.foreground.domain.entity.CartInfo;
-import com.iyaovo.paper.foreground.domain.entity.GoodsCollection;
-import com.iyaovo.paper.foreground.domain.entity.GoodsInfo;
-import com.iyaovo.paper.foreground.domain.entity.GoodsViews;
+import com.iyaovo.paper.foreground.domain.entity.*;
 import com.iyaovo.paper.foreground.domain.vo.CartGoodsVo;
 import com.iyaovo.paper.foreground.domain.vo.GoodsInfoVo;
+import com.iyaovo.paper.foreground.domain.vo.ShopInfoVo;
 import com.iyaovo.paper.foreground.mapper.*;
 import com.iyaovo.paper.foreground.service.IBuyerInfoService;
 import com.iyaovo.paper.foreground.service.IGoodsInfoService;
@@ -61,6 +59,8 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoMapper, GoodsInfo
    private final GoodsViewsMapper goodsViewsMapper;
 
    private final GoodsCollectionMapper goodsCollectionMapper;
+
+   private final ShopFollowMapper shopFollowMapper;
 
 
 
@@ -116,7 +116,19 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoMapper, GoodsInfo
                goodsInfoVo.setIsJoinCart(true);
             }
             //把店铺信息封装到vo
-            goodsInfoVo.setShopInfo(shopInfoMapper.selectById(goodsInfo.getShopId()));
+            ShopInfo shopInfo = shopInfoMapper.selectById(goodsInfo.getShopId());
+            ShopInfoVo shopInfoVo = new ShopInfoVo(shopInfo.getShopId(), shopInfo.getShopName(), ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH + shopInfo.getPicUrl()));
+
+            QueryWrapper<ShopFollow> shopFollowQueryWrapper = new QueryWrapper<ShopFollow>();
+            shopFollowQueryWrapper.eq("shop_id",shopInfo.getShopId())
+                            .eq("buyer_id",iBuyerInfoService.getBuyerInfo().getBuyerId());
+            ShopFollow shopFollow = shopFollowMapper.selectOne(shopFollowQueryWrapper);
+            if(ObjectUtil.isEmpty(shopFollow)){
+               shopInfoVo.setIsFavorite(false);
+            }else{
+               shopInfoVo.setIsFavorite(true);
+            }
+            goodsInfoVo.setShopInfoVo(shopInfoVo);
             goodsInfoVoList.add(goodsInfoVo);
          }
       });
@@ -172,7 +184,7 @@ public class GoodsInfoServiceImpl extends ServiceImpl<GoodsInfoMapper, GoodsInfo
    private CartGoodsVo goodsInfoVoToCartGoodsVo(GoodsInfoVo goodsInfoVo, Integer cartId, Integer goodsNumber){
       CartGoodsVo cartGoodsVo = new CartGoodsVo(goodsInfoVo.getGoodsId(), goodsInfoVo.getGoodsName(), goodsInfoVo.getGoodsIntroduction(),
               goodsInfoVo.getPicUrl(),goodsInfoVo.getPrice(),goodsInfoVo.getPromotionPrice(),
-              goodsInfoVo.getSoldNumber(),goodsInfoVo.getTotalNumber(),goodsInfoVo.getShopInfo(),goodsInfoVo.getIsCollection(),goodsInfoVo.getIsJoinCart(),cartId,goodsNumber);
+              goodsInfoVo.getSoldNumber(),goodsInfoVo.getTotalNumber(),goodsInfoVo.getShopInfoVo(),goodsInfoVo.getIsCollection(),goodsInfoVo.getIsJoinCart(),cartId,goodsNumber);
       return cartGoodsVo;
    }
 }

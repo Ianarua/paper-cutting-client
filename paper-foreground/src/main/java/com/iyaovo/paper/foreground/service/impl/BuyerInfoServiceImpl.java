@@ -310,7 +310,20 @@ public class BuyerInfoServiceImpl extends ServiceImpl<BuyerInfoMapper,BuyerInfo>
                     goodsInfoVo.setIsJoinCart(true);
                 }
                 //把店铺信息封装到vo
-                goodsInfoVo.setShopInfo(shopInfoMapper.selectById(goodsInfo.getShopId()));
+                ShopInfo shopInfo = shopInfoMapper.selectById(goodsInfo.getShopId());
+                ShopInfoVo shopInfoVo = new ShopInfoVo(shopInfo.getShopId(), shopInfo.getShopName(), ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH + shopInfo.getPicUrl()));
+
+                QueryWrapper<ShopFollow> shopFollowQueryWrapper = new QueryWrapper<ShopFollow>();
+                shopFollowQueryWrapper.eq("shop_id",shopInfo.getShopId())
+                        .eq("buyer_id",getBuyerInfo().getBuyerId());
+                ShopFollow shopFollow = shopFollowMapper.selectOne(shopFollowQueryWrapper);
+                if(ObjectUtil.isEmpty(shopFollow)){
+                    shopInfoVo.setIsFavorite(false);
+                }else{
+                    shopInfoVo.setIsFavorite(true);
+                }
+                goodsInfoVo.setShopInfoVo(shopInfoVo);
+                goodsInfoVoList.add(goodsInfoVo);
                 goodsInfoVoList.add(goodsInfoVo);
             }
         });

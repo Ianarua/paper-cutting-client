@@ -59,7 +59,7 @@ public class CartGoodsVo {
    private Integer totalNumber;
 
    @Schema(defaultValue = "店铺")
-   private ShopInfo shopInfo;
+   private ShopInfoVo shopInfoVo;
 
    @Schema(defaultValue = "是否被收藏")
    private Boolean isCollection;

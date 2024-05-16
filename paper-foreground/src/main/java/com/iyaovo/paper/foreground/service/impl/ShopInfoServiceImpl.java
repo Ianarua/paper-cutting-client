@@ -90,7 +90,20 @@ public class ShopInfoServiceImpl extends ServiceImpl<ShopInfoMapper, ShopInfo> i
                goodsInfoVo.setIsJoinCart(true);
             }
             //把店铺信息封装到vo
-            goodsInfoVo.setShopInfo(shopInfoMapper.selectById(goodsInfo.getShopId()));
+//把店铺信息封装到vo
+            ShopInfo shopInfo = shopInfoMapper.selectById(goodsInfo.getShopId());
+            ShopInfoVo shopInfoVo = new ShopInfoVo(shopInfo.getShopId(), shopInfo.getShopName(), ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH + shopInfo.getPicUrl()));
+
+            QueryWrapper<ShopFollow> shopFollowQueryWrapper = new QueryWrapper<ShopFollow>();
+            shopFollowQueryWrapper.eq("shop_id",shopInfo.getShopId())
+                    .eq("buyer_id",iBuyerInfoService.getBuyerInfo().getBuyerId());
+            ShopFollow shopFollow = shopFollowMapper.selectOne(shopFollowQueryWrapper);
+            if(ObjectUtil.isEmpty(shopFollow)){
+               shopInfoVo.setIsFavorite(false);
+            }else{
+               shopInfoVo.setIsFavorite(true);
+            }
+            goodsInfoVo.setShopInfoVo(shopInfoVo);
 
             goodsInfoVoList.add(goodsInfoVo);
          }

@@ -37,11 +37,6 @@ public class GoodsCategoryVo {
     */
    private String goodCategoryName;
 
-   /**
-    * 商品类别名称
-    */
-   @Schema(defaultValue = "urlBase64")
-   private String picUrl;
 
    /**
     * 商品上级类别id

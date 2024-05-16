@@ -50,11 +50,7 @@ public class GoodsCategoryVo {
    @Schema(defaultValue = "商品上级类别id")
    private Integer categorySuperiorId;
 
-   /**
-    * 商品类别url
-    */
-   @Schema(defaultValue = "商品类别url")
-   private String picUrl;
+
 
 }
 

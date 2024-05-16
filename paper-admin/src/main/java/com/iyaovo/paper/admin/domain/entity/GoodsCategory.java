@@ -46,11 +46,7 @@ public class GoodsCategory {
    @TableField("goods_category_name")
    private String goodCategoryName;
 
-   /**
-    * 商品类别名称
-    */
-   @TableField("pic_url")
-   private String picUrl;
+
 
    /**
     * 商品上级类别id
@@ -64,10 +60,9 @@ public class GoodsCategory {
    @TableField(exist = false)
    private Long goodsNumber;
 
-   public GoodsCategory(Integer goodsCategoryId, String goodCategoryName, String picUrl, Integer categorySuperiorId) {
+   public GoodsCategory(Integer goodsCategoryId, String goodCategoryName, Integer categorySuperiorId) {
       this.goodsCategoryId = goodsCategoryId;
       this.goodCategoryName = goodCategoryName;
-      this.picUrl = picUrl;
       this.categorySuperiorId = categorySuperiorId;
    }
 }

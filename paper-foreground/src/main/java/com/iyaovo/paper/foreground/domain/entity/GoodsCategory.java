@@ -52,10 +52,5 @@ public class GoodsCategory {
    @TableField("category_superior_id")
    private Integer categorySuperiorId;
 
-   /**
-    * 商品url
-    */
-   @TableField("pic_url")
-   private String picUrl;
 }
 

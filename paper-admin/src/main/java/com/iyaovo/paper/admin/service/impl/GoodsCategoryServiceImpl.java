@@ -46,7 +46,7 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
 
    @Override
    public int create(GoodsCategoryParam goodsCategoryParam) {
-      return goodsCategoryMapper.insert(new GoodsCategory(null,goodsCategoryParam.getName(),goodsCategoryParam.getPicUrl(),goodsCategoryParam.getParentId()));
+      return goodsCategoryMapper.insert(new GoodsCategory(null,goodsCategoryParam.getName(),goodsCategoryParam.getParentId()));
    }
 
    @Override
@@ -56,7 +56,7 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
 
    @Override
    public int update(Integer id, GoodsCategoryParam goodsCategoryParam) {
-      return goodsCategoryMapper.updateById(new GoodsCategory(id, goodsCategoryParam.getName(),goodsCategoryParam.getPicUrl(),goodsCategoryParam.getParentId()));
+      return goodsCategoryMapper.updateById(new GoodsCategory(id, goodsCategoryParam.getName(),goodsCategoryParam.getParentId()));
    }
 
    @Override
@@ -70,7 +70,7 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
       records.forEach(goodsCategory -> {
          goodsCategory.setGoodsNumber(getGoodsNumber(goodsCategory.getGoodsCategoryId(),goodsCategory.getCategorySuperiorId()));
          goodsCategoryVos.add(new GoodsCategoryVo(goodsCategory.getGoodsCategoryId(),goodsCategory.getGoodCategoryName(),
-                 ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH+goodsCategory.getPicUrl()),goodsCategory.getCategorySuperiorId(),goodsCategory.getGoodsNumber()));
+               goodsCategory.getCategorySuperiorId(),goodsCategory.getGoodsNumber()));
       });
       Page<GoodsCategoryVo> goodsCategoryVoPage = new Page<>(pageNum,pageSize,goodsCategories.getTotal());
       goodsCategoryVoPage.setPages(goodsCategories.getPages());
@@ -116,7 +116,7 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
    @Override
    public GoodsCategoryVo getOneGoodsCategory(Integer goodsCategoryId) {
       GoodsCategory goodsCategory = goodsCategoryMapper.selectById(goodsCategoryId);
-      return new GoodsCategoryVo(goodsCategory.getGoodsCategoryId(),goodsCategory.getGoodCategoryName(),ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH+goodsCategory.getPicUrl()),goodsCategory.getCategorySuperiorId(),goodsCategory.getGoodsNumber());
+      return new GoodsCategoryVo(goodsCategory.getGoodsCategoryId(),goodsCategory.getGoodCategoryName(),goodsCategory.getCategorySuperiorId(),goodsCategory.getGoodsNumber());
    }
 }
 

@@ -18,6 +18,5 @@ public class GoodsCategoryParam {
     @Schema(defaultValue = "商品分类名称")
     private String name;
 
-    @Schema(defaultValue = "类别url")
-    private String picUrl;
+
 }

@@ -63,14 +63,8 @@ public class GoodsCategoryServiceImpl extends ServiceImpl<GoodsCategoryMapper, G
     private List<GoodsCategoryVo> goodsCategoryToGoodsCategoryVo(List<GoodsCategory> goodsCategoryList){
         List<GoodsCategoryVo> goodsCategoryVos = new ArrayList<>();
         goodsCategoryList.forEach(goodsCategory -> {
-            String picUrl = null;
-            if(goodsCategory.getCategorySuperiorId() == 0){
-                picUrl = null;
-            }else{
-                picUrl = ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH+goodsCategory.getPicUrl());
-            }
             goodsCategoryVos.add(new GoodsCategoryVo(goodsCategory.getGoodsCategoryId(),goodsCategory.getGoodCategoryName(),
-                    goodsCategory.getCategorySuperiorId(),picUrl));
+                    goodsCategory.getCategorySuperiorId()));
         });
         return goodsCategoryVos;
     }

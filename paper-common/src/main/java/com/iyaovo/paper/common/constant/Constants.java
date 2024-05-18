@@ -45,5 +45,10 @@ public class Constants {
     * 存储图片路径
     */
    public static final String RESOURCE_PATH = "paper-cutting-resources\\";
+
+   /**
+    * 提问fuyu8b的问题
+    */
+   public static final String PROMPT = "图中的剪纸是什么，有什么特色，有什么寓意?";
 }
 

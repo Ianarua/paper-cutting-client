@@ -78,6 +78,12 @@
                 <version>0.0.20131108.vaadin1</version>
                 <scope>compile</scope>
             </dependency>
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot</artifactId>
+                <version>3.0.5</version>
+            </dependency>
+
         </dependencies>
 
 

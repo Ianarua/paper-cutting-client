@@ -103,12 +103,25 @@ secure:
       - /buyer/logout
 
 
+jasypt:
+  encryptor:
+    # 指定解密算法，需要和加密时使用的算法一致
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
+
 #----文心一言图像理解模型
 fuyu8b:
-  client_id: id
-  client_secret: secret
+  client_id: ENC(i9NWZ+Ek1i8shXXgvf0fTmPbmficKDjlvOcMiXuio44fjBqzch6d/A==)
+  client_secret: ENC(3OcPMgrwl8tbwF1xZZ2BuSuBQuKko8HG9BCtkAZldwg8YR9rUGkP4hDQqRK1ZNx7)
 
 #---- 百度翻译
 baiduTranslate:
-  apiKey: key
-  appId: id
+  apiKey: ENC(8IIKP983dfuQ0nIOWo59HCoFlESJufWW1fyyJfAImAQ=)
+  appId: ENC(mlTv4s/kfBrpYuM0GikbcjGLLWUZZIdnJB4kZGKLN20=)
+
+
+
+
+
+

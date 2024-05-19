@@ -13,6 +13,9 @@
  */
 package com.iyaovo.paper.foreground;
 
+
+
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,6 +27,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @Date: 2024/4/11 08:15:22
  */
 @SpringBootApplication
+@EnableEncryptableProperties
 @ComponentScan(basePackages = {"com.iyaovo.paper.common","com.iyaovo.paper.foreground","com.iyaovo.paper.security"})
 public class PaperForegroundApplication {
     public static void main(String[] args) {

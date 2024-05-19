@@ -25,10 +25,7 @@ import com.iyaovo.paper.foreground.bo.BuyerUserDetails;
 import com.iyaovo.paper.foreground.domain.dto.BuyerChangeInformationDto;
 import com.iyaovo.paper.foreground.domain.dto.BuyerParam;
 import com.iyaovo.paper.foreground.domain.entity.*;
-import com.iyaovo.paper.foreground.domain.vo.BuyerInfoSimpleVo;
-import com.iyaovo.paper.foreground.domain.vo.BuyerInfoVo;
-import com.iyaovo.paper.foreground.domain.vo.GoodsInfoVo;
-import com.iyaovo.paper.foreground.domain.vo.ShopInfoVo;
+import com.iyaovo.paper.foreground.domain.vo.*;
 import com.iyaovo.paper.foreground.mapper.*;
 import com.iyaovo.paper.foreground.service.IBuyerInfoService;
 import com.iyaovo.paper.security.util.JwtTokenUtil;
@@ -45,9 +42,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -103,9 +98,8 @@ public class BuyerInfoServiceImpl extends ServiceImpl<BuyerInfoMapper,BuyerInfo>
     }
 
     @Override
-    public String loginBuyer(BuyerParam buyerParam) {
-        String token = null;
-
+    public LoginTokenVo loginBuyer(BuyerParam buyerParam) {
+        LoginTokenVo loginTokenVo = new LoginTokenVo();
         //密码需要客户端加密后传递
         try {
             UserDetails userDetails = loadUserByUsername(buyerParam.getBuyerAccount());
@@ -115,11 +109,12 @@ public class BuyerInfoServiceImpl extends ServiceImpl<BuyerInfoMapper,BuyerInfo>
             }
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            token = jwtTokenUtil.generateToken(userDetails);
+            loginTokenVo.setToken(jwtTokenUtil.generateToken(userDetails));
+            loginTokenVo.setRefreshToken(jwtTokenUtil.generateRefreshToken(userDetails));
         } catch (AuthenticationException e) {
             Asserts.fail("该账号不存在");
         }
-        return token;
+        return loginTokenVo;
     }
 
     @Override
@@ -330,5 +325,9 @@ public class BuyerInfoServiceImpl extends ServiceImpl<BuyerInfoMapper,BuyerInfo>
         return goodsInfoVoList;
     }
 
+    @Override
+    public String refreshToken(String oldToken) {
+        return jwtTokenUtil.refreshHeadToken(oldToken);
+    }
 }
 

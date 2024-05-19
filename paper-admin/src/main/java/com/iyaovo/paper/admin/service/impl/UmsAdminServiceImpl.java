@@ -10,6 +10,7 @@ import com.iyaovo.paper.admin.domain.entity.*;
 import com.iyaovo.paper.admin.domain.entity.UmsAdmin;
 import com.iyaovo.paper.admin.domain.entity.UmsAdminExample;
 import com.iyaovo.paper.admin.domain.entity.UmsAdminLoginLog;
+import com.iyaovo.paper.admin.domain.vo.LoginTokenVo;
 import com.iyaovo.paper.admin.mapper.UmsAdminLoginLogMapper;
 import com.iyaovo.paper.admin.mapper.UmsAdminMapper;
 import com.iyaovo.paper.admin.mapper.UmsAdminRoleRelationDao;
@@ -136,8 +137,8 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
 
     @Override
-    public String login(String username, String password) {
-        String token = null;
+    public LoginTokenVo login(String username, String password) {
+        LoginTokenVo loginTokenVo = new LoginTokenVo();
 
         //密码需要客户端加密后传递
         try {
@@ -150,13 +151,13 @@ public class UmsAdminServiceImpl implements UmsAdminService {
             }
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            token = jwtTokenUtil.generateToken(userDetails);
-//            updateLoginTimeByUsername(username);
+            loginTokenVo.setToken(jwtTokenUtil.generateToken(userDetails));
+            loginTokenVo.setRefreshToken(jwtTokenUtil.generateRefreshToken(userDetails));
             insertLoginLog(username);
         } catch (AuthenticationException e) {
             LOGGER.warn("登录异常:{}", e.getMessage());
         }
-        return token;
+        return loginTokenVo;
     }
 
     /**

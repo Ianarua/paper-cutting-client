@@ -5,6 +5,7 @@ import com.iyaovo.paper.admin.domain.dto.UpdateAdminPasswordParam;
 import com.iyaovo.paper.admin.domain.entity.UmsAdmin;
 import com.iyaovo.paper.admin.domain.entity.UmsResource;
 import com.iyaovo.paper.admin.domain.entity.UmsRole;
+import com.iyaovo.paper.admin.domain.vo.LoginTokenVo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +38,7 @@ public interface UmsAdminService {
      * @param password 密码
      * @return 生成的JWT的token
      */
-    String login(String username,String password);
+    LoginTokenVo login(String username, String password);
 
     /**
      * 刷新token的功能

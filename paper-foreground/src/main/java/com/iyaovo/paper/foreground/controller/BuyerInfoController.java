@@ -25,6 +25,7 @@ import com.iyaovo.paper.foreground.domain.vo.BuyerInfoVo;
 import com.iyaovo.paper.foreground.service.IBuyerInfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -84,6 +85,21 @@ public class BuyerInfoController {
    @Operation(summary = "用户登录")
    public CommonResult loginBuyer(@Valid @RequestBody BuyerParam buyerParam) {
       return CommonResult.success(iBuyerInfoService.loginBuyer(buyerParam));
+   }
+
+   @Operation(summary = "刷新token")
+   @RequestMapping(value = "/refreshToken", method = RequestMethod.GET)
+   @ResponseBody
+   public CommonResult refreshToken(HttpServletRequest request) {
+      String token = request.getHeader(tokenHeader);
+      String refreshToken = iBuyerInfoService.refreshToken(token);
+      if (refreshToken == null) {
+         return CommonResult.failed("token已经过期！");
+      }
+      Map<String, String> tokenMap = new HashMap<>();
+      tokenMap.put("token", refreshToken);
+      tokenMap.put("tokenHead", tokenHead);
+      return CommonResult.success(tokenMap);
    }
 
    /**

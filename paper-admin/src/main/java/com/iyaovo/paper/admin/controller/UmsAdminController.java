@@ -8,6 +8,7 @@ import com.iyaovo.paper.admin.domain.dto.UpdateAdminPasswordParam;
 import com.iyaovo.paper.admin.domain.entity.UmsAdmin;
 import com.iyaovo.paper.admin.domain.entity.UmsAdminShopRelation;
 import com.iyaovo.paper.admin.domain.entity.UmsRole;
+import com.iyaovo.paper.admin.domain.vo.LoginTokenVo;
 import com.iyaovo.paper.admin.mapper.UmsAdminShopRelationMapper;
 import com.iyaovo.paper.admin.service.UmsAdminService;
 import com.iyaovo.paper.admin.service.UmsRoleService;
@@ -76,14 +77,11 @@ public class UmsAdminController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult login(@Validated @RequestBody UmsAdminLoginParam umsAdminLoginParam) {
-        String token = adminService.login(umsAdminLoginParam.getUsername(), umsAdminLoginParam.getPassword());
-        if (token == null) {
+        LoginTokenVo loginTokenVo = adminService.login(umsAdminLoginParam.getUsername(), umsAdminLoginParam.getPassword());
+        if (loginTokenVo.getToken() == null) {
             return CommonResult.validateFailed("用户名或密码错误");
         }
-        Map<String, String> tokenMap = new HashMap<>();
-        tokenMap.put("token", token);
-        tokenMap.put("tokenHead", tokenHead);
-        return CommonResult.success(tokenMap);
+        return CommonResult.success(loginTokenVo);
     }
 
     @Operation(summary = "刷新token")

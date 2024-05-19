@@ -47,6 +47,14 @@ public class JwtTokenUtil {
                 .compact();
     }
 
+    private String generateRefreshToken(Map<String, Object> claims) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000 * 30))
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+    }
+
     /**
      * 从token中获取JWT中的负载
      */
@@ -113,6 +121,16 @@ public class JwtTokenUtil {
 
     /**
      * 根据用户信息生成token
+     */
+    public String generateRefreshToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
+        claims.put(CLAIM_KEY_CREATED, new Date());
+        return generateRefreshToken(claims);
+    }
+
+    /**
+     * 根据用户信息生成刷新token
      */
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();

@@ -6,10 +6,7 @@ import com.iyaovo.paper.foreground.domain.dto.BuyerChangeInformationDto;
 import com.iyaovo.paper.foreground.domain.dto.BuyerParam;
 import com.iyaovo.paper.foreground.domain.entity.BuyerInfo;
 
-import com.iyaovo.paper.foreground.domain.vo.BuyerInfoSimpleVo;
-import com.iyaovo.paper.foreground.domain.vo.BuyerInfoVo;
-import com.iyaovo.paper.foreground.domain.vo.GoodsInfoVo;
-import com.iyaovo.paper.foreground.domain.vo.ShopInfoVo;
+import com.iyaovo.paper.foreground.domain.vo.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
@@ -31,7 +28,7 @@ public interface IBuyerInfoService extends IService<BuyerInfo> {
     /**
      * 登录
      */
-    String loginBuyer(BuyerParam buyerParam);
+    LoginTokenVo loginBuyer(BuyerParam buyerParam);
 
     /**
      * 更改密码
@@ -117,7 +114,5 @@ public interface IBuyerInfoService extends IService<BuyerInfo> {
      */
     void cancelFavoriteShop(Integer shopId);
 
-    /**
-     * 清理超过多少天的近期浏览
-     */
+    String refreshToken(String oldToken);
 }

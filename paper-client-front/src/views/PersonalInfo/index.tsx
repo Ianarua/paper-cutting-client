@@ -65,11 +65,22 @@ const PersonalInfo = () => {
                             }
                         </Pressable>
                     </View>
-                    <Image
-                        style={ styles.picUrl }
-                        source={ personalInfoDataIn.picUrl }
-                        defaultSource={ require('@/assets/img/logo.png') }
-                    />
+                    <View style={{
+                        width: 120,
+                        height: 120,
+                        borderRadius: 240,
+                        backgroundColor: '#f2c88c',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <Image
+                            style={ styles.picUrl }
+                            // source={ personalInfoDataIn.picUrl }
+                            source={ require('@/assets/img/minePage/mine.png') }
+                            defaultSource={ require('@/assets/img/logo.png') }
+                        />
+                    </View>
                     <View style={ styles.buyerItem }>
                         <Text style={ styles.buyerText }>用户名称: </Text>
                         <TextInput
@@ -133,7 +144,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    picUrl: {},
+    picUrl: {
+        width: 100,
+        height: 100
+    },
     buyerItem: {
         width: '100%',
         height: 40,

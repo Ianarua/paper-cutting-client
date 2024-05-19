@@ -98,6 +98,7 @@ const CarScreen = () => {
         const statsData: ISettleItem[] = settleStats();
         // console.log('aaa', statsData);
         // @ts-ignore
+        // console.log('vvvvvvv', statsData[0].shopInfo.shopName);
         navigation.navigate('Settle', { settleData: statsData });
         console.log('结算');
     }
@@ -113,6 +114,7 @@ const CarScreen = () => {
                 });
             }
         }
+        console.log(selectedItems[0].shopInfo.shopName);
         return selectedItems;
     }
 

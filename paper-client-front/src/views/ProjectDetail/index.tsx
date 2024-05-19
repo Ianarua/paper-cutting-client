@@ -6,15 +6,30 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { RootRouteType, Views } from '@/interface/IReactNavigationProps.ts';
 import { postCreateCar } from '@/api/Car';
 import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
+import { IBusinessInfo } from '@/interface/IBusinessPage.ts';
+import { getIdGoods } from '@/api/ProjectInfo';
 
 const ProjectDetail = () => {
     const route = useRoute<RootRouteType<Views.ProjectDetail>>();
     const navigation = useNavigation();
     const { projectBlockData } = route.params;
     let [isJoinCart, setIsJoinCart] = useState(false);
+    const [shopInfo, setShopInfo] = useState<IBusinessInfo>({
+        picUrl: '',
+        shopName: '',
+        shopId: 0,
+        isFavorite: false
+    });
     useEffect(() => {
         setIsJoinCart(projectBlockData.isJoinCart);
     }, [projectBlockData]);
+
+    useEffect(() => {
+        !(async function () {
+            const res: any = await getIdGoods(projectBlockData.goodsId);
+            setShopInfo(res.shopInfoVo);
+        })();
+    }, []);
 
     async function addToCar () {
         if (!isJoinCart) {
@@ -70,14 +85,14 @@ const ProjectDetail = () => {
                     <View style={ styles.partition }/>
                     <View style={ styles.businessInfo }>
                         <Image
-                            style={ { width: 40, height: 40, backgroundColor: '#000', marginRight: 10 } }
-                            // source={ { uri: `data:image/png;base64,${ }` } }
+                            style={ { width: 40, height: 40, marginRight: 10 } }
+                            source={ { uri: `data:image/png;base64,${ shopInfo.picUrl }` } }
                         />
                         <Pressable
                             // @ts-ignore
-                            onPress={ () => navigation.navigate('BusinessDetail', { shopId: 1 }) }
+                            onPress={ () => navigation.navigate('BusinessDetail', { shopId: shopInfo.shopId }) }
                         >
-                            <Text style={ { fontSize: 16, color: '#000', fontWeight: 'bold' } }>啊啊啊啊啊</Text>
+                            <Text style={ { fontSize: 16, color: '#000', fontWeight: 'bold' } }>{ shopInfo.shopName }</Text>
                         </Pressable>
                     </View>
                 </View>

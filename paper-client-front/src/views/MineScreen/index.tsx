@@ -159,12 +159,12 @@ const MineScreen = () => {
                     <View style={ styles.order }>
                         <View style={ styles.orderTop }>
                             <Text style={ { color: '#000', fontWeight: 'bold' } }>我的订单</Text>
-                            <Pressable
-                                // @ts-ignore
-                                onPress={ () => navigation.navigate('Order') }
-                            >
-                                <Text style={ { fontSize: 12 } }>查看全部 { '>' } </Text>
-                            </Pressable>
+                            {/*<Pressable*/}
+                            {/*    // @ts-ignore*/}
+                            {/*    onPress={ () => navigation.navigate('Order') }*/}
+                            {/*>*/}
+                            {/*    <Text style={ { fontSize: 12 } }>查看全部 { '>' } </Text>*/}
+                            {/*</Pressable>*/}
                         </View>
                         <View style={ styles.orderInner }>
                             {

@@ -51,7 +51,8 @@ const DiscussBlock = (props: IProps) => {
             >
                 <View style={ styles.user }>
                     <Image
-                        source={ { uri: `data:image/png;base64,${ discussData.picUrl }` } }
+                        // source={ { uri: `data:image/png;base64,${ discussData.picUrl }` } }
+                        source={ require('@/assets/img/logo.png') }
                         style={ { width: 40, height: 40, marginRight: 10, borderRadius: 80 } }
                     />
                     <MyText text={ discussData.name } styles={ { fontWeight: 'bold' } }/>

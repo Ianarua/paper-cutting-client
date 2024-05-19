@@ -12,16 +12,21 @@ const Order = () => {
     const [orderData, setOrderData] = useState<IOrderBlock[]>([]);
     useEffect(() => {
         !(async function () {
-            const res: any = getAllOrder();
-            setOrderData(res.list);
+            // const res: any = await getAllOrder(1, 100);
+            // console.log(';rrr', res);
+            // setOrderData(res.list);
         })();
     }, [isFocused]);
+
+    useEffect(() => {
+        console.log('orrr', orderData);
+    }, [orderData]);
     return (
         <AddBackgroundHOC>
             <TopPage title="我的订单"/>
             <View style={ styles.content }>
                 {
-                    orderData.map((item, index) => {
+                    orderData?.map((item, index) => {
                         return (
                             <OrderItem
                                 key={ index }

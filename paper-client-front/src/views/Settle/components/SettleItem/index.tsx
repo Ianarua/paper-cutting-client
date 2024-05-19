@@ -9,6 +9,7 @@ interface IProps {
 
 const SettleItem = (props: IProps) => {
     const { settleData } = props;
+    console.log('eeeeeeeee', settleData.shopInfo.shopId);
 
     return (
         <View style={ styles.content }>
@@ -16,7 +17,7 @@ const SettleItem = (props: IProps) => {
                 {/*<Image source={ { uri: shopInfo.picUrl } } style={ { width: 17, objectFit: 'contain' } }/>*/ }
                 <View style={ styles.headerLeft }>
                     <Image source={ require('@/assets/img/carPage/store.png') } style={ { width: 17, objectFit: 'contain', marginRight: 5 } }/>
-                    <Text style={ { marginRight: 15 } }>{ settleData.shopInfo.shopName }</Text>
+                    <Text style={ { marginRight: 15 } }>{ settleData?.shopInfo.shopName }</Text>
                     {/*<Image source={ require('@/assets/img/carPage/greater.png') } style={ { width: 10, objectFit: 'contain' } }/>*/ }
                 </View>
             </View>

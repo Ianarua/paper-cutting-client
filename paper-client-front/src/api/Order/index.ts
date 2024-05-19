@@ -4,9 +4,11 @@ import deleteOrder from '@/api/Order/modules/deleteOrder.ts';
 
 /**
  * @description 展示全部订单
+ * @param pageNum
+ * @param pageSize
  */
-export function getAllOrder () {
-    return allOrder();
+export function getAllOrder (pageNum: number = 1, pageSize: number = 100) {
+    return allOrder(pageNum, pageSize);
 }
 
 /**

@@ -1,14 +1,10 @@
 import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { FC, useEffect, useState } from 'react';
-import { ICarItem } from '@/interface/ICarPage.ts';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import MyText from '@/components/MyText';
-import InputNumber from '@/components/InputNumber';
-import { postDeleteCar } from '@/api/Car';
-import useDebounce from '@/utils/useDebounce.ts';
-import ImgBase64 from '@/components/ImgBase64';
 import IProjectBlock from '@/interface/IProjectBlock.ts';
 import { IOrderBlock } from '@/interface/IOrderBlock.ts';
+import { IBusinessInfo } from '@/interface/IBusinessPage.ts';
+import { getIdGoods } from '@/api/ProjectInfo/index.ts';
 
 interface IProps {
     orderItemData: IOrderBlock;
@@ -16,11 +12,40 @@ interface IProps {
 
 const OrderItem: FC<IProps> = (props) => {
     const { orderItemData } = props;
-
-    // 删除购物车该商品
-    // async function deleteCar () {
-    //     await postDeleteCar(projectInfo.goodsId);
-    // }
+    const [shopInfo, setShopInfo] = useState<IBusinessInfo>({
+        picUrl: '',
+        shopName: '',
+        shopId: 0,
+        isFavorite: false
+    });
+    const [projectInfo, setProjectInfo] = useState<IProjectBlock>({
+        goodsId: 0,
+        goodsName: '',
+        goodsIntroduction: '',
+        picUrl: '',
+        price: 0,
+        promotionPrice: 0,
+        soldNumber: 0,
+        totalNumber: 0,
+        isCollection: false,
+        isJoinCart: false,
+        shopInfo: {
+            picUrl: '',
+            shopName: '',
+            shopId: 0,
+            isFavorite: false
+        }
+    });
+    useEffect(() => {
+        !(async function () {
+            const res: any = await getIdGoods(orderItemData.goodsId);
+            setShopInfo(res.shopInfoVo);
+            setProjectInfo(res);
+        })();
+    }, []);
+    useEffect(() => {
+        console.log(projectInfo);
+    }, [projectInfo]);
 
     return (
         <View style={ styles.content }>
@@ -51,7 +76,7 @@ const OrderItem: FC<IProps> = (props) => {
                     </View>
                 </View>
                 <View style={ styles.innerRight }>
-                    <Text>数量: { settleData.quantity }</Text>
+                    {/*<Text>数量: { settleData.quantity }</Text>*/}
                 </View>
             </View>
         </View>

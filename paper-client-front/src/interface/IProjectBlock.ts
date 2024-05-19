@@ -13,5 +13,5 @@ export default interface IProjectBlock {
     totalNumber: number,   // 库存
     shopInfo: IBusinessInfo, // 店铺信息
     isCollection: boolean,  // 商品是否已经被收藏
-    isJoinCart: true    // 商品是否已经加入了购物车
+    isJoinCart: boolean    // 商品是否已经加入了购物车
 }

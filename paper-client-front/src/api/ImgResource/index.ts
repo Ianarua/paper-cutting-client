@@ -1,12 +1,10 @@
 import request from '@/utils/request.ts';
 
-export function postResourceImg (file: File): any {
+export function postResourceImg (formData: FormData): any {
     return request({
         url: '/resource/add',
         method: 'POST',
-        data: {
-            file
-        },
+        data: formData,
         headers: {
             'Content-Type': 'multipart/form-data'
         }

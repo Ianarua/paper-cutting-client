@@ -86,14 +86,17 @@ const HomePage = () => {
                     </View>
                 </View>
                 <View style={ styles.hasInBottom }>
-                    <MyText text="-----  已经到底啦  -----"/>
+                    {
+                        pageNum > 2
+                            ? <MyText text="-----  已经到底啦  -----" styles={ { fontSize: 16 } }/>
+                            : <MyText text="…… 加载中 ……" styles={ { fontSize: 16 } }/>
+                    }
                 </View>
             </ScrollView>
         </AddBackgroundHOC>
     );
 };
 export default HomePage;
-const [vWidth, vHeight] = [Dimensions.get('window').width, Dimensions.get('window').height];
 const styles = StyleSheet.create({
     content: {
         display: 'flex',

@@ -18,14 +18,12 @@ interface IProps {
 
 const ProjectBlock: FC<IProps> = ({ addBtn, projectBlockData }) => {
     const navigation = useNavigation();
-    const [projectWidth, setProjectWidth] = useState(0);
-    let [projectHeight, setProjectHeight] = useState(projectWidth * 1.2);
+    let [projectHeight, setProjectHeight] = useState(0);
     const window = useWindowDimensions();
-    useEffect(() => {
-        setProjectWidth(window.width / 2.1); // 每个商品大块的宽度
-        setProjectHeight(projectWidth * 1.2);
-    }, [projectWidth, projectHeight, window.width]);
 
+    useEffect(() => {
+        setProjectHeight(window.width / 1.8);
+    }, []);
     return (
         <Pressable
             style={ {

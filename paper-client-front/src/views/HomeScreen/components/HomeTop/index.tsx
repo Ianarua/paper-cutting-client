@@ -1,8 +1,13 @@
-import { Dimensions, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Dimensions, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import MyText from '@/components/MyText';
 import { useNavigation } from '@react-navigation/native';
+import DownerModal from '@/components/Modal/DrownModal';
+import Camera from '@/views/Camera';
+import CenterModal from '@/components/Modal/CenterModal';
+import { postImageUnderstand } from '@/api/ImageUnderstanding';
+import ImgBase64 from '@/components/ImgBase64';
 
 interface IProps {
     page: number,   // 0 主页,1 社区
@@ -10,7 +15,7 @@ interface IProps {
 }
 
 const HomeTop = (props: IProps) => {
-    const Navigation = useNavigation();
+    const navigation = useNavigation();
     const onNavigator = props.onNavigator;
     const [curPage, setCurPage] = useState(props.page);
     const [searchValue, setSearchValue] = useState('');
@@ -18,17 +23,33 @@ const HomeTop = (props: IProps) => {
         setCurPage(props.page);
     }, [props.page]);
 
+    // 控制底部弹窗(相册、相机)
+    const [isShowDrown, setIsShowDrown] = useState(false);
+    // 控制居中弹窗(结果展示)
+    const [isShowCenter, setIsShowCenter] = useState(false);
+
+    // 传回来的resourcePath
+    const [understandContent, setUnderstandContent] = useState('');
+    // 传回来的图片base64
+    const [understandContentImg, setUnderstandContentImg] = useState('');
+
+    // 开始调用AI接口内容理解
+    async function understand (resourcePath: string) {
+        const res: any = await postImageUnderstand(resourcePath);
+        console.log(res);
+        setUnderstandContent(res.content);
+    }
+
     return (
         <View style={ styles.container }>
             {/* 签到,主页,社区 */ }
             <View style={ styles.topBtn }>
                 <View style={ styles.btnSign }>
                     <AntDesignIcon name="calendar"/>
-                    {/*<MyText text="签到" styles={ { fontSize: 10, fontWeight: 'bold' } } onNavigator={() => }/>*/ }
                     <Pressable
                         hitSlop={ 10 }
                         // @ts-ignore
-                        onPress={ () => Navigation.navigate('SignUp') }
+                        onPress={ () => navigation.navigate('SignUp') }
                     >
                         <Text style={ { fontSize: 10, fontWeight: 'bold' } }>签到</Text>
                     </Pressable>
@@ -46,15 +67,20 @@ const HomeTop = (props: IProps) => {
                     />
                 </View>
             </View>
-            {/* 搜索框,拍照,扫码*/ }
+            {/* 搜索框,拍照,扫码 */ }
             <View style={ styles.topSearchBar }>
                 <View style={ styles.searchBarInner }>
-                    <AntDesignIcon
-                        name={ 'camerao' }
-                        color={ '#84321c' }
-                        size={ 20 }
-                        style={ { marginRight: 5 } }
-                    />
+                    <Pressable
+                        // @ts-ignore
+                        onPress={ () => setIsShowDrown(true) }
+                    >
+                        <AntDesignIcon
+                            name={ 'camerao' }
+                            color={ '#84321c' }
+                            size={ 20 }
+                            style={ { marginRight: 5 } }
+                        />
+                    </Pressable>
                     <MyText
                         text={ '|' }
                         styles={ { fontWeight: 'bold', color: '#f1ece6' } }
@@ -73,6 +99,49 @@ const HomeTop = (props: IProps) => {
                     />
                 </View>
             </View>
+            {/* 底部弹窗 */ }
+            <DownerModal isShow={ isShowDrown } onClose={ () => setIsShowDrown(false) }>
+                <Camera
+                    onCloseDrown={ (imgBase64: string) => {
+                        setUnderstandContentImg(imgBase64);
+                        setIsShowDrown(false);
+                    } }
+                    onOpenCenter={ (resourcePath: string) => {
+                        // 展示居中弹窗
+                        setIsShowCenter(true);
+                        // 拿到传回来的path,开始AI接口
+                        understand(resourcePath).then();
+                    } }
+                />
+            </DownerModal>
+            {/* 居中弹窗 */ }
+            <CenterModal isShow={ isShowCenter } onClose={ () => setIsShowCenter(false) }>
+                <ImgBase64
+                    picUrl={ understandContentImg }
+                    style={ {
+                        width: '100%',
+                        height: '50%',
+                        borderRadius: 18,
+                        marginBottom: 10
+                    } }
+                />
+                <ScrollView style={ { flex: 1 } }>
+                    <Text>{ understandContent }</Text>
+                </ScrollView>
+                <Pressable
+                    onPress={ () => setIsShowCenter(false) }
+                    style={ {
+                        width: '30%',
+                        height: '10%',
+                        backgroundColor: '#f2c88c',
+                        borderRadius: 18,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    } }
+                >
+                    <Text style={ { fontSize: 16, color: '#fff' } }>确定</Text>
+                </Pressable>
+            </CenterModal>
         </View>
     );
 };

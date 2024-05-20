@@ -16,7 +16,7 @@ interface IProps extends ICarItem {
 }
 
 const CarItem = (props: IProps) => {
-    const { shopInfo, projectInfo, changeCheckedFunc, isCheckedPar, changeNumsFunc } = props;
+    const { shopInfoVo, projectInfo, changeCheckedFunc, isCheckedPar, changeNumsFunc } = props;
     const [isChecked, setIsChecked] = useState(isCheckedPar);
 
     // 修改数量函数
@@ -42,8 +42,8 @@ const CarItem = (props: IProps) => {
                 {/*<Image source={ { uri: shopInfo.picUrl } } style={ { width: 17, objectFit: 'contain' } }/>*/ }
                 <View style={ styles.headerLeft }>
                     <Image source={ require('@/assets/img/carPage/store.png') } style={ { width: 17, objectFit: 'contain', marginRight: 5 } }/>
-                    {/*<Text style={ { marginRight: 15 } }>{ shopInfo?.shopName }</Text>*/}
-                    <Text style={ { marginRight: 15 } }>纸韵艺坊</Text>
+                    <Text style={ { marginRight: 15 } }>{ shopInfoVo?.shopName }</Text>
+                    {/*<Text style={ { marginRight: 15 } }>纸韵艺坊</Text>*/ }
                     <Image source={ require('@/assets/img/carPage/greater.png') } style={ { width: 10, objectFit: 'contain' } }/>
                 </View>
                 <Pressable

@@ -8,7 +8,6 @@ import CarItem from '@/views/CarScreen/components/CarItem';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import { getGoodsCar, getUpdateCar } from '@/api/Car';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import IProjectBlock from '@/interface/IProjectBlock.ts';
 import { ISettleItem } from '@/interface/ISettleList.ts';
 
 /*
@@ -28,8 +27,8 @@ const CarScreen = () => {
             const res: any = await getGoodsCar();
             // 对数据进行处理,分为projectInfo和shopInfo
             setCarItemData(res.map((item: any) => {
-                const { shopInfo, ...projectInfo } = item;
-                return { shopInfo, projectInfo };
+                const { shopInfoVo, ...projectInfo } = item;
+                return { shopInfoVo, projectInfo };
             }));
             setCarItemData(value => {
                 setIsCheckedArr(new Array(value.length).fill(false));
@@ -96,9 +95,7 @@ const CarScreen = () => {
     // 结算按钮
     function settleFunc () {
         const statsData: ISettleItem[] = settleStats();
-        // console.log('aaa', statsData);
         // @ts-ignore
-        // console.log('vvvvvvv', statsData[0].shopInfo.shopName);
         navigation.navigate('Settle', { settleData: statsData });
         console.log('结算');
     }
@@ -114,7 +111,7 @@ const CarScreen = () => {
                 });
             }
         }
-        console.log(selectedItems[0].shopInfo.shopName);
+        // console.log('selectedItems[0].shopInfoVo.shopName----', selectedItems[0].shopInfoVo.shopId);
         return selectedItems;
     }
 
@@ -135,7 +132,7 @@ const CarScreen = () => {
                             return (
                                 <CarItem
                                     key={ index }
-                                    shopInfo={ item.shopInfo }
+                                    shopInfoVo={ item.shopInfoVo }
                                     projectInfo={ item.projectInfo }
                                     changeCheckedFunc={ changeCheckedFunc(index) }
                                     isCheckedPar={ isCheckedArr[index] }

@@ -1,7 +1,6 @@
 import showSimpleInformation from '@/api/buyerInfo/modules/showSimpleInformation.ts';
 import changeInformation from '@/api/buyerInfo/modules/changeInformation.ts';
 import { IPersonalInfoIn } from '@/interface/IPersonalInfo.ts';
-import { postResourceImg } from '@/api/ImgResource';
 import showInformation from '@/api/buyerInfo/modules/showInformation.ts';
 
 /**

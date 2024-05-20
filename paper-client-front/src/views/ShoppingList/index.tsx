@@ -59,7 +59,11 @@ const ShoppingList = () => {
                             })
                         }
                         <View style={ styles.hasInBottom }>
-                            <MyText text="-----  已经到底啦  -----"/>
+                            {
+                                pageNum > 2
+                                    ? <MyText text="-----  已经到底啦  -----" styles={ { fontSize: 16 } }/>
+                                    : <MyText text="…… 加载中 ……" styles={ { fontSize: 16 } }/>
+                            }
                         </View>
                     </View>
 

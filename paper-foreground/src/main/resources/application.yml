@@ -1,5 +1,9 @@
 --- #------基础配置------
 spring:
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 10MB
   application:
     name: paper-foreground
 server:

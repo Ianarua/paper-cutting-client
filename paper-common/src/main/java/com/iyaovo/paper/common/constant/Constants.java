@@ -49,6 +49,6 @@ public class Constants {
    /**
     * 提问fuyu8b的问题
     */
-   public static final String PROMPT = "图中的剪纸是什么，有什么特色，有什么寓意?";
+   public static final String PROMPT = "图中的剪纸是什么，有什么特色，有什么寓意?给我1000字回答";
 }
 

@@ -16,6 +16,7 @@ package com.iyaovo.paper.foreground.controller;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.json.JSONArray;
 import com.iyaovo.paper.common.api.CommonResult;
+import com.iyaovo.paper.common.api.ResultCode;
 import com.iyaovo.paper.common.constant.Constants;
 import com.iyaovo.paper.common.util.ImageToBase64Util;
 import com.iyaovo.paper.foreground.domain.vo.ImageUnderstandingVo;
@@ -28,15 +29,17 @@ import okhttp3.*;
 
 import okhttp3.RequestBody;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
-import org.json.JSONObject;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
 
 /**
  * @ClassName: ImageUnderstandingController
@@ -50,6 +53,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @RequiredArgsConstructor
 public class ImageUnderstandingController {
+
+
 
    @Value("${fuyu8b.client_id}")
    private String API_KEY ;
@@ -67,23 +72,33 @@ public class ImageUnderstandingController {
 
    private static final OkHttpClient HTTP_CLIENT = new OkHttpClient().newBuilder().build();
 
+
    @PostMapping("")
    @Operation(summary = "图片内容理解")
-   public CommonResult<ImageUnderstandingVo>  imageUnderstanding(@RequestParam("picUrl") String picUrl) throws JSONException, IOException {
+   public CommonResult<ImageUnderstandingVo>  imageUnderstanding(@RequestParam("picUrl") String picUrl) {
       //将图片保存到本地
       imageUnderstandingService.imageUnderstanding(picUrl);
       //通过fuyu8b大模型理解图片
       MediaType mediaType = MediaType.parse("application/json");
       String picUrlBase64 = ImageToBase64Util.convertFileToBase64(Constants.RESOURCE_PATH+picUrl);
       RequestBody body = RequestBody.create(mediaType, "{\"prompt\":\""+ Constants.PROMPT + "\",\"image\":\""+ picUrlBase64 +"\"}");
-      Request request = new Request.Builder()
-              .url("https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/image2text/fuyu_8b?access_token=" + getAccessToken())
-              .method("POST", body)
-              .addHeader("Content-Type", "application/json")
-              .build();
-      Response response = HTTP_CLIENT.newCall(request).execute();
-      JSONObject jsonObject = new JSONObject(response.body().string());
-      String result = jsonObject.getString("result");
+      Request request = null;
+      String result = null;
+      try {
+         request = new Request.Builder()
+                 .url("https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/image2text/fuyu_8b?access_token=" + getAccessToken())
+                 .method("POST", body)
+                 .addHeader("Content-Type", "application/json")
+                 .build();
+         Response response = HTTP_CLIENT.newCall(request).execute();
+         JSONObject jsonObject = new JSONObject(response.body().string());
+         result = jsonObject.getString("result");
+      } catch (IOException e) {
+         return CommonResult.failed(ResultCode.FAILED,e.getMessage());
+      } catch (JSONException e) {
+         return CommonResult.failed(ResultCode.FAILED,e.getMessage());
+      }
+
       return CommonResult.success(new ImageUnderstandingVo(picUrlBase64,translate(result)));
    }
 

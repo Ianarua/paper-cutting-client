@@ -13,16 +13,13 @@
  */
 package com.iyaovo.paper.foreground.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.iyaovo.paper.common.api.CommonPage;
 import com.iyaovo.paper.common.domain.OrderStatusEnum;
 import com.iyaovo.paper.foreground.domain.dto.CartInfoDto;
 import com.iyaovo.paper.foreground.domain.dto.IdsParam;
 import com.iyaovo.paper.foreground.domain.dto.SettleCartGoodsParam;
 import com.iyaovo.paper.foreground.domain.entity.*;
-import com.iyaovo.paper.foreground.domain.vo.GoodsInfoVo;
 import com.iyaovo.paper.foreground.mapper.*;
 import com.iyaovo.paper.foreground.service.IBuyerInfoService;
 import com.iyaovo.paper.foreground.service.ICartInfoService;
@@ -75,12 +72,14 @@ public class CartInfoServiceImpl extends ServiceImpl<CartInfoMapper,CartInfo> im
       for (int cartId : settleCartGoodsParam.getCartIds()) {
          CartInfo cartInfo = cartInfoMapper.selectById(cartId);
          orderInfoMapper.insert(new OrderInfo(null, cartInfo.getGoodsId(), iBuyerInfoService.getBuyerInfo().getBuyerId(), OrderStatusEnum.PENDING_EVALUATE, receivingAddressId));
+         UpdateWrapper<GoodsInfo> goodsInfoUpdateWrapper = new UpdateWrapper<>();
+         goodsInfoUpdateWrapper.eq("goods_id", cartInfo.getGoodsId());
+         goodsInfoUpdateWrapper.setSql("sold_number = sold_number + 1 ");
+         goodsInfoMapper.update(null, goodsInfoUpdateWrapper);
          cartInfoMapper.deleteById(cartId);
+      }
+
       }
    }
 
-
-
-
-}
 

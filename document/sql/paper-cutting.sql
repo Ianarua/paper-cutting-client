@@ -15,124 +15,164 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- 导出 paper-cutting 的数据库结构
-CREATE DATABASE IF NOT EXISTS `paper-cutting` /*!40100 DEFAULT CHARACTER SET utf8mb4   */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `paper-cutting`;
+-- 导出 paper-cutting-android 的数据库结构
+CREATE DATABASE IF NOT EXISTS `paper-cutting-android` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `paper-cutting-android`;
 
--- 导出  表 paper-cutting.buyer_info 结构
+-- 导出  表 paper-cutting-android.buyer_info 结构
 CREATE TABLE IF NOT EXISTS `buyer_info` (
                                             `buyer_id` bigint NOT NULL,
-                                            `buyer_name` varchar(50) CHARACTER SET utf8mb4  NOT NULL COMMENT '买家账号',
-    `buyer_password` varchar(200) CHARACTER SET utf8mb4  NOT NULL COMMENT '买家密码',
-    `buyer_hobby` varchar(200) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '买家爱好',
-    `buyer_autograph` varchar(200) CHARACTER SET utf8mb4  DEFAULT NULL,
-    `pic_url` varchar(255) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '头像',
+                                            `buyer_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '买家账号',
+    `buyer_password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '买家密码',
+    `buyer_hobby` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '买家爱好',
+    `buyer_autograph` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `pic_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '头像',
     `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `del_flag` bit(1) NOT NULL DEFAULT b'0' COMMENT '逻辑删除(默认0)'
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4     COMMENT='买家信息表';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='买家信息表';
 
--- 正在导出表  paper-cutting.buyer_info 的数据：~9 rows (大约)
+-- 正在导出表  paper-cutting-android.buyer_info 的数据：~2 rows (大约)
 INSERT INTO `buyer_info` (`buyer_id`, `buyer_name`, `buyer_password`, `buyer_hobby`, `buyer_autograph`, `pic_url`, `create_time`, `update_time`, `del_flag`) VALUES
-    (1782381108064657409, 'admin', '$2a$10$y.NBngNh6H1HRJtPFrxAo.mf9f8LCDAz.V8br6EAehIT4Tt1EVsO6', '3', '3', '', '2024-04-22 12:09:05', '2024-05-08 09:26:55', b'0');
+                                                                                                                                                                 (1782381108064657409, 'admin', '$2a$10$y.NBngNh6H1HRJtPFrxAo.mf9f8LCDAz.V8br6EAehIT4Tt1EVsO6', '打篮球，唱歌', '时间不站在你那里', 'Image/2024-05-21UJex.png', '2024-04-22 12:09:05', '2024-05-21 05:10:43', b'0'),
+                                                                                                                                                                 (1789323086874775554, 'a', '$2a$10$7IsJANx1Tsh7W9l5PiOl/.pFYMWBiLNPxahCBuEK8nvx8GSL8Mxdq', NULL, NULL, 'Image/2024-05-08CDCM.png', '2024-05-11 15:54:02', '2024-05-21 04:43:48', b'0');
 
--- 导出  表 paper-cutting.cart_info 结构
+-- 导出  表 paper-cutting-android.cart_info 结构
 CREATE TABLE IF NOT EXISTS `cart_info` (
                                            `cart_id` int unsigned NOT NULL AUTO_INCREMENT,
                                            `buyer_id` bigint NOT NULL COMMENT '用户id',
                                            `goods_id` int NOT NULL DEFAULT '0' COMMENT '商品id',
                                            `goods_number` int NOT NULL DEFAULT '1' COMMENT '购物车中商品数量',
                                            PRIMARY KEY (`cart_id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4    ;
+    ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
--- 正在导出表  paper-cutting.cart_info 的数据：~0 rows (大约)
+-- 正在导出表  paper-cutting-android.cart_info 的数据：~5 rows (大约)
 INSERT INTO `cart_info` (`cart_id`, `buyer_id`, `goods_id`, `goods_number`) VALUES
-                                                                                (9, 1782381108064657409, 1, 5),
-                                                                                (10, 1782381108064657409, 3, 1),
-                                                                                (11, 1782381108064657409, 5, 1);
+                                                                                (28, 1782381108064657409, 20, 1),
+                                                                                (31, 1782381108064657409, 40, 1),
+                                                                                (33, 1782381108064657409, 21, 1),
+                                                                                (34, 1782381108064657409, 23, 1),
+                                                                                (35, 1782381108064657409, 25, 1);
 
--- 导出  表 paper-cutting.daily_sign 结构
+-- 导出  表 paper-cutting-android.daily_sign 结构
 CREATE TABLE IF NOT EXISTS `daily_sign` (
                                             `daily_sign_id` int NOT NULL AUTO_INCREMENT,
                                             `buyer_id` bigint NOT NULL COMMENT '买家id',
-                                            `sign_time` varchar(50) NOT NULL COMMENT '签到时间',
+                                            `sign_time` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '签到时间',
     PRIMARY KEY (`daily_sign_id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4     COMMENT='每日签到表';
+    ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='每日签到表';
 
--- 正在导出表  paper-cutting.daily_sign 的数据：~3 rows (大约)
+-- 正在导出表  paper-cutting-android.daily_sign 的数据：~3 rows (大约)
 INSERT INTO `daily_sign` (`daily_sign_id`, `buyer_id`, `sign_time`) VALUES
                                                                         (2, 1782381108064657409, '2024-04-23'),
                                                                         (3, 1782381108064657409, '2024-04-24'),
                                                                         (6, 1782381108064657409, '2024-04-26');
 
--- 导出  表 paper-cutting.discuss_info 结构
+-- 导出  表 paper-cutting-android.discuss_info 结构
 CREATE TABLE IF NOT EXISTS `discuss_info` (
                                               `discuss_id` int NOT NULL AUTO_INCREMENT COMMENT '主键id',
                                               `buyer_id` bigint NOT NULL COMMENT '用户id',
                                               `parent_id` int NOT NULL COMMENT '讨论父id(0为一级讨论)',
-                                              `discuss_content` varchar(255)   NOT NULL COMMENT '讨论内容',
+                                              `discuss_content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '讨论内容',
     `favorite_number` int NOT NULL DEFAULT '0' COMMENT '点赞数',
     `comment_number` int NOT NULL DEFAULT '0' COMMENT '评论数',
     PRIMARY KEY (`discuss_id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4     COMMENT='广场讨论表';
+    ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='广场讨论表';
 
--- 正在导出表  paper-cutting.discuss_info 的数据：~4 rows (大约)
+-- 正在导出表  paper-cutting-android.discuss_info 的数据：~11 rows (大约)
 INSERT INTO `discuss_info` (`discuss_id`, `buyer_id`, `parent_id`, `discuss_content`, `favorite_number`, `comment_number`) VALUES
-                                                                                                                               (1, 1782381108064657409, 0, '一级评论1', 0, 0),
-                                                                                                                               (2, 1782381108064657409, 0, '一级评论2', 1, 1),
-                                                                                                                               (3, 1782381108064657409, 2, '一级评论2的二级评论', 0, 0),
-                                                                                                                               (4, 1782381108064657409, 2, '一级评论2的二级评论', 0, 0);
+                                                                                                                               (1, 1782381108064657409, 0, '如何保持剪纸作品的整洁和保存？', 46, 3),
+                                                                                                                               (2, 1782381108064657409, 0, '如何选择合适的纸张进行剪纸创作？', 101, 2),
+                                                                                                                               (3, 1782381108064657409, 2, '我个人喜欢使用宣纸，因为它有很好的韧性和吸墨性。', 0, 0),
+                                                                                                                               (4, 1782381108064657409, 2, '我推荐使用彩色的折纸，这样可以增加剪纸作品的颜色丰富度。', 0, 0),
+                                                                                                                               (5, 1782381108064657409, 1, '我在剪纸完成后会使用静电刷清理多余的纸屑。', 0, 0),
+                                                                                                                               (6, 1782381108064657409, 1, '我建议将完成的剪纸作品放在相框或者透明的保护册中，以防止损坏。', 0, 0),
+                                                                                                                               (7, 1782381108064657409, 1, '有没有什么好的方法可以防止剪纸作品变色或者发黄？', 0, 0),
+                                                                                                                               (8, 1782381108064657409, 0, '分享一款你最喜欢的生肖鸡剪纸作品。', 38, 3),
+                                                                                                                               (9, 1782381108064657409, 8, '我喜欢的一款生肖鸡剪纸作品是它的羽毛细节非常精致。', 0, 0),
+                                                                                                                               (10, 1782381108064657409, 8, '我最近在淘宝上发现了一款创意十足的生肖鸡剪纸，设计非常独特。', 0, 0),
+                                                                                                                               (11, 1782381108064657409, 8, '我推荐一个剪纸艺术家的工作室，他们的生肖鸡剪纸作品都非常精美。', 0, 0);
 
--- 导出  表 paper-cutting.goods_category 结构
+-- 导出  表 paper-cutting-android.discuss_like 结构
+CREATE TABLE IF NOT EXISTS `discuss_like` (
+                                              `like_id` int unsigned NOT NULL AUTO_INCREMENT,
+                                              `discuss_id` int NOT NULL,
+                                              `buyer_id` bigint NOT NULL,
+                                              PRIMARY KEY (`like_id`) USING BTREE
+    ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='讨论点赞表';
+
+-- 正在导出表  paper-cutting-android.discuss_like 的数据：~3 rows (大约)
+INSERT INTO `discuss_like` (`like_id`, `discuss_id`, `buyer_id`) VALUES
+                                                                     (28, 8, 1782381108064657409),
+                                                                     (29, 2, 1782381108064657409),
+                                                                     (33, 1, 1782381108064657409);
+
+-- 导出  表 paper-cutting-android.goods_category 结构
 CREATE TABLE IF NOT EXISTS `goods_category` (
                                                 `goods_category_id` tinyint unsigned NOT NULL AUTO_INCREMENT,
-                                                `goods_category_name` varchar(50) CHARACTER SET utf8mb4  NOT NULL COMMENT '类别名称',
-    `pic_url` varchar(255) NOT NULL COMMENT '类别url',
+                                                `goods_category_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类别名称',
     `category_superior_id` tinyint unsigned NOT NULL DEFAULT '0' COMMENT '0即为上级分类',
     PRIMARY KEY (`goods_category_id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4     COMMENT='商品第一类别表';
+    ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='商品第一类别表';
 
--- 正在导出表  paper-cutting.goods_category 的数据：~16 rows (大约)
-INSERT INTO `goods_category` (`goods_category_id`, `goods_category_name`, `pic_url`, `category_superior_id`) VALUES
-                                                                                                                 (1, '剪纸画', '', 0),
-                                                                                                                 (2, '生肖', '', 0),
-                                                                                                                 (3, '人像', '', 0),
-                                                                                                                 (4, '窗花', '', 0),
-                                                                                                                 (5, '中国风', '', 0),
-                                                                                                                 (6, '福字', '', 0),
-                                                                                                                 (7, '民俗', '', 0),
-                                                                                                                 (8, '喜字', '', 0),
-                                                                                                                 (9, '党史党建', '', 0),
-                                                                                                                 (10, '剪纸定制', '', 0),
-                                                                                                                 (12, '牛', 'Image\\2024-05-08CDCM.png', 2),
-                                                                                                                 (14, '马', 'Image\\2024-05-08CDCM.png', 2),
-                                                                                                                 (15, '猴', 'Image\\2024-05-08CDCM.png', 2),
-                                                                                                                 (16, '吴昕开', 'Image\\2024-05-08CDCM.png', 3),
-                                                                                                                 (17, '无心恺', 'Image\\2024-05-08CDCM.png', 3),
-                                                                                                                 (18, '武信铠', 'Image\\2024-05-08CDCM.png', 3);
+-- 正在导出表  paper-cutting-android.goods_category 的数据：~33 rows (大约)
+INSERT INTO `goods_category` (`goods_category_id`, `goods_category_name`, `category_superior_id`) VALUES
+                                                                                                      (1, '剪纸画', 0),
+                                                                                                      (2, '生肖', 0),
+                                                                                                      (3, '人像', 0),
+                                                                                                      (4, '窗花', 0),
+                                                                                                      (5, '中国风', 0),
+                                                                                                      (6, '福字', 0),
+                                                                                                      (7, '民俗', 0),
+                                                                                                      (8, '喜字', 0),
+                                                                                                      (9, '党史党建', 0),
+                                                                                                      (10, '剪纸定制', 0),
+                                                                                                      (21, '鼠', 2),
+                                                                                                      (22, '牛', 2),
+                                                                                                      (23, '虎', 2),
+                                                                                                      (24, '兔', 2),
+                                                                                                      (25, '龙', 2),
+                                                                                                      (26, '蛇', 2),
+                                                                                                      (27, '马', 2),
+                                                                                                      (28, '羊', 2),
+                                                                                                      (29, '猴', 2),
+                                                                                                      (30, '鸡', 2),
+                                                                                                      (31, '狗', 2),
+                                                                                                      (32, '猪', 2),
+                                                                                                      (33, '神话', 3),
+                                                                                                      (34, '历史', 3),
+                                                                                                      (35, '民间', 3),
+                                                                                                      (36, '戏剧', 3),
+                                                                                                      (37, '民族', 3),
+                                                                                                      (38, '生活', 3),
+                                                                                                      (39, '卡通', 3),
+                                                                                                      (40, '流行', 3),
+                                                                                                      (41, '动物', 1),
+                                                                                                      (42, '人物', 1),
+                                                                                                      (43, '花鸟', 1);
 
--- 导出  表 paper-cutting.goods_collection 结构
+-- 导出  表 paper-cutting-android.goods_collection 结构
 CREATE TABLE IF NOT EXISTS `goods_collection` (
                                                   `goods_collection_id` int unsigned NOT NULL AUTO_INCREMENT,
                                                   `goods_id` int NOT NULL COMMENT '商品id',
                                                   `buyer_id` bigint NOT NULL COMMENT '用户id',
                                                   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '收藏时间',
                                                   PRIMARY KEY (`goods_collection_id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4     COMMENT='商品收藏';
+    ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='商品收藏';
 
--- 正在导出表  paper-cutting.goods_collection 的数据：~1 rows (大约)
+-- 正在导出表  paper-cutting-android.goods_collection 的数据：~2 rows (大约)
 INSERT INTO `goods_collection` (`goods_collection_id`, `goods_id`, `buyer_id`, `create_time`) VALUES
-                                                                                                  (1, 1, 1782381108064657409, '2024-04-23 07:18:59'),
+                                                                                                  (1, 20, 1782381108064657409, '2024-04-23 07:18:59'),
                                                                                                   (3, 3, 1782381108064657409, '2024-05-09 08:43:50');
 
--- 导出  表 paper-cutting.goods_info 结构
+-- 导出  表 paper-cutting-android.goods_info 结构
 CREATE TABLE IF NOT EXISTS `goods_info` (
                                             `goods_id` int unsigned NOT NULL AUTO_INCREMENT,
                                             `goods_category_id` tinyint NOT NULL COMMENT '商品第二类别表id',
                                             `shop_id` int NOT NULL DEFAULT '0' COMMENT '店铺id',
-                                            `goods_name` varchar(50) NOT NULL COMMENT '商品名称',
-    `goods_introduction` varchar(255) NOT NULL COMMENT '商品描述',
-    `pic_url` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '商品标题图片',
+                                            `goods_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商品名称',
+    `goods_introduction` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商品描述',
+    `pic_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商品标题图片',
     `price` decimal(10,2) NOT NULL COMMENT '商品原价',
     `promotion_price` decimal(10,2) NOT NULL COMMENT '促销价格',
     `sold_number` int NOT NULL DEFAULT '0' COMMENT '已售数量',
@@ -141,34 +181,67 @@ CREATE TABLE IF NOT EXISTS `goods_info` (
     `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `del_flag` bit(1) NOT NULL DEFAULT b'0' COMMENT '逻辑删除(默认0)',
     PRIMARY KEY (`goods_id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4     COMMENT='商品信息表';
+    ) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='商品信息表';
 
--- 正在导出表  paper-cutting.goods_info 的数据：~6 rows (大约)
+-- 正在导出表  paper-cutting-android.goods_info 的数据：~22 rows (大约)
 INSERT INTO `goods_info` (`goods_id`, `goods_category_id`, `shop_id`, `goods_name`, `goods_introduction`, `pic_url`, `price`, `promotion_price`, `sold_number`, `total_number`, `create_time`, `update_time`, `del_flag`) VALUES
-                                                                                                                                                                                                                              (1, 12, 1, '大牛', '大牛介绍', 'Image\\2024-05-08CDCM.png', 100.00, 50.00, 0, 10052, '2024-04-16 07:13:24', '2024-05-08 08:46:50', b'0'),
-                                                                                                                                                                                                                              (3, 12, 1, '大小牛', '大小牛介绍', 'Image\\2024-05-08CDCM.png', 100.00, 50.00, 0, 10052, '2024-04-23 05:34:20', '2024-05-08 08:46:54', b'0'),
-                                                                                                                                                                                                                              (5, 12, 1, '小牛', '小牛介绍', 'Image\\2024-05-08CDCM.png', 50.00, 25.00, 0, 10000, '2024-04-24 13:04:51', '2024-05-08 08:46:56', b'0'),
-                                                                                                                                                                                                                              (6, 15, 1, '小猴猴', '小猴猴介绍', 'Image\\2024-05-08CDCM.png', 50.00, 25.00, 0, 10000, '2024-04-24 13:29:03', '2024-05-08 08:46:57', b'0'),
-                                                                                                                                                                                                                              (7, 15, 1, '小小猴猴猴猴', '小小猴猴猴猴介绍', 'Image\\2024-05-08CDCM.png', 5000.00, 2500.00, 0, 1000000, '2024-04-24 13:29:23', '2024-05-08 08:46:57', b'0'),
-                                                                                                                                                                                                                              (8, 15, 722354179, '小小猴', '小小猴介绍', 'Image\\2024-05-08CDCM.png', 5000.00, 2500.00, 0, 1000000, '2024-04-24 13:30:19', '2024-05-08 08:46:58', b'0');
+                                                                                                                                                                                                                              (20, 30, 722354191, '彩羽鸣春', '精美的生肖鸡剪纸，寓意吉祥如意，为您带来好运和幸福。', 'Image/2024-05-16HuCF.jpg', 25.00, 12.00, 0, 1000, '2024-05-16 10:20:33', '2024-05-21 04:41:33', b'0'),
+                                                                                                                                                                                                                              (21, 30, 722354192, '福瑞祥鸡 ', '这款生肖鸡剪纸以其精细的工艺和生动的形象，展现了传统文化的魅力。', 'Image/2024-05-16ZqdW.jpg', 25.00, 10.00, 0, 1000, '2024-05-16 10:21:34', '2024-05-21 04:41:35', b'0'),
+                                                                                                                                                                                                                              (22, 30, 722354193, '金鸡报晓', '采用优质纸张制作，色彩鲜艳，让生肖鸡剪纸成为家居装饰的亮点。', 'Image/2024-05-16VTII.jpg', 40.00, 20.00, 0, 1000, '2024-05-16 10:22:31', '2024-05-21 04:41:38', b'0'),
+                                                                                                                                                                                                                              (23, 30, 722354195, '锦绣凤雏', '这款剪纸作品将生肖鸡的形象与中国传统文化相结合，寓意着家庭的团圆和幸福。', 'Image/2024-05-16iDrx.jpg', 25.00, 15.00, 0, 0, '2024-05-16 10:23:16', '2024-05-21 04:41:41', b'0'),
+                                                                                                                                                                                                                              (24, 30, 722354197, '瑞彩仙鸡', '独特的生肖鸡剪纸设计，为您带来独特的视觉体验和美好的寓意。', 'Image/2024-05-16IRBI.jpg', 15.00, 5.00, 0, 1000, '2024-05-16 10:23:48', '2024-05-21 04:41:44', b'0'),
+                                                                                                                                                                                                                              (25, 30, 722354197, '百福鸡舞', '这款生肖鸡剪纸以其精美的工艺和细腻的刀工，展现了剪纸艺术的魅力。', 'Image/2024-05-16EPmd.jpg', 40.00, 30.00, 0, 1000, '2024-05-16 10:24:26', '2024-05-21 04:41:46', b'0'),
+                                                                                                                                                                                                                              (26, 30, 722354199, '吉星拱照', '将生肖鸡剪纸作为礼物送给亲朋好友，寓意着吉祥如意和美好的祝福。', 'Image/2024-05-16sC1e.jpg', 15.00, 10.00, 0, 1000, '2024-05-16 10:24:54', '2024-05-21 04:41:48', b'0'),
+                                                                                                                                                                                                                              (27, 30, 722354200, '锦绣吉祥', '这款生肖鸡剪纸以其生动的形象和传统的工艺，展现了中华文化的博大精深。', 'Image/2024-05-164AW0.jpg', 30.00, 20.00, 0, 1000, '2024-05-16 10:25:26', '2024-05-21 04:41:50', b'0'),
+                                                                                                                                                                                                                              (28, 30, 722354196, '凤鸣朝阳 ', '采用传统的剪纸工艺，将生肖鸡的形象栩栩如生地展现出来，让人赞叹不已。', 'Image/2024-05-16JTlP.jpg', 20.00, 15.00, 0, 1000, '2024-05-16 10:25:54', '2024-05-21 04:41:52', b'0'),
+                                                                                                                                                                                                                              (29, 30, 722354195, '欢歌迎春', '这款生肖鸡剪纸以其独特的创意和精美的工艺，成为了家居装饰的时尚之选。', 'Image/2024-05-16GpnF.jpg', 28.00, 20.00, 0, 1000, '2024-05-16 10:26:18', '2024-05-21 04:41:53', b'0'),
+                                                                                                                                                                                                                              (30, 30, 722354197, '翠羽迎春', '将生肖鸡剪纸挂在墙上，不仅增添了艺术氛围，还能带来好运和吉祥。', 'Image/2024-05-16TJlc.jpg', 13.00, 10.00, 0, 1000, '2024-05-16 10:26:51', '2024-05-21 04:41:55', b'0'),
+                                                                                                                                                                                                                              (31, 30, 722354196, '红冠吉祥', '这款生肖鸡剪纸以其传统的工艺和独特的创意，展现了剪纸艺术的魅力和活力。', 'Image/2024-05-16ZonX.jpg', 35.00, 30.00, 0, 1000, '2024-05-16 10:27:16', '2024-05-21 04:41:56', b'0'),
+                                                                                                                                                                                                                              (32, 30, 722354196, '玉立雅鸡', '精美的生肖鸡剪纸，寓意着家庭的幸福和美满，是家居装饰的绝佳选择。', 'Image/2024-05-16U1TM.jpg', 43.00, 40.00, 0, 1000, '2024-05-16 10:28:11', '2024-05-21 04:41:58', b'0'),
+                                                                                                                                                                                                                              (33, 30, 722354192, '华彩金鸡', '这款生肖鸡剪纸以其生动的形象和细腻的刀工，让人仿佛能听到鸡鸣之声。\n', 'Image/2024-05-16MZWQ.jpg', 12.00, 10.00, 0, 1000, '2024-05-16 10:28:32', '2024-05-21 04:42:00', b'0'),
+                                                                                                                                                                                                                              (34, 30, 722354191, '祥瑞凤鸡', '将生肖鸡剪纸作为礼物送给亲朋好友，寓意着吉祥如意和美好的祝福。', 'Image/2024-05-16rlpT.jpg', 17.00, 11.00, 0, 1000, '2024-05-16 10:28:59', '2024-05-21 04:42:02', b'0'),
+                                                                                                                                                                                                                              (35, 30, 722354198, '瑞羽仙姬', '这款生肖鸡剪纸以其传统的工艺和独特的创意，展现了剪纸艺术的魅力和活力。', 'Image/2024-05-16Ra1E.jpg', 37.00, 34.00, 0, 1000, '2024-05-16 10:29:20', '2024-05-21 04:42:03', b'0'),
+                                                                                                                                                                                                                              (36, 30, 722354196, '锦绣金鸡', '精美的生肖鸡剪纸，寓意着家庭的幸福和美满，是家居装饰的绝佳选择。', 'Image/2024-05-16xPMv.jpg', 20.00, 11.00, 0, 1000, '2024-05-16 10:29:43', '2024-05-21 04:42:04', b'0'),
+                                                                                                                                                                                                                              (37, 30, 722354198, '福韵灵鸡', '这款生肖鸡剪纸以其生动的形象和细腻的刀工，让人仿佛能听到鸡鸣之声。', 'Image/2024-05-16CL66.jpg', 25.00, 11.00, 0, 1000, '2024-05-16 10:30:07', '2024-05-21 04:42:06', b'0'),
+                                                                                                                                                                                                                              (38, 30, 722354196, '舞阳金鸡', '这款生肖鸡剪纸以其传统的工艺和独特的创意，展现了剪纸艺术的魅力和活力。', 'Image/2024-05-16brXS.jpg', 34.00, 17.00, 0, 1000, '2024-05-16 10:30:29', '2024-05-21 04:42:08', b'0'),
+                                                                                                                                                                                                                              (39, 30, 722354197, '雅韵鸣鸡', '生肖鸡剪纸，富有中国传统文化的韵味，是家居装饰和礼品赠送的佳品。', 'Image/2024-05-16Ygz5.jpg', 25.00, 15.00, 0, 1000, '2024-05-16 10:30:55', '2024-05-21 04:42:09', b'0'),
+                                                                                                                                                                                                                              (40, 30, 722354199, '金翎瑞羽', '生肖鸡剪纸：传承中华文化，剪纸艺术与生肖文化的完美结合，寓意吉祥如意。', 'Image/2024-05-16JVnH.jpg', 34.00, 24.00, 0, 1000, '2024-05-16 10:31:17', '2024-05-21 04:42:11', b'0'),
+                                                                                                                                                                                                                              (41, 30, 722354199, '鸣春福鸡', '精美生肖鸡剪纸：独具匠心的传统手工艺，为您带来独特的装饰艺术享受。', 'Image/2024-05-16TSww.jpg', 23.00, 14.00, 0, 1000, '2024-05-16 10:31:37', '2024-05-21 04:42:13', b'0');
 
--- 导出  表 paper-cutting.goods_views 结构
+-- 导出  表 paper-cutting-android.goods_views 结构
 CREATE TABLE IF NOT EXISTS `goods_views` (
                                              `goods_views_id` int unsigned NOT NULL AUTO_INCREMENT,
                                              `goods_id` int NOT NULL COMMENT '商品id',
                                              `buyer_id` bigint NOT NULL COMMENT '用户id',
                                              `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '浏览时间',
                                              PRIMARY KEY (`goods_views_id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4     COMMENT='近期浏览商品';
+    ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='近期浏览商品';
 
--- 正在导出表  paper-cutting.goods_views 的数据：~4 rows (大约)
+-- 正在导出表  paper-cutting-android.goods_views 的数据：~12 rows (大约)
 INSERT INTO `goods_views` (`goods_views_id`, `goods_id`, `buyer_id`, `create_time`) VALUES
-                                                                                        (5, 1, 1782381108064657409, '2024-05-09 08:46:54'),
-                                                                                        (6, 3, 1782381108064657409, '2024-05-09 04:46:53'),
-                                                                                        (7, 5, 1782381108064657409, '2024-05-09 04:46:54'),
-                                                                                        (8, 6, 1782381108064657409, '2024-05-09 04:46:56');
+                                                                                        (5, 20, 1782381108064657409, '2024-05-20 08:19:19'),
+                                                                                        (6, 21, 1782381108064657409, '2024-05-20 05:29:11'),
+                                                                                        (7, 25, 1782381108064657409, '2024-05-21 01:52:33'),
+                                                                                        (8, 30, 1782381108064657409, '2024-05-16 10:40:26'),
+                                                                                        (9, 41, 1782381108064657409, '2024-05-16 10:40:34'),
+                                                                                        (10, 234, 1782381108064657409, '2024-05-15 20:01:32'),
+                                                                                        (11, 1, 1782381108064657409, '2024-05-16 13:50:36'),
+                                                                                        (12, 6, 1782381108064657409, '2024-05-16 13:50:36'),
+                                                                                        (13, 3, 1782381108064657409, '2024-05-16 13:50:35'),
+                                                                                        (14, 10, 1782381108064657409, '2024-05-16 13:50:36'),
+                                                                                        (15, 23, 1782381108064657409, '2024-05-20 05:28:44'),
+                                                                                        (16, 22, 1782381108064657409, '2024-05-19 10:44:56');
 
--- 导出  表 paper-cutting.order_info 结构
+-- 导出  表 paper-cutting-android.image_understanding 结构
+CREATE TABLE IF NOT EXISTS `image_understanding` (
+                                                     `image_Id` bigint unsigned NOT NULL COMMENT '图片id',
+                                                     `pic_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '图片url',
+    PRIMARY KEY (`image_Id`) USING BTREE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='图片理解';
+
+-- 正在导出表  paper-cutting-android.image_understanding 的数据：~0 rows (大约)
+
+-- 导出  表 paper-cutting-android.order_info 结构
 CREATE TABLE IF NOT EXISTS `order_info` (
                                             `order_id` bigint NOT NULL,
                                             `goods_id` int NOT NULL COMMENT '商品id',
@@ -179,100 +252,108 @@ CREATE TABLE IF NOT EXISTS `order_info` (
                                             `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                                             `del_flag` bit(1) NOT NULL DEFAULT b'0' COMMENT '逻辑删除(默认0)',
     PRIMARY KEY (`order_id`) USING BTREE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4     COMMENT='订单信息表';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='订单信息表';
 
--- 正在导出表  paper-cutting.order_info 的数据：~2 rows (大约)
+-- 正在导出表  paper-cutting-android.order_info 的数据：~3 rows (大约)
 INSERT INTO `order_info` (`order_id`, `goods_id`, `buyer_id`, `receiving_address_id`, `order_status`, `create_time`, `update_time`, `del_flag`) VALUES
-                                                                                                                                                    (1783712793834233858, 3, 1782381108064657409, 1, 3, '2024-04-26 04:20:44', '2024-04-26 05:58:12', b'1'),
-                                                                                                                                                    (1783712793876176897, 1, 1782381108064657409, 1, 3, '2024-04-26 04:20:44', '2024-04-26 04:20:44', b'0');
+                                                                                                                                                    (1791098426802524162, 25, 1782381108064657409, 1, 3, '2024-05-16 13:28:36', '2024-05-16 13:28:36', b'0'),
+                                                                                                                                                    (1792075791812726786, 30, 1782381108064657409, 1, 3, '2024-05-19 06:12:18', '2024-05-19 06:12:18', b'0'),
+                                                                                                                                                    (1792426367788449793, 35, 1782381108064657409, 1, 3, '2024-05-20 05:25:22', '2024-05-20 05:25:22', b'0');
 
--- 导出  表 paper-cutting.receiving_address 结构
+-- 导出  表 paper-cutting-android.receiving_address 结构
 CREATE TABLE IF NOT EXISTS `receiving_address` (
                                                    `receiving_address_id` int unsigned NOT NULL AUTO_INCREMENT,
                                                    `buyer_id` bigint NOT NULL COMMENT '用户id',
-                                                   `recipient_name` varchar(50) CHARACTER SET utf8mb4  NOT NULL COMMENT '收件人姓名',
-    `recipient_phone` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '收件人电话',
-    `recipient_region` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '所在地区',
-    `recipient_address` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '详细地址',
+                                                   `recipient_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '收件人姓名',
+    `recipient_phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '收件人电话',
+    `recipient_region` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '所在地区',
+    `recipient_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '详细地址',
     PRIMARY KEY (`receiving_address_id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4     COMMENT='收货地址表';
+    ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='收货地址表';
 
--- 正在导出表  paper-cutting.receiving_address 的数据：~2 rows (大约)
+-- 正在导出表  paper-cutting-android.receiving_address 的数据：~4 rows (大约)
 INSERT INTO `receiving_address` (`receiving_address_id`, `buyer_id`, `recipient_name`, `recipient_phone`, `recipient_region`, `recipient_address`) VALUES
-                                                                                                                                                       (1, 1782381108064657409, '收件人姓名2', '收件人电话', '收件人所在地区', '收件人详细地址'),
-                                                                                                                                                       (2, 1, '1', '1', '1', '1');
+                                                                                                                                                       (1, 1782381108064657409, '王振义', '1863539xxxx', '山西阳泉', '盂县世纪华庭小区10号楼'),
+                                                                                                                                                       (4, 1782381108064657409, '吴昕凯', '1324258xxxx', '山西太原', '太原理工大学迎西校区'),
+                                                                                                                                                       (5, 1782381108064657409, '李昊困', '1864236xxxx', '山西榆次', '太原理工大学明向小区'),
+                                                                                                                                                       (17, 1782381108064657409, '梨花开', '15534217753', '山西大同', '大同平城区迎宾街');
 
--- 导出  表 paper-cutting.shop_follow 结构
+-- 导出  表 paper-cutting-android.shop_follow 结构
 CREATE TABLE IF NOT EXISTS `shop_follow` (
                                              `shop_follow_id` int unsigned NOT NULL AUTO_INCREMENT,
                                              `shop_id` int NOT NULL COMMENT '店铺id',
                                              `buyer_id` bigint NOT NULL COMMENT '用户id',
                                              `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '关注时间',
                                              PRIMARY KEY (`shop_follow_id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4     COMMENT='店铺关注表';
+    ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='店铺关注表';
 
--- 正在导出表  paper-cutting.shop_follow 的数据：~1 rows (大约)
+-- 正在导出表  paper-cutting-android.shop_follow 的数据：~2 rows (大约)
 INSERT INTO `shop_follow` (`shop_follow_id`, `shop_id`, `buyer_id`, `create_time`) VALUES
-                                                                                       (1, 1, 1782381108064657409, '2024-04-23 07:19:32'),
+                                                                                       (1, 722354191, 1782381108064657409, '2024-04-23 07:19:32'),
                                                                                        (3, 722354187, 1782381108064657409, '2024-05-09 08:45:03');
 
--- 导出  表 paper-cutting.shop_info 结构
+-- 导出  表 paper-cutting-android.shop_info 结构
 CREATE TABLE IF NOT EXISTS `shop_info` (
                                            `shop_id` int unsigned NOT NULL AUTO_INCREMENT,
-                                           `shop_name` varchar(50) NOT NULL COMMENT '店铺名称',
-    `pic_url` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '店铺图片',
+                                           `shop_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '店铺名称',
+    `pic_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '店铺图片',
     `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `del_flag` bit(1) NOT NULL DEFAULT b'0' COMMENT '逻辑删除(默认0)',
     PRIMARY KEY (`shop_id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=722354191 DEFAULT CHARSET=utf8mb4     COMMENT='店铺信息表';
+    ) ENGINE=InnoDB AUTO_INCREMENT=722354201 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='店铺信息表';
 
--- 正在导出表  paper-cutting.shop_info 的数据：~3 rows (大约)
+-- 正在导出表  paper-cutting-android.shop_info 的数据：~10 rows (大约)
 INSERT INTO `shop_info` (`shop_id`, `shop_name`, `pic_url`, `create_time`, `update_time`, `del_flag`) VALUES
-                                                                                                          (1, '姿色纸缘', 'Image\\2024-05-08CDCM.png', '2024-04-16 07:26:15', '2024-05-08 08:51:23', b'0'),
-                                                                                                          (722354187, '店铺名称', 'Image\\2024-05-08CDCM.png', '2024-04-25 11:24:41', '2024-05-08 08:51:24', b'0'),
-                                                                                                          (722354190, '店铺名', 'Image\\2024-05-08CDCM.png', '2024-04-28 05:31:23', '2024-05-08 08:51:24', b'0');
+                                                                                                          (722354191, '纸韵艺坊', 'Image/2024-05-16ep5e.png', '2024-05-16 10:12:24', '2024-05-21 04:43:02', b'0'),
+                                                                                                          (722354192, '剪影阁', 'Image/2024-05-16iOtf.png', '2024-05-16 10:12:33', '2024-05-21 04:43:04', b'0'),
+                                                                                                          (722354193, '千丝万缕坊', 'Image/2024-05-16IBsH.png', '2024-05-16 10:12:39', '2024-05-21 04:43:07', b'0'),
+                                                                                                          (722354194, '红纸轩', 'Image/2024-05-16lqZl.png', '2024-05-16 10:12:46', '2024-05-21 04:43:09', b'0'),
+                                                                                                          (722354195, '艺剪云端', 'Image/2024-05-16pIZs.png', '2024-05-16 10:12:51', '2024-05-21 04:43:11', b'0'),
+                                                                                                          (722354196, '纸韵传承', 'Image/2024-05-16bC45.png', '2024-05-16 10:12:56', '2024-05-21 04:43:12', b'0'),
+                                                                                                          (722354197, '剪梦阁', 'Image/2024-05-16dvZI.png', '2024-05-16 10:13:02', '2024-05-21 04:43:14', b'0'),
+                                                                                                          (722354198, '纸界匠心', 'Image/2024-05-16Ptv6.png', '2024-05-16 10:13:07', '2024-05-21 04:43:16', b'0'),
+                                                                                                          (722354199, '锦绣剪影', 'Image/2024-05-16A5kI.png', '2024-05-16 10:13:12', '2024-05-21 04:43:17', b'0'),
+                                                                                                          (722354200, '古韵剪纸坊', 'Image/2024-05-16aYae.png', '2024-05-16 10:13:18', '2024-05-21 04:43:19', b'0');
 
--- 导出  表 paper-cutting.ums_admin 结构
+-- 导出  表 paper-cutting-android.ums_admin 结构
 CREATE TABLE IF NOT EXISTS `ums_admin` (
                                            `id` bigint NOT NULL AUTO_INCREMENT,
-                                           `username` varchar(64) CHARACTER SET utf8mb3    DEFAULT NULL,
-    `password` varchar(64) CHARACTER SET utf8mb3    DEFAULT NULL,
-    `icon` varchar(500) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '头像',
-    `email` varchar(100) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '邮箱',
-    `nick_name` varchar(200) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '昵称',
-    `note` varchar(500) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '备注信息',
+                                           `username` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+    `password` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+    `icon` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '头像',
+    `email` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '邮箱',
+    `nick_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '昵称',
+    `note` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '备注信息',
     `create_time` datetime DEFAULT NULL COMMENT '创建时间',
     `login_time` datetime DEFAULT NULL COMMENT '最后登录时间',
     `status` int DEFAULT '1' COMMENT '帐号启用状态：0->禁用；1->启用',
     PRIMARY KEY (`id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='后台用户表';
+    ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='后台用户表';
 
--- 正在导出表  paper-cutting.ums_admin 的数据：~10 rows (大约)
+-- 正在导出表  paper-cutting-android.ums_admin 的数据：~9 rows (大约)
 INSERT INTO `ums_admin` (`id`, `username`, `password`, `icon`, `email`, `nick_name`, `note`, `create_time`, `login_time`, `status`) VALUES
-                                                                                                                                        (1, '', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', '头像', '邮箱', '昵称', '备注信息', '2018-09-29 13:55:30', '2018-09-29 13:55:39', 0),
-                                                                                                                                        (3, 'admin', '$2a$10$.E1FokumK5GIXWgKlg.Hc.i/0/2.qdAwYFL1zc5QHdyzpXOr38RZO', 'https://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/icon/github_icon_01.png', 'admin@163.com', '系统管理员', '系统管理员', '2018-10-08 13:32:47', '2019-04-20 12:45:16', 1),
-                                                                                                                                        (4, 'macro', '$2a$10$Bx4jZPR7GhEpIQfefDQtVeS58GfT5n6mxs/b4nLLK65eMFa16topa', 'https://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/icon/github_icon_01.png', 'macro@qq.com', 'macro', 'macro专用', '2019-10-06 15:53:51', '2020-02-03 14:55:55', 1),
-                                                                                                                                        (6, 'productAdmin', '$2a$10$6/.J.p.6Bhn7ic4GfoB5D.pGd7xSiD1a9M6ht6yO0fxzlKJPjRAGm', 'https://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/icon/github_icon_03.png', 'product@qq.com', '商品管理员', '只有商品权限', '2020-02-07 16:15:08', NULL, 1),
-                                                                                                                                        (7, 'orderAdmin', '$2a$10$UqEhA9UZXjHHA3B.L9wNG.6aerrBjC6WHTtbv1FdvYPUI.7lkL6E.', 'https://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/icon/github_icon_04.png', 'order@qq.com', '订单管理员', '只有订单管理权限', '2020-02-07 16:15:50', NULL, 1),
-                                                                                                                                        (8, 'test123', '$2a$10$M1qJguEzwoAN0la7PB8UO.HOGe1xZGku7xw1iTaUUpY0ZVRCxrxoO', 'string', 'abc@qq.com', 'string', 'string', '2022-08-07 14:45:42', NULL, 1),
-                                                                                                                                        (9, 'test256', '$2a$10$kTMBrt8mkXcO8T4eHThFWOf3KuNK6tqevkiAf4YbtXtaCJ6ocYkJa', 'string', 'abc@qq.com', 'string', 'string', '2022-08-07 14:52:57', NULL, 1),
-                                                                                                                                        (10, 'test1267', '$2a$10$VUywDhXVPY13YZxMD/uPWeDqkzSozN7o8u/3MX6sBig2NK2VaTJZ2', NULL, 'test1267@qq.com', 'test1267', 'test1267', '2023-01-04 16:13:34', NULL, 1),
-                                                                                                                                        (11, 'iyaovo', '$2a$10$2FJclxrEQ8bLmhslSvYJhe0fqPTGc4jH9wlLq3wK3e4ptThLREOne', '用户头像', '邮箱', '用户昵称', '备注', '2024-04-25 17:47:13', NULL, 1),
-                                                                                                                                        (16, 'iwqeqwe', '$2a$10$fdpixEGkKGbWdYUWlpU2v.7mkxijnyGsvZfzR2RtgmOnr1F40MhEa', '用户头像', '邮箱', '用户昵称', '备注', '2024-04-26 21:08:16', NULL, 1);
+                                                                                                                                        (1, '', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'Image/2024-05-16rmVO.jpg', '邮箱', '昵称', '备注信息', '2018-09-29 13:55:30', '2018-09-29 13:55:39', 0),
+                                                                                                                                        (3, 'admin', '$2a$10$.E1FokumK5GIXWgKlg.Hc.i/0/2.qdAwYFL1zc5QHdyzpXOr38RZO', 'Image/2024-05-21UJex.png', 'admin@163.com', '系统管理员', '系统管理员', '2018-10-08 13:32:47', '2019-04-20 12:45:16', 1),
+                                                                                                                                        (8, 'test123', '$2a$10$M1qJguEzwoAN0la7PB8UO.HOGe1xZGku7xw1iTaUUpY0ZVRCxrxoO', 'Image/2024-05-16rmVO.jpg', 'abc@qq.com', 'string', 'string', '2022-08-07 14:45:42', NULL, 1),
+                                                                                                                                        (9, 'test256', '$2a$10$kTMBrt8mkXcO8T4eHThFWOf3KuNK6tqevkiAf4YbtXtaCJ6ocYkJa', 'Image/2024-05-16rmVO.jpg', 'abc@qq.com', 'string', 'string', '2022-08-07 14:52:57', NULL, 1),
+                                                                                                                                        (10, 'test1267', '$2a$10$VUywDhXVPY13YZxMD/uPWeDqkzSozN7o8u/3MX6sBig2NK2VaTJZ2', 'Image/2024-05-16rmVO.jpg', 'test1267@qq.com', 'test1267', 'test1267', '2023-01-04 16:13:34', NULL, 1),
+                                                                                                                                        (16, 'iwqeqwe', '$2a$10$fdpixEGkKGbWdYUWlpU2v.7mkxijnyGsvZfzR2RtgmOnr1F40MhEa', 'Image/2024-05-16rmVO.jpg', '邮箱', '用户昵称', '备注', '2024-04-26 21:08:16', NULL, 1),
+                                                                                                                                        (17, 'zuizuizui', '$2a$10$han.5ifsgal6NMSNz0Q6XuVAsE1uhqxdBUX0z9dXM4M783GQz6rCG', 'Image/2024-05-16rmVO.jpg', '邮箱', '用户昵称', '备注', '2024-05-16 18:16:59', NULL, 1),
+                                                                                                                                        (18, 'iyaovo', '$2a$10$3ELagkrm1Dx17kAdFXgRn.jgrvSBrKZCJwwbiLnDagoPkHpOhb8Yq', 'Image/2024-05-16rmVO.jpg', '邮箱', '用户昵称', '备注', '2024-05-16 18:44:39', NULL, 1);
 
--- 导出  表 paper-cutting.ums_admin_login_log 结构
+-- 导出  表 paper-cutting-android.ums_admin_login_log 结构
 CREATE TABLE IF NOT EXISTS `ums_admin_login_log` (
                                                      `id` bigint NOT NULL AUTO_INCREMENT,
                                                      `admin_id` bigint DEFAULT NULL,
                                                      `create_time` datetime DEFAULT NULL,
-                                                     `ip` varchar(64) CHARACTER SET utf8mb3    DEFAULT NULL,
-    `address` varchar(100) CHARACTER SET utf8mb3    DEFAULT NULL,
-    `user_agent` varchar(100) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '浏览器登录类型',
+                                                     `ip` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+    `address` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+    `user_agent` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '浏览器登录类型',
     PRIMARY KEY (`id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=427 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='后台用户登录日志表';
+    ) ENGINE=InnoDB AUTO_INCREMENT=437 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='后台用户登录日志表';
 
--- 正在导出表  paper-cutting.ums_admin_login_log 的数据：~426 rows (大约)
+-- 正在导出表  paper-cutting-android.ums_admin_login_log 的数据：~436 rows (大约)
 INSERT INTO `ums_admin_login_log` (`id`, `admin_id`, `create_time`, `ip`, `address`, `user_agent`) VALUES
                                                                                                        (1, 3, '2018-12-23 14:27:00', '0:0:0:0:0:0:0:1', NULL, NULL),
                                                                                                        (2, 3, '2019-04-07 16:04:39', '0:0:0:0:0:0:0:1', NULL, NULL),
@@ -699,9 +780,19 @@ INSERT INTO `ums_admin_login_log` (`id`, `admin_id`, `create_time`, `ip`, `addre
                                                                                                        (423, 3, '2024-04-26 20:53:17', '192.168.1.8', NULL, NULL),
                                                                                                        (424, 3, '2024-04-26 22:47:01', '192.168.1.8', NULL, NULL),
                                                                                                        (425, 11, '2024-04-28 13:29:33', '192.168.1.5', NULL, NULL),
-                                                                                                       (426, 3, '2024-05-09 13:48:55', '10.0.0.172', NULL, NULL);
+                                                                                                       (426, 3, '2024-05-09 13:48:55', '10.0.0.172', NULL, NULL),
+                                                                                                       (427, 3, '2024-05-12 14:27:07', '10.0.0.131', NULL, NULL),
+                                                                                                       (428, 3, '2024-05-16 15:50:06', '10.0.0.131', NULL, NULL),
+                                                                                                       (429, 3, '2024-05-16 15:53:15', '10.0.0.131', NULL, NULL),
+                                                                                                       (430, 3, '2024-05-16 16:36:07', '192.168.0.107', NULL, NULL),
+                                                                                                       (431, 3, '2024-05-16 18:13:44', '10.0.0.131', NULL, NULL),
+                                                                                                       (432, 3, '2024-05-16 18:13:50', '10.0.0.131', NULL, NULL),
+                                                                                                       (433, 3, '2024-05-16 18:13:55', '10.0.0.131', NULL, NULL),
+                                                                                                       (434, 3, '2024-05-16 18:17:19', '10.0.0.131', NULL, NULL),
+                                                                                                       (435, 3, '2024-05-16 21:16:06', '26.118.114.44', NULL, NULL),
+                                                                                                       (436, 3, '2024-05-16 22:01:49', '10.0.0.131', NULL, NULL);
 
--- 导出  表 paper-cutting.ums_admin_permission_relation 结构
+-- 导出  表 paper-cutting-android.ums_admin_permission_relation 结构
 CREATE TABLE IF NOT EXISTS `ums_admin_permission_relation` (
                                                                `id` bigint NOT NULL AUTO_INCREMENT,
                                                                `admin_id` bigint DEFAULT NULL,
@@ -710,17 +801,17 @@ CREATE TABLE IF NOT EXISTS `ums_admin_permission_relation` (
                                                                PRIMARY KEY (`id`) USING BTREE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='后台用户和权限关系表(除角色中定义的权限以外的加减权限)';
 
--- 正在导出表  paper-cutting.ums_admin_permission_relation 的数据：~0 rows (大约)
+-- 正在导出表  paper-cutting-android.ums_admin_permission_relation 的数据：~0 rows (大约)
 
--- 导出  表 paper-cutting.ums_admin_role_relation 结构
+-- 导出  表 paper-cutting-android.ums_admin_role_relation 结构
 CREATE TABLE IF NOT EXISTS `ums_admin_role_relation` (
                                                          `id` bigint NOT NULL AUTO_INCREMENT,
                                                          `admin_id` bigint DEFAULT NULL,
                                                          `role_id` bigint DEFAULT NULL,
                                                          PRIMARY KEY (`id`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='后台用户和角色关系表';
+    ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='后台用户和角色关系表';
 
--- 正在导出表  paper-cutting.ums_admin_role_relation 的数据：~8 rows (大约)
+-- 正在导出表  paper-cutting-android.ums_admin_role_relation 的数据：~10 rows (大约)
 INSERT INTO `ums_admin_role_relation` (`id`, `admin_id`, `role_id`) VALUES
                                                                         (26, 3, 5),
                                                                         (27, 6, 1),
@@ -729,48 +820,60 @@ INSERT INTO `ums_admin_role_relation` (`id`, `admin_id`, `role_id`) VALUES
                                                                         (30, 4, 5),
                                                                         (31, 8, 1),
                                                                         (33, 11, 1),
-                                                                        (36, 16, 1);
+                                                                        (36, 16, 1),
+                                                                        (37, 17, 1),
+                                                                        (38, 18, 1);
 
--- 导出  表 paper-cutting.ums_admin_shop_relation 结构
+-- 导出  表 paper-cutting-android.ums_admin_shop_relation 结构
 CREATE TABLE IF NOT EXISTS `ums_admin_shop_relation` (
                                                          `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
                                                          `admin_id` bigint NOT NULL DEFAULT '0' COMMENT '用户id',
                                                          `shop_id` int NOT NULL COMMENT '店铺id',
-                                                         PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=1519267843 DEFAULT CHARSET=utf8mb4     COMMENT='用户店铺关系表';
+                                                         PRIMARY KEY (`id`) USING BTREE
+    ) ENGINE=InnoDB AUTO_INCREMENT=1519267853 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户店铺关系表';
 
--- 正在导出表  paper-cutting.ums_admin_shop_relation 的数据：~1 rows (大约)
+-- 正在导出表  paper-cutting-android.ums_admin_shop_relation 的数据：~11 rows (大约)
 INSERT INTO `ums_admin_shop_relation` (`id`, `admin_id`, `shop_id`) VALUES
-    (1, 11, 1);
+                                                                        (1, 11, 1),
+                                                                        (1519267843, 16, 722354191),
+                                                                        (1519267844, 1, 722354192),
+                                                                        (1519267845, 4, 722354193),
+                                                                        (1519267846, 6, 722354194),
+                                                                        (1519267847, 7, 722354195),
+                                                                        (1519267848, 8, 722354196),
+                                                                        (1519267849, 9, 722354197),
+                                                                        (1519267850, 10, 722354198),
+                                                                        (1519267851, 11, 722354199),
+                                                                        (1519267852, 18, 722354200);
 
--- 导出  表 paper-cutting.ums_menu 结构
+-- 导出  表 paper-cutting-android.ums_menu 结构
 CREATE TABLE IF NOT EXISTS `ums_menu` (
                                           `id` bigint NOT NULL AUTO_INCREMENT,
                                           `parent_id` bigint DEFAULT NULL COMMENT '父级ID',
                                           `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                                          `title` varchar(100) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '菜单名称',
+                                          `title` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '菜单名称',
     `level` int DEFAULT NULL COMMENT '菜单级数',
     `sort` int DEFAULT NULL COMMENT '菜单排序',
-    `name` varchar(100) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '前端名称',
-    `icon` varchar(200) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '前端图标',
+    `name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '前端名称',
+    `icon` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '前端图标',
     `hidden` int DEFAULT NULL COMMENT '前端隐藏',
     PRIMARY KEY (`id`) USING BTREE
     ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='后台菜单表';
 
--- 正在导出表  paper-cutting.ums_menu 的数据：~24 rows (大约)
+-- 正在导出表  paper-cutting-android.ums_menu 的数据：~24 rows (大约)
 INSERT INTO `ums_menu` (`id`, `parent_id`, `create_time`, `title`, `level`, `sort`, `name`, `icon`, `hidden`) VALUES
                                                                                                                   (1, 0, '2020-02-02 14:50:36', '商品', 0, 0, 'pms', 'product', 0),
                                                                                                                   (2, 1, '2020-02-02 14:51:50', '商品列表', 1, 0, 'product', 'product-list', 0),
                                                                                                                   (3, 1, '2020-02-02 14:52:44', '添加商品', 1, 0, 'addProduct', 'product-add', 0),
                                                                                                                   (4, 1, '2020-02-02 14:53:51', '商品分类', 1, 0, 'productCate', 'product-cate', 0),
-                                                                                                                  (5, 1, '2020-02-02 14:54:51', '商品类型', 1, 0, 'productAttr', 'product-attr', 0),
+                                                                                                                  (5, 1, '2020-02-02 14:54:51', '商品类型', 1, 0, 'productAttr', 'product-attr', 1),
                                                                                                                   (6, 1, '2020-02-02 14:56:29', '品牌管理', 1, 0, 'brand', 'product-brand', 0),
-                                                                                                                  (7, 0, '2020-02-02 16:54:07', '订单', 0, 0, 'oms', 'order', 0),
+                                                                                                                  (7, 0, '2020-02-02 16:54:07', '订单', 0, 0, 'oms', 'order', 1),
                                                                                                                   (8, 7, '2020-02-02 16:55:18', '订单列表', 1, 0, 'order', 'product-list', 0),
                                                                                                                   (9, 7, '2020-02-02 16:56:46', '订单设置', 1, 0, 'orderSetting', 'order-setting', 0),
                                                                                                                   (10, 7, '2020-02-02 16:57:39', '退货申请处理', 1, 0, 'returnApply', 'order-return', 0),
                                                                                                                   (11, 7, '2020-02-02 16:59:40', '退货原因设置', 1, 0, 'returnReason', 'order-return-reason', 0),
-                                                                                                                  (12, 0, '2020-02-04 16:18:00', '营销', 0, 0, 'sms', 'sms', 0),
+                                                                                                                  (12, 0, '2020-02-04 16:18:00', '营销', 0, 0, 'sms', 'sms', 1),
                                                                                                                   (13, 12, '2020-02-04 16:19:22', '秒杀活动列表', 1, 0, 'flash', 'sms-flash', 0),
                                                                                                                   (14, 12, '2020-02-04 16:20:16', '优惠券列表', 1, 0, 'coupon', 'sms-coupon', 0),
                                                                                                                   (16, 12, '2020-02-07 16:22:38', '品牌推荐', 1, 0, 'homeBrand', 'product-brand', 0),
@@ -778,28 +881,28 @@ INSERT INTO `ums_menu` (`id`, `parent_id`, `create_time`, `title`, `level`, `sor
                                                                                                                   (18, 12, '2020-02-07 16:26:38', '人气推荐', 1, 0, 'homeHot', 'sms-hot', 0),
                                                                                                                   (19, 12, '2020-02-07 16:28:16', '专题推荐', 1, 0, 'homeSubject', 'sms-subject', 0),
                                                                                                                   (20, 12, '2020-02-07 16:28:42', '广告列表', 1, 0, 'homeAdvertise', 'sms-ad', 0),
-                                                                                                                  (21, 0, '2020-02-07 16:29:13', '权限', 0, 0, 'ums', 'ums', 0),
+                                                                                                                  (21, 0, '2020-02-07 16:29:13', '权限', 0, 0, 'ums', 'ums', 1),
                                                                                                                   (22, 21, '2020-02-07 16:29:51', '用户列表', 1, 0, 'admin', 'ums-admin', 0),
                                                                                                                   (23, 21, '2020-02-07 16:30:13', '角色列表', 1, 0, 'role', 'ums-role', 0),
                                                                                                                   (24, 21, '2020-02-07 16:30:53', '菜单列表', 1, 0, 'menu', 'ums-menu', 0),
                                                                                                                   (25, 21, '2020-02-07 16:31:13', '资源列表', 1, 0, 'resource', 'ums-resource', 0);
 
--- 导出  表 paper-cutting.ums_permission 结构
+-- 导出  表 paper-cutting-android.ums_permission 结构
 CREATE TABLE IF NOT EXISTS `ums_permission` (
                                                 `id` bigint NOT NULL AUTO_INCREMENT,
                                                 `pid` bigint DEFAULT NULL COMMENT '父级权限id',
-                                                `name` varchar(100) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '名称',
-    `value` varchar(200) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '权限值',
-    `icon` varchar(500) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '图标',
+                                                `name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '名称',
+    `value` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '权限值',
+    `icon` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '图标',
     `type` int DEFAULT NULL COMMENT '权限类型：0->目录；1->菜单；2->按钮（接口绑定权限）',
-    `uri` varchar(200) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '前端资源路径',
+    `uri` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '前端资源路径',
     `status` int DEFAULT NULL COMMENT '启用状态；0->禁用；1->启用',
     `create_time` datetime DEFAULT NULL COMMENT '创建时间',
     `sort` int DEFAULT NULL COMMENT '排序',
     PRIMARY KEY (`id`) USING BTREE
     ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='后台用户权限表';
 
--- 正在导出表  paper-cutting.ums_permission 的数据：~18 rows (大约)
+-- 正在导出表  paper-cutting-android.ums_permission 的数据：~18 rows (大约)
 INSERT INTO `ums_permission` (`id`, `pid`, `name`, `value`, `icon`, `type`, `uri`, `status`, `create_time`, `sort`) VALUES
                                                                                                                         (1, 0, '商品', NULL, NULL, 0, NULL, 1, '2018-09-29 16:15:14', 0),
                                                                                                                         (2, 1, '商品列表', 'pms:product:read', NULL, 1, '/pms/goods/index', 1, '2018-09-29 16:17:01', 0),
@@ -820,18 +923,18 @@ INSERT INTO `ums_permission` (`id`, `pid`, `name`, `value`, `icon`, `type`, `uri
                                                                                                                         (17, 6, '删除品牌', 'pms:brand:delete', NULL, 2, '/pms/brand/delete', 1, '2018-09-29 16:50:59', 0),
                                                                                                                         (18, 0, '首页', NULL, NULL, 0, NULL, 1, '2018-09-29 16:51:57', 0);
 
--- 导出  表 paper-cutting.ums_resource 结构
+-- 导出  表 paper-cutting-android.ums_resource 结构
 CREATE TABLE IF NOT EXISTS `ums_resource` (
                                               `id` bigint NOT NULL AUTO_INCREMENT,
                                               `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                                              `name` varchar(200) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '资源名称',
-    `url` varchar(200) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '资源URL',
-    `description` varchar(500) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '描述',
+                                              `name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '资源名称',
+    `url` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '资源URL',
+    `description` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '描述',
     `category_id` bigint DEFAULT NULL COMMENT '资源分类ID',
     PRIMARY KEY (`id`) USING BTREE
     ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='后台资源表';
 
--- 正在导出表  paper-cutting.ums_resource 的数据：~31 rows (大约)
+-- 正在导出表  paper-cutting-android.ums_resource 的数据：~31 rows (大约)
 INSERT INTO `ums_resource` (`id`, `create_time`, `name`, `url`, `description`, `category_id`) VALUES
                                                                                                   (1, '2020-02-04 17:04:55', '商品品牌管理', '/shop/**', NULL, 1),
                                                                                                   (2, '2020-02-04 17:05:35', '商品属性分类管理', '/productAttribute/category/**', NULL, 1),
@@ -865,16 +968,16 @@ INSERT INTO `ums_resource` (`id`, `create_time`, `name`, `url`, `description`, `
                                                                                                   (31, '2020-09-19 15:51:29', '获取登录用户信息', '/admin/info', '用户登录必配', 4),
                                                                                                   (32, '2020-09-19 15:53:34', '用户登出', '/admin/logout', '用户登出必配', 4);
 
--- 导出  表 paper-cutting.ums_resource_category 结构
+-- 导出  表 paper-cutting-android.ums_resource_category 结构
 CREATE TABLE IF NOT EXISTS `ums_resource_category` (
                                                        `id` bigint NOT NULL AUTO_INCREMENT,
                                                        `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                                                       `name` varchar(200) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '分类名称',
+                                                       `name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '分类名称',
     `sort` int DEFAULT NULL COMMENT '排序',
     PRIMARY KEY (`id`) USING BTREE
     ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='资源分类表';
 
--- 正在导出表  paper-cutting.ums_resource_category 的数据：~6 rows (大约)
+-- 正在导出表  paper-cutting-android.ums_resource_category 的数据：~6 rows (大约)
 INSERT INTO `ums_resource_category` (`id`, `create_time`, `name`, `sort`) VALUES
                                                                               (1, '2020-02-05 10:21:44', '商品模块', 0),
                                                                               (2, '2020-02-05 10:22:34', '订单模块', 0),
@@ -883,11 +986,11 @@ INSERT INTO `ums_resource_category` (`id`, `create_time`, `name`, `sort`) VALUES
                                                                               (5, '2020-02-07 16:34:27', '内容模块', 0),
                                                                               (7, '2020-09-19 15:49:08', '其他模块', 0);
 
--- 导出  表 paper-cutting.ums_role 结构
+-- 导出  表 paper-cutting-android.ums_role 结构
 CREATE TABLE IF NOT EXISTS `ums_role` (
                                           `id` bigint NOT NULL AUTO_INCREMENT,
-                                          `name` varchar(100) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '名称',
-    `description` varchar(500) CHARACTER SET utf8mb3    DEFAULT NULL COMMENT '描述',
+                                          `name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '名称',
+    `description` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '描述',
     `admin_count` int DEFAULT NULL COMMENT '后台用户数量',
     `create_time` datetime DEFAULT NULL COMMENT '创建时间',
     `status` int DEFAULT '1' COMMENT '启用状态：0->禁用；1->启用',
@@ -895,13 +998,13 @@ CREATE TABLE IF NOT EXISTS `ums_role` (
     PRIMARY KEY (`id`) USING BTREE
     ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='后台用户角色表';
 
--- 正在导出表  paper-cutting.ums_role 的数据：~3 rows (大约)
+-- 正在导出表  paper-cutting-android.ums_role 的数据：~3 rows (大约)
 INSERT INTO `ums_role` (`id`, `name`, `description`, `admin_count`, `create_time`, `status`, `sort`) VALUES
                                                                                                          (1, '商品管理员', '只能查看及操作商品', 0, '2020-02-03 16:50:37', 1, 0),
                                                                                                          (2, '订单管理员', '只能查看及操作订单', 0, '2018-09-30 15:53:45', 1, 0),
                                                                                                          (5, '超级管理员', '拥有所有查看和操作功能', 0, '2020-02-02 15:11:05', 1, 0);
 
--- 导出  表 paper-cutting.ums_role_menu_relation 结构
+-- 导出  表 paper-cutting-android.ums_role_menu_relation 结构
 CREATE TABLE IF NOT EXISTS `ums_role_menu_relation` (
                                                         `id` bigint NOT NULL AUTO_INCREMENT,
                                                         `role_id` bigint DEFAULT NULL COMMENT '角色ID',
@@ -909,7 +1012,7 @@ CREATE TABLE IF NOT EXISTS `ums_role_menu_relation` (
                                                         PRIMARY KEY (`id`) USING BTREE
     ) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='后台角色菜单关系表';
 
--- 正在导出表  paper-cutting.ums_role_menu_relation 的数据：~35 rows (大约)
+-- 正在导出表  paper-cutting-android.ums_role_menu_relation 的数据：~35 rows (大约)
 INSERT INTO `ums_role_menu_relation` (`id`, `role_id`, `menu_id`) VALUES
                                                                       (53, 2, 7),
                                                                       (54, 2, 8),
@@ -947,7 +1050,7 @@ INSERT INTO `ums_role_menu_relation` (`id`, `role_id`, `menu_id`) VALUES
                                                                       (125, 1, 5),
                                                                       (126, 1, 6);
 
--- 导出  表 paper-cutting.ums_role_permission_relation 结构
+-- 导出  表 paper-cutting-android.ums_role_permission_relation 结构
 CREATE TABLE IF NOT EXISTS `ums_role_permission_relation` (
                                                               `id` bigint NOT NULL AUTO_INCREMENT,
                                                               `role_id` bigint DEFAULT NULL,
@@ -955,7 +1058,7 @@ CREATE TABLE IF NOT EXISTS `ums_role_permission_relation` (
                                                               PRIMARY KEY (`id`) USING BTREE
     ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='后台用户角色和权限关系表';
 
--- 正在导出表  paper-cutting.ums_role_permission_relation 的数据：~17 rows (大约)
+-- 正在导出表  paper-cutting-android.ums_role_permission_relation 的数据：~17 rows (大约)
 INSERT INTO `ums_role_permission_relation` (`id`, `role_id`, `permission_id`) VALUES
                                                                                   (1, 1, 1),
                                                                                   (2, 1, 2),
@@ -975,7 +1078,7 @@ INSERT INTO `ums_role_permission_relation` (`id`, `role_id`, `permission_id`) VA
                                                                                   (16, 4, 16),
                                                                                   (17, 4, 17);
 
--- 导出  表 paper-cutting.ums_role_resource_relation 结构
+-- 导出  表 paper-cutting-android.ums_role_resource_relation 结构
 CREATE TABLE IF NOT EXISTS `ums_role_resource_relation` (
                                                             `id` bigint NOT NULL AUTO_INCREMENT,
                                                             `role_id` bigint DEFAULT NULL COMMENT '角色ID',
@@ -983,7 +1086,7 @@ CREATE TABLE IF NOT EXISTS `ums_role_resource_relation` (
                                                             PRIMARY KEY (`id`) USING BTREE
     ) ENGINE=InnoDB AUTO_INCREMENT=249 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='后台角色资源关系表';
 
--- 正在导出表  paper-cutting.ums_role_resource_relation 的数据：~46 rows (大约)
+-- 正在导出表  paper-cutting-android.ums_role_resource_relation 的数据：~46 rows (大约)
 INSERT INTO `ums_role_resource_relation` (`id`, `role_id`, `resource_id`) VALUES
                                                                               (194, 5, 1),
                                                                               (195, 5, 2),

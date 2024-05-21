@@ -38,7 +38,6 @@ const ShoppingScreen = () => {
     function changeShopCategory (goodsCategoryId: number) {
         // 设置active
         const activeItem = shopItemAll?.find(item => item.goodsCategoryId === goodsCategoryId)!;
-        console.log('点击了', activeItem.goodCategoryName);
         setShopItemActive({
             goodCategoryName: activeItem.goodCategoryName,
             goodsCategoryId: activeItem.goodsCategoryId,

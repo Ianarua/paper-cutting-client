@@ -9,11 +9,11 @@ export interface IResponse {
 }
 
 const request: AxiosInstance = axios.create({
-    baseURL: 'http://10.0.0.131:8082',
+    baseURL: 'http://192.168.32.137:8082',
     headers: {
         'Content-Type': 'application/json'
     },
-    timeout: 5000
+    timeout: 300000
 });
 
 request.interceptors.request.use(
@@ -46,13 +46,14 @@ request.interceptors.response.use(
                 console.error(responseData.message);
                 const token = await login('admin', 'macro123');
                 await storage.save({ key: 'token', data: token });
+                // return await request.request(response.config);
             }
             console.error(responseData.message);
             return Promise.reject(responseData.message);
         }
     },
     (error) => {
-        console.log('err-------', error);
+        console.error('err-------', error);
         // 对响应错误进行处理
         if (error.response) {
             // 服务器返回了错误状态码

@@ -35,9 +35,6 @@ const ProjectDetail = () => {
         if (!isJoinCart) {
             await postCreateCar(projectBlockData.goodsId, 1);
             setIsJoinCart(true);
-            console.log('添加成功!');
-        } else {
-            console.log('已添加至购物车了');
         }
     }
 

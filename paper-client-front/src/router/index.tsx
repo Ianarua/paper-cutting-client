@@ -14,6 +14,7 @@ import Order from '@/views/Order';
 import AddressDetail from '@/views/Adress/components/AddressDetail';
 import ShoppingList from '@/views/ShoppingList';
 import BusinessDetail from '@/views/BusinessDetail';
+import Camera from '@/views/Camera';
 
 /*
     只配置stack
@@ -86,6 +87,11 @@ const router: IRouter[] = [
         name: 'BusinessDetail',
         title: '店铺详情页',
         component: BusinessDetail
+    },
+    {
+        name: 'Camera',
+        title: '选择图片',
+        component: Camera
     }
 ];
 

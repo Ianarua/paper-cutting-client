@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
     imgView: {
         // width: '100%',
         height: '60%',
-        paddingTop: 10,
-        paddingBottom: 10,
+        // paddingTop: 10,
+        // paddingBottom: 10,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
         // backgroundColor: '#f1ece6'
     },
     img: {
-        width: width,
-        height: height,
-        objectFit: 'cover'
+        width: '100%',
+        height: '100%',
+        objectFit: 'contain'
     },
 });

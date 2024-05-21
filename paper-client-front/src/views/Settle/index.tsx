@@ -9,7 +9,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import { IAddress } from '@/interface/IAddress.ts';
 import { getAllAddress } from '@/api/Address';
 import AddressItem from '@/views/Adress/components/AddressItem';
-import { getSettleGoods } from '@/api/ProjectInfo';
 import { postSettleCar } from '@/api/Car';
 
 
@@ -27,8 +26,8 @@ const Settle: FC = () => {
         })();
     }, []);
 
-    const [totalAmount, setTotalAmount] = useState(0);
     // 计算总额
+    const [totalAmount, setTotalAmount] = useState(0);
     useEffect(() => {
         setTotalAmount(settleData.reduce((sum, item) => {
             return sum + item.projectInfo.promotionPrice * item.quantity;

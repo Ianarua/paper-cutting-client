@@ -8,6 +8,7 @@ import Camera from '@/views/Camera';
 import CenterModal from '@/components/Modal/CenterModal';
 import { postImageUnderstand } from '@/api/ImageUnderstanding';
 import ImgBase64 from '@/components/ImgBase64';
+import LoadingText from '@/components/LoadingText';
 
 interface IProps {
     page: number,   // 0 主页,1 社区
@@ -43,16 +44,16 @@ const HomeTop = (props: IProps) => {
         <View style={ styles.container }>
             {/* 签到,主页,社区 */ }
             <View style={ styles.topBtn }>
-                <View style={ styles.btnSign }>
-                    <AntDesignIcon name="calendar"/>
-                    <Pressable
-                        hitSlop={ 10 }
-                        // @ts-ignore
-                        onPress={ () => navigation.navigate('SignUp') }
-                    >
-                        <Text style={ { fontSize: 10, fontWeight: 'bold' } }>签到</Text>
-                    </Pressable>
-                </View>
+                {/*<View style={ styles.btnSign }>*/}
+                {/*    <AntDesignIcon name="calendar"/>*/}
+                {/*    <Pressable*/}
+                {/*        hitSlop={ 10 }*/}
+                {/*        // @ts-ignore*/}
+                {/*        onPress={ () => navigation.navigate('SignUp') }*/}
+                {/*    >*/}
+                {/*        <Text style={ { fontSize: 10, fontWeight: 'bold' } }>签到</Text>*/}
+                {/*    </Pressable>*/}
+                {/*</View>*/}
                 <View style={ styles.btnPage }>
                     <MyText
                         text="主页"
@@ -114,18 +115,26 @@ const HomeTop = (props: IProps) => {
                 />
             </DownerModal>
             {/* 居中弹窗 */ }
-            <CenterModal isShow={ isShowCenter } onClose={ () => setIsShowCenter(false) }>
+            <CenterModal isShow={ isShowCenter } onClose={ () => {
+                setIsShowCenter(false);
+                setUnderstandContent('');
+                setUnderstandContentImg('');
+            } }>
                 <ImgBase64
                     picUrl={ understandContentImg }
                     style={ {
-                        width: '100%',
-                        height: '50%',
+                        width: Dimensions.get('window').width / 1.6,
+                        height: Dimensions.get('window').height / 5,
                         borderRadius: 18,
-                        marginBottom: 10
+                        marginBottom: 10,
                     } }
                 />
                 <ScrollView style={ { flex: 1 } }>
-                    <Text>{ understandContent }</Text>
+                    {
+                        understandContent
+                            ? <Text>{ understandContent }</Text>
+                            : <LoadingText/>
+                    }
                 </ScrollView>
                 <Pressable
                     onPress={ () => setIsShowCenter(false) }

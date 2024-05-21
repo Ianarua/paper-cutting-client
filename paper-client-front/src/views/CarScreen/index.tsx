@@ -44,7 +44,6 @@ const CarScreen = () => {
     // }, [carItemData]);
 
     useEffect(() => {
-        console.log(isCheckedArr, addNumsArr);
         // 如果检测到勾选状态改变,就放进 已勾选数组里,并改变总金额
         isCheckedArr.includes(false) && setTotalSelected(false);
         computedTotalAmount(isCheckedArr);

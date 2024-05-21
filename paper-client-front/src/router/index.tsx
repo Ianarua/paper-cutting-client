@@ -15,6 +15,9 @@ import AddressDetail from '@/views/Adress/components/AddressDetail';
 import ShoppingList from '@/views/ShoppingList';
 import BusinessDetail from '@/views/BusinessDetail';
 import Camera from '@/views/Camera';
+import Login from '@/views/Login';
+import Register from '@/views/Register';
+import StartPage from '@/views/StartPage';
 
 /*
     只配置stack
@@ -33,10 +36,25 @@ interface IRouter {
 
 const router: IRouter[] = [
     {
+        name: 'StartPage',
+        title: '首屏启动',
+        component: StartPage
+    },
+    {
         name: 'Main',
         title: '首页',
         component: Main,
 
+    },
+    {
+        name: 'Login',
+        title: '登录',
+        component: Login
+    },
+    {
+        name: 'Register',
+        title: '注册',
+        component: Register
     },
     {
         name: 'SignUp',

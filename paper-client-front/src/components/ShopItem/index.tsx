@@ -1,18 +1,19 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { IShopItem } from '@/interface/IShopPage.ts';
+import { IShopItem } from '@/interface/IShopCategory.ts';
 import { useNavigation } from '@react-navigation/native';
 
 interface IProps {
     shopItemData: IShopItem;
 }
 
+// categorySuperiorId
 const ShopItem = (props: IProps) => {
     const navigation = useNavigation();
     const { goodCategoryName, goodsCategoryId } = props.shopItemData;
     return (
         <Pressable
-            style={ styles.content }
+            style={ goodsCategoryId === -1 ? styles.contentHidden : styles.content }
             // @ts-ignore
             onPress={ () => navigation.navigate('ShoppingList', { goodsCategoryId }) }
         >
@@ -25,10 +26,12 @@ const ShopItem = (props: IProps) => {
 export default ShopItem;
 const styles = StyleSheet.create({
     content: {
-        width: 67.5,
+        // width: 67.5,
+        width: '33%',
         height: 100,
         display: 'flex',
         justifyContent: 'center',
+        alignItems: 'center'
     },
     image: {
         height: 60,
@@ -43,5 +46,13 @@ const styles = StyleSheet.create({
     imageText: {
         color: '#84321c',
         fontSize: 18
+    },
+    contentHidden: {
+        width: '33%',
+        height: 100,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        opacity: 0
     }
 });

@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import React, { FC, useEffect } from 'react';
-import { IShopCategory } from '@/interface/IShopPage.ts';
+import { IShopCategory } from '@/interface/IShopCategory.ts';
 import ShopItem from '@/components/ShopItem';
 import MyText from '@/components/MyText';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
@@ -14,6 +14,13 @@ const ShopCategory: FC<IProps> = (props) => {
     // 路由参数获取
     // const { shopCategoryData } = route.params;
     const { shopCategoryData } = props;
+    const shopCategoryDataChildren = shopCategoryData;
+    shopCategoryDataChildren?.children.push({
+        goodCategoryName: '',
+        goodsCategoryId: -1,
+        categorySuperiorId: -1,
+        children: []
+    });
     return (
         <AddBackgroundHOC>
             <View style={ styles.content }>
@@ -22,7 +29,7 @@ const ShopCategory: FC<IProps> = (props) => {
                 </View>
                 <View style={ styles.mainInner }>
                     {
-                        shopCategoryData?.children.map((item, index) => {
+                        shopCategoryDataChildren?.children.map((item, index) => {
                             return (
                                 <ShopItem key={ index } shopItemData={ item }/>
                             );

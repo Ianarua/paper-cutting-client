@@ -11,7 +11,7 @@ export default interface IProjectBlock {
     promotionPrice: number, // 当前商品价格
     soldNumber: number,  // 卖了多少笔
     totalNumber: number,   // 库存
-    shopInfo: IBusinessInfo, // 店铺信息
+    shopInfoVo: IBusinessInfo, // 店铺信息
     isCollection: boolean,  // 商品是否已经被收藏
     isJoinCart: boolean    // 商品是否已经加入了购物车
 }

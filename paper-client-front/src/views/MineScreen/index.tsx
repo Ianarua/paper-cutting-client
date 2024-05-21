@@ -50,12 +50,13 @@ const MineScreen = () => {
 
     const isFocused = useIsFocused();
     useEffect(() => {
-        // TODO 调个人信息接口(外)
+        // 调个人信息接口(外)
         !(async function () {
             const res: any = await getSimpleInfo();
             setPersonalInfoDataOut(res);
         })();
     }, [isFocused]);
+
     // 静态信息 收藏、关注、浏览
     const headerBottom = [
         {
@@ -74,6 +75,7 @@ const MineScreen = () => {
             nums: personalInfoDataOut.goodsViewNumber
         },
     ];
+
     // 推荐商品
     const [projectBlockData, setProjectBlockData] = useState<IProjectBlock[]>([]);
     useEffect(() => {
@@ -95,15 +97,15 @@ const MineScreen = () => {
                         end={ { x: 1, y: 0 } }
                     >
                         <View style={ styles.headerInfoBtn }>
-                            <Pressable
-                                // @ts-ignore
-                                onPress={ () => navigation.navigate('SignUp') }
-                            >
-                                <Image
-                                    source={ require('@/assets/img/minePage/sign.png') }
-                                    style={ { width: 24, height: 24, objectFit: 'contain', marginRight: 20 } }
-                                />
-                            </Pressable>
+                            {/*<Pressable*/}
+                            {/*    // @ts-ignore*/}
+                            {/*    onPress={ () => navigation.navigate('SignUp') }*/}
+                            {/*>*/}
+                            {/*    <Image*/}
+                            {/*        source={ require('@/assets/img/minePage/sign.png') }*/}
+                            {/*        style={ { width: 24, height: 24, objectFit: 'contain', marginRight: 20 } }*/}
+                            {/*    />*/}
+                            {/*</Pressable>*/}
                             <Pressable
                                 // @ts-ignore
                                 onPress={ () => navigation.navigate('PersonalInfo') }
@@ -159,12 +161,12 @@ const MineScreen = () => {
                     <View style={ styles.order }>
                         <View style={ styles.orderTop }>
                             <Text style={ { color: '#000', fontWeight: 'bold' } }>我的订单</Text>
-                            {/*<Pressable*/}
-                            {/*    // @ts-ignore*/}
-                            {/*    onPress={ () => navigation.navigate('Order') }*/}
-                            {/*>*/}
-                            {/*    <Text style={ { fontSize: 12 } }>查看全部 { '>' } </Text>*/}
-                            {/*</Pressable>*/}
+                            <Pressable
+                                // @ts-ignore
+                                onPress={ () => navigation.navigate('Order') }
+                            >
+                                <Text style={ { fontSize: 12 } }>查看全部 { '>' } </Text>
+                            </Pressable>
                         </View>
                         <View style={ styles.orderInner }>
                             {
@@ -193,13 +195,6 @@ const MineScreen = () => {
                             {
                                 projectBlockData.map((item, index) => {
                                     return (
-                                        // <ProjectBlock
-                                        //     key={ index }
-                                        //     imgUrl={ item.imgUrl }
-                                        //     title={ item.title }
-                                        //     price={ item.price }
-                                        //     hasSold={ item.hasSold }
-                                        // />
                                         <ProjectBlock
                                             key={ index }
                                             projectBlockData={ item }

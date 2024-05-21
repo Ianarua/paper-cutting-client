@@ -1,5 +1,5 @@
 import { RouteProp } from '@react-navigation/native';
-import { IShopCategory } from '@/interface/IShopPage.ts';
+import { IShopCategory } from '@/interface/IShopCategory.ts';
 import IProjectBlock from '@/interface/IProjectBlock.ts';
 import { IAddress } from '@/interface/IAddress.ts';
 import { ISettleItem } from '@/interface/ISettleList.ts';

@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import router from '../router';
 
@@ -7,15 +6,6 @@ import router from '../router';
  */
 function CuttingIndex () {
     const Stack = createStackNavigator();
-    useEffect(() => {
-        !(async function () {
-                // const res = await register('user1', '123');
-                // console.log('注册成功!');
-
-                // console.log(storage.load({ key: 'token' }));
-            }
-        )();
-    }, []);
     return (
         <Stack.Navigator>
             {
@@ -29,7 +19,6 @@ function CuttingIndex () {
                                 // @ts-ignore
                                 headerMode: 'none',
                                 cardStyleInterpolator: undefined,
-
                             } }
                         />
                     );
@@ -37,6 +26,7 @@ function CuttingIndex () {
             }
         </Stack.Navigator>
     );
+
 }
 
 export default CuttingIndex;

@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import { IDiscuss } from '@/interface/IDiscuss.ts';
@@ -6,7 +6,6 @@ import DiscussBlock from './components/DiscussBlock/index.tsx';
 import { getDiscuss } from '@/api/Discuss';
 import { useIsFocused } from '@react-navigation/native';
 import MyText from '@/components/MyText';
-import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 
 const CommunityPage = () => {
     const [discussData, seDiscussData] = useState<IDiscuss[]>([]);
@@ -44,20 +43,20 @@ const CommunityPage = () => {
                 style={ { flex: 1 } }
                 onMomentumScrollEnd={ _contentViewScroll }
             >
-                    <View style={ styles.content }>
-                        <View style={ styles.communityInner }>
-                            {
-                                discussData.map((item, index) => {
-                                    return (
-                                        <DiscussBlock
-                                            key={ index }
-                                            discussData={ item }
-                                        />
-                                    );
-                                })
-                            }
-                        </View>
+                <View style={ styles.content }>
+                    <View style={ styles.communityInner }>
+                        {
+                            discussData.map((item, index) => {
+                                return (
+                                    <DiscussBlock
+                                        key={ index }
+                                        discussData={ item }
+                                    />
+                                );
+                            })
+                        }
                     </View>
+                </View>
                 <View style={ styles.hasInBottom }>
                     {
                         pageNum > 2
@@ -66,23 +65,23 @@ const CommunityPage = () => {
                     }
                 </View>
             </ScrollView>
-            {/*<Pressable*/}
-            {/*    style={ styles.btn }*/}
-            {/*    // @ts-ignore*/}
-            {/*    onPress={ () => navigation.navigate('AddressDetail', {*/}
-            {/*        addressDetailParams: {*/}
-            {/*            receivingAddressId: 0,*/}
-            {/*            buyerId: 0,*/}
-            {/*            recipientName: '',*/}
-            {/*            recipientPhone: '',*/}
-            {/*            recipientAddress: '',*/}
-            {/*            recipientRegion: ''*/}
-            {/*        },*/}
-            {/*        isAdd: true*/}
-            {/*    }) }*/}
-            {/*>*/}
-            {/*    <AntDesignIcon name="pluscircle" color="#84321c" size={ 50 }/>*/}
-            {/*</Pressable>*/}
+            {/*<Pressable*/ }
+            {/*    style={ styles.btn }*/ }
+            {/*    // @ts-ignore*/ }
+            {/*    onPress={ () => navigation.navigate('AddressDetail', {*/ }
+            {/*        addressDetailParams: {*/ }
+            {/*            receivingAddressId: 0,*/ }
+            {/*            buyerId: 0,*/ }
+            {/*            recipientName: '',*/ }
+            {/*            recipientPhone: '',*/ }
+            {/*            recipientAddress: '',*/ }
+            {/*            recipientRegion: ''*/ }
+            {/*        },*/ }
+            {/*        isAdd: true*/ }
+            {/*    }) }*/ }
+            {/*>*/ }
+            {/*    <AntDesignIcon name="pluscircle" color="#84321c" size={ 50 }/>*/ }
+            {/*</Pressable>*/ }
         </AddBackgroundHOC>
     );
 };

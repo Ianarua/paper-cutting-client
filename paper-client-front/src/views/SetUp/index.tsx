@@ -1,14 +1,17 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import TopPage from '@/components/TopPage';
 import { useNavigation } from '@react-navigation/native';
+import { navigate, navigationRef, reset } from '@/utils/navigation.ts';
+import { logout } from '@/api/login.ts';
 
 const SetUp = () => {
     const navigation = useNavigation();
     const data = [
         {
-            title: '修改收货地址'
+            title: '修改收货地址',
+            page: 'Address'
         },
         {
             title: '我的安全'
@@ -22,7 +25,27 @@ const SetUp = () => {
         {
             title: '关于'
         },
+        {
+            title: '退出登录',
+            page: 'Login'
+        },
+        // {
+        //     title: '注册',
+        //     page: 'Register'
+        // }
     ];
+
+    async function pressHandle (item: { title: string, page: string }) {
+        if (item.hasOwnProperty('page')) {
+            if (item.title === '退出登录') {
+                await logout();
+                reset('Login'); // 清空栈并跳转到登录页面
+            } else {
+                navigate(item.page);
+            }
+        }
+    }
+
     return (
         <AddBackgroundHOC>
             <TopPage title="设置"/>
@@ -41,8 +64,12 @@ const SetUp = () => {
                                 key={ index }
                                 style={ styles.item }
                                 onPress={ () => {
+                                    // item.title === '修改收货地址' && navigation.navigate('Address');
                                     // @ts-ignore
-                                    item.title === '修改收货地址' && navigation.navigate('Address');
+                                    // item.hasOwnProperty('page') && page === 'Login'
+                                    //     ? navigationRef(item.page)
+                                    //     : navigationRef(item.page);
+                                    pressHandle(item);
                                 } }
                             >
                                 <Text style={ { fontSize: 16, color: '#000' } }>{ item.title } </Text>

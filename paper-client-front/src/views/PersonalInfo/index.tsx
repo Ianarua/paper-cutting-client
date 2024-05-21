@@ -1,11 +1,11 @@
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import TopPage from '@/components/TopPage';
 import { IPersonalInfoIn } from '@/interface/IPersonalInfo.ts';
 import { getShowInfo, postChangeInfo } from '@/api/buyerInfo';
-import { AxiosResponse } from 'axios';
 import { useIsFocused } from '@react-navigation/native';
+import Form, { FormField } from '@/components/Form';
 
 const PersonalInfo = () => {
     const [personalInfoDataIn, setPersonalInfoDataIn] = useState<IPersonalInfoIn>({
@@ -28,8 +28,8 @@ const PersonalInfo = () => {
     const [isEdit, setIsEdit] = useState(false);
 
     async function handleEditButtonPress () {
-        // 当前是修改状态 -> 保存信息
-        if (isEdit) {
+        // 当前是修改状态 -> 保存信息(加了判断有没有通过验证)
+        if (isEdit && isPass) {
             // 调接口
             await postChangeInfo(personalInfoDataIn);
             setIsEdit(false);
@@ -41,11 +41,30 @@ const PersonalInfo = () => {
 
     // 修改信息文本
     function changeInput (field: string, value: string) {
-        setPersonalInfoDataIn({
+        setPersonalInfoDataIn(prevState => ({
             ...personalInfoDataIn,
             [field]: value
-        });
+        }));
     }
+
+    // 表单传回来的是否验证通过
+    const [isPass, setIsPass] = useState(false);
+
+    // 表单配置
+    const formConfig: FormField[] = [
+        {
+            name: 'buyerHobby',
+            label: '爱好',
+            maxLength: 10,
+            required: true
+        },
+        {
+            name: 'buyerAutograph',
+            label: '个人签名',
+            maxLength: 10,
+            required: true
+        },
+    ];
 
     return (
         <AddBackgroundHOC>
@@ -64,7 +83,7 @@ const PersonalInfo = () => {
                             }
                         </Pressable>
                     </View>
-                    <View style={{
+                    <View style={ {
                         width: 120,
                         height: 120,
                         borderRadius: 240,
@@ -72,7 +91,7 @@ const PersonalInfo = () => {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center'
-                    }}>
+                    } }>
                         <Image
                             style={ styles.picUrl }
                             // source={ personalInfoDataIn.picUrl }
@@ -80,36 +99,45 @@ const PersonalInfo = () => {
                             defaultSource={ require('@/assets/img/logo.png') }
                         />
                     </View>
-                    <View style={ styles.buyerItem }>
-                        <Text style={ styles.buyerText }>用户名称: </Text>
-                        <TextInput
-                            maxLength={ 10 }
-                            style={ styles.buyerTextInput }
-                            value={ personalInfoDataIn.buyerName }
-                            editable={ isEdit }
-                            onChangeText={ (value) => changeInput('buyerName', value) }
-                        />
-                    </View>
-                    <View style={ styles.buyerItem }>
-                        <Text style={ styles.buyerText }>爱好: </Text>
-                        <TextInput
-                            maxLength={ 10 }
-                            style={ styles.buyerTextInput }
-                            value={ personalInfoDataIn.buyerHobby }
-                            editable={ isEdit }
-                            onChangeText={ (value) => changeInput('buyerHobby', value) }
-                        />
-                    </View>
-                    <View style={ styles.buyerItem }>
-                        <Text style={ styles.buyerText }>个人签名: </Text>
-                        <TextInput
-                            maxLength={ 10 }
-                            style={ styles.buyerTextInput }
-                            value={ personalInfoDataIn.buyerAutograph }
-                            editable={ isEdit }
-                            onChangeText={ (value) => changeInput('buyerAutograph', value) }
-                        />
-                    </View>
+                    <Form
+                        formConfig={ formConfig }
+                        formData={ personalInfoDataIn }
+                        isEditable={ isEdit }
+                        onInputChange={ changeInput }
+                        verifiedPassedFunc={ (isPass: boolean) => {
+                            setIsPass(prevState => isPass);
+                        } }
+                    />
+                    {/*<View style={ styles.buyerItem }>*/ }
+                    {/*    <Text style={ styles.buyerText }>用户名称: </Text>*/ }
+                    {/*    <TextInput*/ }
+                    {/*        maxLength={ 10 }*/ }
+                    {/*        style={ styles.buyerTextInput }*/ }
+                    {/*        value={ personalInfoDataIn.buyerName }*/ }
+                    {/*        editable={ isEdit }*/ }
+                    {/*        onChangeText={ (value) => changeInput('buyerName', value) }*/ }
+                    {/*    />*/ }
+                    {/*</View>*/ }
+                    {/*<View style={ styles.buyerItem }>*/ }
+                    {/*    <Text style={ styles.buyerText }>爱好: </Text>*/ }
+                    {/*    <TextInput*/ }
+                    {/*        maxLength={ 10 }*/ }
+                    {/*        style={ styles.buyerTextInput }*/ }
+                    {/*        value={ personalInfoDataIn.buyerHobby }*/ }
+                    {/*        editable={ isEdit }*/ }
+                    {/*        onChangeText={ (value) => changeInput('buyerHobby', value) }*/ }
+                    {/*    />*/ }
+                    {/*</View>*/ }
+                    {/*<View style={ styles.buyerItem }>*/ }
+                    {/*    <Text style={ styles.buyerText }>个人签名: </Text>*/ }
+                    {/*    <TextInput*/ }
+                    {/*        maxLength={ 10 }*/ }
+                    {/*        style={ styles.buyerTextInput }*/ }
+                    {/*        value={ personalInfoDataIn.buyerAutograph }*/ }
+                    {/*        editable={ isEdit }*/ }
+                    {/*        onChangeText={ (value) => changeInput('buyerAutograph', value) }*/ }
+                    {/*    />*/ }
+                    {/*</View>*/ }
                 </View>
             </View>
         </AddBackgroundHOC>
@@ -162,6 +190,7 @@ const styles = StyleSheet.create({
     },
     buyerTextInput: {
         flex: 1,
+        paddingLeft: 10,
         backgroundColor: '#f5f5f5',
         borderRadius: 15
     }

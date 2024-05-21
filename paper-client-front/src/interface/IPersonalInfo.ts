@@ -1,8 +1,6 @@
-import { ImageSourcePropType } from 'react-native';
-
 interface IPersonalInfo {
     // ----- 公共
-    picUrl: ImageSourcePropType,
+    picUrl: string,
     buyerId: string,
     buyerName: string,
 
@@ -19,7 +17,7 @@ interface IPersonalInfo {
 }
 
 type publicType = {
-    picUrl: ImageSourcePropType,
+    picUrl: string,
     buyerId: string,
     buyerName: string
 }

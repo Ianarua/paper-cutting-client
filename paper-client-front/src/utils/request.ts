@@ -1,6 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
 import storage from '@/utils/storage.ts';
 import { login } from '@/api/login.ts';
+import { useNavigation } from '@react-navigation/native';
+import { navigate } from '@/utils/navigation.ts';
 
 export interface IResponse {
     code: number,
@@ -9,11 +11,11 @@ export interface IResponse {
 }
 
 const request: AxiosInstance = axios.create({
-    baseURL: 'http://192.168.32.137:8082',
+    baseURL: 'http://43.143.208.148:8082',
     headers: {
         'Content-Type': 'application/json'
     },
-    timeout: 300000
+    timeout: 30000
 });
 
 request.interceptors.request.use(
@@ -44,9 +46,8 @@ request.interceptors.response.use(
             // 处理其他状态码的情况
             if (responseData.code === 401) {
                 console.error(responseData.message);
-                const token = await login('admin', 'macro123');
-                await storage.save({ key: 'token', data: token });
-                // return await request.request(response.config);
+                // 跳转到登录页面
+                navigate('Login');
             }
             console.error(responseData.message);
             return Promise.reject(responseData.message);

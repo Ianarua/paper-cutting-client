@@ -5,6 +5,7 @@ import IProjectBlock from '@/interface/IProjectBlock.ts';
 import { IOrderBlock } from '@/interface/IOrderBlock.ts';
 import { IBusinessInfo } from '@/interface/IBusinessPage.ts';
 import { getIdGoods } from '@/api/ProjectInfo/index.ts';
+import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
 
 interface IProps {
     orderItemData: IOrderBlock;
@@ -18,7 +19,7 @@ const OrderItem: FC<IProps> = (props) => {
         shopId: 0,
         isFavorite: false
     });
-    const [projectInfo, setProjectInfo] = useState<IProjectBlock>({
+    const [projectInfo, setProjectInfo] = useState<Omit<IProjectBlock, 'shopInfoVo'>>({
         goodsId: 0,
         goodsName: '',
         goodsIntroduction: '',
@@ -29,57 +30,62 @@ const OrderItem: FC<IProps> = (props) => {
         totalNumber: 0,
         isCollection: false,
         isJoinCart: false,
-        shopInfo: {
-            picUrl: '',
-            shopName: '',
-            shopId: 0,
-            isFavorite: false
-        }
     });
+    const statusMap = new Map([
+        [0, '待付款'],
+        [1, '待发货'],
+        [2, '待收货'],
+        [3, '待评价'],
+        [4, '退款/售后']
+    ]);
     useEffect(() => {
         !(async function () {
             const res: any = await getIdGoods(orderItemData.goodsId);
             setShopInfo(res.shopInfoVo);
-            setProjectInfo(res);
+            setProjectInfo(prevState => {
+                const info = { ...res };
+                delete info.shopInfoVo;
+                return info;
+            });
         })();
     }, []);
-    useEffect(() => {
-        console.log(projectInfo);
-    }, [projectInfo]);
 
     return (
-        <View style={ styles.content }>
-            <View style={ styles.header }>
-                {/*<Image source={ { uri: shopInfo.picUrl } } style={ { width: 17, objectFit: 'contain' } }/>*/ }
-                <View style={ styles.headerLeft }>
-                    <Image source={ require('@/assets/img/carPage/store.png') } style={ { width: 17, objectFit: 'contain', marginRight: 5 } }/>
-                    <Text style={ { marginRight: 15 } }>{ shopInfo?.shopName }</Text>
-                    <Image source={ require('@/assets/img/carPage/greater.png') } style={ { width: 10, objectFit: 'contain' } }/>
+        <IsRenderHOC isShow={ shopInfo.shopName !== '' }>
+            <View style={ styles.content }>
+                <View style={ styles.header }>
+                    {/*<Image source={ { uri: shopInfo.picUrl } } style={ { width: 17, objectFit: 'contain' } }/>*/ }
+                    <View style={ styles.headerLeft }>
+                        <Image source={ require('@/assets/img/carPage/store.png') } style={ { width: 17, objectFit: 'contain', marginRight: 5 } }/>
+                        <Text style={ { marginRight: 15 } }>{ shopInfo?.shopName }</Text>
+                        <Image source={ require('@/assets/img/carPage/greater.png') } style={ { width: 10, objectFit: 'contain' } }/>
+                    </View>
+                    {/*<View*/}
+                    {/*    style={ styles.headerRight }*/}
+                    {/*>*/}
+                    {/*    <Text style={ { color: '#fff' } }>{ orderItemData.orderStatus }</Text>*/}
+                    {/*</View>*/}
                 </View>
-                <View
-                    style={ styles.headerRight }
-                >
-                    <Text style={ { color: '#fff' } }>{ orderItemData.orderStatus }</Text>
+                <View style={ styles.inner }>
+                    <View style={ styles.innerLeft }>
+                        <View style={ styles.innerLeftImgView }>
+                            <Image
+                                source={ { uri: `data:image/png;base64,${ projectInfo.picUrl }` } }
+                                style={ { width: '70%', height: '100%', objectFit: 'contain' } }
+                            />
+                        </View>
+                        <View style={ styles.innerLeftInfo }>
+                            <MyText text={ projectInfo.goodsName } styles={ { fontSize: 15, fontWeight: 'bold' } }/>
+                            <MyText text={ `￥ ${ projectInfo.promotionPrice } / 件` }
+                                    styles={ { color: '#f44545', fontSize: 14, fontWeight: 'bold' } }/>
+                        </View>
+                    </View>
+                    <View style={ styles.innerRight }>
+                        <Text style={{fontSize: 14, color: '#e7775b'}}>{ statusMap.get(orderItemData.orderStatus) }</Text>
+                    </View>
                 </View>
             </View>
-            <View style={ styles.inner }>
-                <View style={ styles.innerLeft }>
-                    <View style={ styles.innerLeftImgView }>
-                        <Image
-                            source={ { uri: `data:image/png;base64,${ projectInfo.picUrl }` } }
-                            style={ { width: '70%', height: '100%', objectFit: 'contain' } }
-                        />
-                    </View>
-                    <View style={ styles.innerLeftInfo }>
-                        <MyText text={ projectInfo.goodsName } styles={ { fontSize: 15, fontWeight: 'bold' } }/>
-                        <MyText text={ `￥ ${ projectInfo.promotionPrice } / 件` } styles={ { color: '#f44545', fontSize: 14, fontWeight: 'bold' } }/>
-                    </View>
-                </View>
-                <View style={ styles.innerRight }>
-                    {/*<Text>数量: { settleData.quantity }</Text>*/}
-                </View>
-            </View>
-        </View>
+        </IsRenderHOC>
     );
 };
 export default OrderItem;
@@ -151,10 +157,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     innerRight: {
-        width: '12%',
+        width: '20%',
         height: '90%',
+        marginTop: 40,
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center'
     },
 });

@@ -1,4 +1,4 @@
-import { Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { ImageBackground, StyleSheet } from 'react-native';
 import React, { ReactNode } from 'react';
 
 interface IProps {
@@ -7,6 +7,7 @@ interface IProps {
 
 const AddBackgroundHOC = (props: IProps) => {
     return (
+
         <ImageBackground
             source={ require('@/assets/img/backGround.png') }
             style={ styles.background }
@@ -15,6 +16,7 @@ const AddBackgroundHOC = (props: IProps) => {
         >
             { props.children }
         </ImageBackground>
+
     );
 };
 export default AddBackgroundHOC;

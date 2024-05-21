@@ -4,7 +4,7 @@ import MyText from '@/components/MyText';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Shadow } from 'react-native-shadow-2';
 import ShopCategory from '@/views/ShoppingScreen/commponents/ShopCategory';
-import { IShopCategory } from '@/interface/IShopPage.ts';
+import { IShopCategory } from '@/interface/IShopCategory.ts';
 import { useNavigation } from '@react-navigation/native';
 import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
 import { getWithChildrenCategory } from '@/api/Category';
@@ -72,6 +72,7 @@ const ShoppingScreen = () => {
                             <TextInput
                                 style={ styles.searchBarInput }
                                 placeholder={ '输入搜索内容' }
+                                editable={ false }
                                 value={ searchValue }
                                 onChangeText={ text => setSearchValue(text) }
                             />
@@ -178,7 +179,8 @@ const styles = StyleSheet.create({
     },
     sideMenuActive: {
         backgroundColor: '#f1ece6',
-        position: 'relative'
+        position: 'relative',
+        zIndex: -1
     },
     sideMenuActiveBlock: {
         position: 'absolute',
@@ -199,6 +201,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#b0b0b0',
         borderStyle: 'solid',
+        zIndex: 100
     },
     mainInner: {
         width: '100%',

@@ -12,9 +12,10 @@ const ImgBase64: FC<IProps> = (props) => {
     const styles = style;
     const [base64Url, setBase64Url] = useState('');
     useEffect(() => {
-        setBase64Url(prevState => {
-            return `data:image/png;base64,${ picUrl }`;
-        });
+        setBase64Url(`data:image/png;base64,${ picUrl }`);
+        // return () => {
+        //     setBase64Url('');
+        // }
     }, []);
     return (
         <IsRenderHOC isShow={ base64Url !== '' }>

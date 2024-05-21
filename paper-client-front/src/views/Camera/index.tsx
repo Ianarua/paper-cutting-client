@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { FC } from 'react';
-import { ImagePickerResponse, launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { Asset, ImagePickerResponse, launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { postResourceImg } from '@/api/ImgResource';
 
 interface IProps {
@@ -32,7 +32,7 @@ const Camera: FC<IProps> = (props) => {
     };
 
     // 上传图片函数
-    async function uploadImage (params: { name: string; type: string; uri: string }) {
+    async function uploadImage (params: { name: string; type: string; uri: string, base64: string }) {
         const formData = new FormData();
         formData.append('file', {
             uri: params.uri,
@@ -42,10 +42,9 @@ const Camera: FC<IProps> = (props) => {
         // 请求接口
         const res: any = await postResourceImg(formData);
         // resourcePath        resourceBase64
-        console.log('res---', res.resourcePath);
-        // 关闭底部弹窗
-        onCloseDrown(res.resourceBase64);
-        // 打开居中弹窗
+        // 关闭底部弹窗,传回图片的base64,展示用
+        onCloseDrown(params.base64);
+        // 打开居中弹窗,传回图片的path,为了调AI分析接口
         onOpenCenter(res.resourcePath);
     }
 
@@ -57,6 +56,7 @@ const Camera: FC<IProps> = (props) => {
                 uri: asset.uri!,
                 type: asset.type!, // 或者使用 'image/jpeg'、'image/png' 等
                 name: asset.fileName || asset.uri!.split('/').pop()!,
+                base64: asset.base64!
             };
             // 调用上传图片函数
             await uploadImage(file);

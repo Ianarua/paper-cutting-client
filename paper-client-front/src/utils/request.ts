@@ -53,7 +53,7 @@ request.interceptors.response.use(
         }
     },
     (error) => {
-        console.log('err-------', error);
+        console.error('err-------', error);
         // 对响应错误进行处理
         if (error.response) {
             // 服务器返回了错误状态码

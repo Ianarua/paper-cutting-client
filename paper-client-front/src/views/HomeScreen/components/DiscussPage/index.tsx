@@ -30,7 +30,6 @@ const CommunityPage = () => {
         const forgeScrollHeight = e.nativeEvent.layoutMeasurement.height;
         if (offsetY + forgeScrollHeight >= contentSizeHeight) {
             setPageNum(prevState => prevState + 1);
-            console.log('上传滑动到底部事件', pageNum);
         }
     }
 

@@ -23,9 +23,7 @@ const BusinessDetail = () => {
     });
     useEffect(() => {
         !(async function () {
-            console.log('-----shopId', shopId);
             const res: any = await getShopInfo(shopId);
-            console.log('ressss', res);
             setBusinessData(res);
         })();
     }, [isFocused]);
@@ -46,7 +44,6 @@ const BusinessDetail = () => {
         const forgeScrollHeight = e.nativeEvent.layoutMeasurement.height; //scrollView高度
         if (offsetY + forgeScrollHeight >= contentSizeHeight) {
             setPageNum(prevState => prevState + 1);
-            console.log('上传滑动到底部事件', pageNum);
         }
     }
 

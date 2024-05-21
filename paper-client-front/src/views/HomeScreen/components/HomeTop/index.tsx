@@ -1,5 +1,5 @@
 import { Dimensions, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import MyText from '@/components/MyText';
 import { useNavigation } from '@react-navigation/native';
@@ -36,7 +36,6 @@ const HomeTop = (props: IProps) => {
     // 开始调用AI接口内容理解
     async function understand (resourcePath: string) {
         const res: any = await postImageUnderstand(resourcePath);
-        console.log(res);
         setUnderstandContent(res.content);
     }
 
@@ -103,7 +102,7 @@ const HomeTop = (props: IProps) => {
             <DownerModal isShow={ isShowDrown } onClose={ () => setIsShowDrown(false) }>
                 <Camera
                     onCloseDrown={ (imgBase64: string) => {
-                        setUnderstandContentImg(imgBase64);
+                        setUnderstandContentImg(prevState => imgBase64);
                         setIsShowDrown(false);
                     } }
                     onOpenCenter={ (resourcePath: string) => {

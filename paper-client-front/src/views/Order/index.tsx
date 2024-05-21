@@ -18,9 +18,6 @@ const Order = () => {
         })();
     }, [isFocused]);
 
-    useEffect(() => {
-        console.log('orrr', orderData);
-    }, [orderData]);
     return (
         <AddBackgroundHOC>
             <TopPage title="我的订单"/>

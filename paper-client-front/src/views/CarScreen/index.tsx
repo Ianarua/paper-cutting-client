@@ -97,7 +97,6 @@ const CarScreen = () => {
         const statsData: ISettleItem[] = settleStats();
         // @ts-ignore
         navigation.navigate('Settle', { settleData: statsData });
-        console.log('结算');
     }
 
     // 统计结算商品(勾选的),包括carItemData和数量

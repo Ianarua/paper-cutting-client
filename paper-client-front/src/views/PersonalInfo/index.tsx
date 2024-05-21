@@ -33,7 +33,6 @@ const PersonalInfo = () => {
             // 调接口
             await postChangeInfo(personalInfoDataIn);
             setIsEdit(false);
-            console.log('----保存成功!');
         } else {
             // 当前不是修改状态 -> 点一下变成修改状态
             setIsEdit(true);

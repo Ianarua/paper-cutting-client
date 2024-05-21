@@ -46,7 +46,7 @@ public class ResourceServiceImpl implements IResourceService {
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         String imagePath = null;
         if(suffixName.equals(".jpg") || suffixName.equals(".png")){
-            imagePath ="Image\\";
+            imagePath ="Image/";
         }else {
             Asserts.fail("文件格式错误!");
         }
@@ -56,7 +56,7 @@ public class ResourceServiceImpl implements IResourceService {
         String fileName2 = fileName1 + suffixName;
         try {
             BufferedOutputStream out = new BufferedOutputStream(
-                    new FileOutputStream(new File(Constants.RESOURCE_PATH +imagePath + fileName2)));
+                    new FileOutputStream(new File(Constants.RESOURCE_PATH +imagePath +fileName2)));
             out.write(file.getBytes());
             out.flush();
             out.close();

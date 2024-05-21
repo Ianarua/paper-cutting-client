@@ -44,7 +44,7 @@ public class Constants {
    /**
     * 存储图片路径
     */
-   public static final String RESOURCE_PATH = "paper-cutting-resources\\";
+   public static final String RESOURCE_PATH = "/www/wwwroot/paper-cutting-resources/";
 
    /**
     * 提问fuyu8b的问题

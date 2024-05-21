@@ -8,8 +8,8 @@ spring:
   application:
     name: paper-admin
 server:
-  port: 8080
-# springdoc-openapi项目配置，访问地址：http://127.0.0.1:8080/doc.html
+  port: 8083
+# springdoc-openapi项目配置，访问地址：http://127.0.0.1:8083/doc.html
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

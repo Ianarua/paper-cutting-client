@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import MyText from '@/components/MyText';
@@ -6,6 +6,7 @@ import IProjectBlock from '@/interface/IProjectBlock.ts';
 import ProjectBlock from '@/components/ProjectBlock';
 import IMenu from '@/interface/IHomePage.ts';
 import { getRecommendGoods } from '@/api/ProjectInfo';
+import CenterModal from '@/components/Modal/CenterModal';
 
 const HomePage = () => {
     // 历史文化、制作工艺、专属定制  的菜单栏. 不变
@@ -46,6 +47,19 @@ const HomePage = () => {
         }
     }
 
+    // 控制 历史文化、制作工艺弹窗 是否显示
+    let [isShowHistory, setIsShowHistory] = useState(false);
+    let [isShowArt, setIsShowArt] = useState(false);
+
+    // 历史文化、制作工艺点击
+    function menuHandle (imgText: string) {
+        if (imgText === '历史文化') {
+            setIsShowHistory(true);
+        } else if (imgText === '制作工艺') {
+            setIsShowArt(true);
+        }
+    }
+
     return (
         <AddBackgroundHOC>
             <ScrollView
@@ -63,10 +77,14 @@ const HomePage = () => {
                         {
                             menu.map((item, index) => {
                                 return (
-                                    <View key={ index } style={ { display: 'flex', justifyContent: 'center', alignItems: 'center' } }>
+                                    <Pressable
+                                        key={ index }
+                                        style={ { display: 'flex', justifyContent: 'center', alignItems: 'center' } }
+                                        onPress={ () => menuHandle(item.imgText) }
+                                    >
                                         <Image source={ item.imgUrl } style={ styles.homeMenuImg }/>
                                         <MyText text={ item.imgText } styles={ { fontSize: 12, fontWeight: 'bold' } }/>
-                                    </View>
+                                    </Pressable>
                                 );
                             })
                         }
@@ -92,6 +110,56 @@ const HomePage = () => {
                     }
                 </View>
             </ScrollView>
+            {/*  历史文化居中弹窗  */ }
+            <CenterModal isShow={ isShowHistory } onClose={ () => setIsShowHistory(false) } style={ { justifyContent: 'space-around' } }>
+                <Text style={ { fontSize: 20, color: '#84321c' } }>剪纸的历史文化</Text>
+                <ScrollView>
+                    <Text
+                        style={ { fontSize: 14, lineHeight: 25, marginTop: 15 } }
+                    >
+                        { '\u3000\u3000' }剪纸文化起源于中国，是一种古老的民间艺术，已有千年历史。它最早可以追溯到东汉时期，随着造纸术的发展而兴盛。剪纸技艺精湛，内容丰富，常见题材包括吉祥图案、民俗风情和自然景观等。作为一种表达祝福、祈福的艺术形式，剪纸在节庆、婚礼等场合广泛应用，象征着喜庆和美好。它不仅是中华民族传统文化的重要组成部分，更是人们情感寄托和审美表达的载体。
+                    </Text>
+                </ScrollView>
+                <Pressable
+                    style={ {
+                        width: 80,
+                        height: 40,
+                        borderRadius: 18,
+                        backgroundColor: '#f67e3e',
+                        marginTop: 15,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    } }
+                    onPress={ () => setIsShowHistory(false) }
+                >
+                    <Text style={ { fontSize: 18, color: '#fff' } }>确定</Text>
+                </Pressable>
+            </CenterModal>
+            {/*  制作工艺居中弹窗  */ }
+            <CenterModal isShow={ isShowArt } onClose={ () => setIsShowArt(false) } style={ { justifyContent: 'space-between' } }>
+                <Text style={ { fontSize: 20, color: '#84321c' } }>剪纸的制作工艺</Text>
+                <ScrollView>
+                    <Text
+                        style={ { fontSize: 14, lineHeight: 25, marginTop: 15 } }
+                    >
+                        { '\u3000\u3000' }剪纸文化的制作工艺精细，需要高度的手工技巧。首先选用质地细腻的红纸或彩纸，使用剪刀或刻刀进行创作。设计图案多为对称结构，以花卉、动物、人物为常见题材。制作过程中，要求剪工稳准，线条流畅，精雕细琢。剪纸既可单独成品，也可粘贴于窗户、灯笼等物品上，用以装饰或祈福，充分体现了民间艺术的巧思与审美。
+                    </Text>
+                </ScrollView>
+                <Pressable
+                    style={ {
+                        width: 80,
+                        height: 40,
+                        borderRadius: 18,
+                        backgroundColor: '#f67e3e',
+                        marginTop: 15,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    } }
+                    onPress={ () => setIsShowArt(false) }
+                >
+                    <Text style={ { fontSize: 18, color: '#fff' } }>确定</Text>
+                </Pressable>
+            </CenterModal>
         </AddBackgroundHOC>
     );
 };

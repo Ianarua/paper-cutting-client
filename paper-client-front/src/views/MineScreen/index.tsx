@@ -205,9 +205,6 @@ const MineScreen = () => {
                         </View>
                     </View>
                 </View>
-                <View style={ styles.hasInBottom }>
-                    <MyText text="~~~~~  已经到底啦  ~~~~~"/>
-                </View>
             </ScrollView>
         </AddBackgroundHOC>
     );
@@ -358,12 +355,4 @@ const styles = StyleSheet.create({
         marginRight: 5,
         // backgroundColor: '#fff'
     },
-    hasInBottom: {
-
-        marginTop: 20,
-        marginBottom: 30,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
 });

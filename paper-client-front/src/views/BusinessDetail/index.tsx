@@ -8,6 +8,7 @@ import { IBusinessInfo } from '@/interface/IBusinessPage.ts';
 import { getShopGoods, getShopInfo } from '@/api/Business';
 import IProjectBlock from '@/interface/IProjectBlock.ts';
 import ProjectBlock from '@/components/ProjectBlock';
+import MyText from '@/components/MyText';
 
 const BusinessDetail = () => {
     const route = useRoute<RootRouteType<Views.BusinessDetail>>();
@@ -31,10 +32,13 @@ const BusinessDetail = () => {
     // 店铺里面的商品
     const [projectList, setProjectList] = useState<IProjectBlock[]>([]);
     const [pageNum, setPageNum] = useState(1);
+    let [total, setTotal] = useState(Infinity);
+
     useEffect(() => {
         !(async function () {
             const res: any = await getShopGoods(shopId, pageNum, 8);
             setProjectList(prevData => [...prevData, ...res.list]);
+            setTotal(res.totalPage);
         })();
     }, [pageNum]);
 
@@ -42,7 +46,7 @@ const BusinessDetail = () => {
         const offsetY = e.nativeEvent.contentOffset.y; //滑动距离
         const contentSizeHeight = e.nativeEvent.contentSize.height; //scrollView contentSize高度
         const forgeScrollHeight = e.nativeEvent.layoutMeasurement.height; //scrollView高度
-        if (offsetY + forgeScrollHeight >= contentSizeHeight) {
+        if (offsetY + forgeScrollHeight >= contentSizeHeight && pageNum < total) {
             setPageNum(prevState => prevState + 1);
         }
     }
@@ -72,6 +76,13 @@ const BusinessDetail = () => {
                                     />
                                 );
                             })
+                        }
+                    </View>
+                    <View style={ styles.hasInBottom }>
+                        {
+                            pageNum > total - 1
+                                ? <MyText text="-----  已经到底啦  -----" styles={ { fontSize: 16 } }/>
+                                : <MyText text="…… 加载中 ……" styles={ { fontSize: 16 } }/>
                         }
                     </View>
                 </View>
@@ -106,5 +117,13 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10
         // backgroundColor: '#fff'
+    },
+    hasInBottom: {
+        width: '100%',
+        marginTop: 20,
+        marginBottom: 30,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });

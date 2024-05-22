@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import { ILogin } from '@/interface/ILogin.ts';
-import Form, { FormField } from '@/components/Form';
+import Form, { IFormField } from '@/components/Form';
 import LinearGradient from 'react-native-linear-gradient';
 import { login } from '@/api/login.ts';
 import storage from '@/utils/storage.ts';
@@ -26,7 +26,7 @@ const Login = () => {
     const [isPass, setIsPass] = useState(false);
 
     // 表单配置
-    const formConfig: FormField[] = [
+    const formConfig: IFormField[] = [
         {
             name: 'username',
             label: '账号',
@@ -62,9 +62,7 @@ const Login = () => {
                         formData={ loginData }
                         isEditable={ true }
                         onInputChange={ changeInput }
-                        verifiedPassedFunc={ (isPass: boolean) => {
-                            setIsPass(prevState => isPass);
-                        } }
+                        verifiedPassedFunc={ (isPass: boolean) => setIsPass(prevState => isPass) }
                     />
                 </View>
                 <LinearGradient

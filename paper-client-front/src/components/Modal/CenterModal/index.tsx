@@ -1,14 +1,15 @@
-import { Modal, Pressable, StyleSheet, View } from 'react-native';
+import { Modal, StyleSheet, View, ViewStyle } from 'react-native';
 import { FC, ReactNode } from 'react';
 
 interface IProps {
     isShow: boolean,
     onClose: () => void,
-    children: ReactNode
+    children: ReactNode,
+    style?: ViewStyle
 }
 
 const CenterModal: FC<IProps> = (props) => {
-    const { isShow, onClose, children } = props;
+    const { isShow, onClose, children, style } = props;
     return (
         <Modal
             transparent={ true }
@@ -17,7 +18,7 @@ const CenterModal: FC<IProps> = (props) => {
             onRequestClose={ onClose } // 返回键调用关闭
         >
             <View style={ styles.overlay }>
-                <View style={ styles.content }>
+                <View style={ [styles.content, style] }>
                     { children }
                 </View>
             </View>
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     },
     content: {
         width: '80%',
-        height:'50%',
+        height: '50%',
         justifyContent: 'center', // 垂直居中
         alignItems: 'center', // 水平居中
         backgroundColor: '#ffffff',

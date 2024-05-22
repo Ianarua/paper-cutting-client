@@ -1,22 +1,3 @@
-import { ImageSourcePropType } from 'react-native';
-
-export interface ISmallComments {
-    smallUserName: string,
-    smallCommentText: string
-}
-
-export interface IBigComments {
-    avatar: ImageSourcePropType,
-    bigUserName: string,
-    bigCommentText: string
-}
-
-export interface ICommunityData {
-    bigComments: IBigComments,
-    favorite: number,
-    smallComments?: ISmallComments[]
-}
-
 export interface IDiscuss {
     /* 讨论id */
     discussId: number;
@@ -44,3 +25,13 @@ export interface IDiscuss {
 }
 
 export type IDiscussCommentVos = Omit<IDiscuss, 'favoriteNumber' | 'commentNumber' | 'discussCommentVos'>
+
+export interface IDiscussPublish {
+    /* 父id,发起话题为0 */
+    parentId: number,
+
+    /* 话题内容 */
+    discussContent: string,
+
+    [key: string]: string | number
+}

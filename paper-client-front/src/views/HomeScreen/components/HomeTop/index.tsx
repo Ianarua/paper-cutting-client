@@ -90,6 +90,7 @@ const HomeTop = (props: IProps) => {
                         placeholder={ '输入搜索内容' }
                         value={ searchValue }
                         onChangeText={ text => setSearchValue(text) }
+                        editable={false}
                     />
                     <AntDesignIcon
                         name={ 'scan1' }

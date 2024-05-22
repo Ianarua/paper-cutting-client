@@ -24,6 +24,6 @@ export function getLikeDiscuss (discussId: number) {
  * @param parentId 评论id 0是发布一级评论 不是0是二级评论
  * @param discussContent 评论内容
  */
-export function postPublishDiscuss (parentId: number, discussContent: string) {
+export function postPublishDiscuss (parentId: number = 0, discussContent: string) {
     return publishDiscuss(parentId, discussContent);
 }

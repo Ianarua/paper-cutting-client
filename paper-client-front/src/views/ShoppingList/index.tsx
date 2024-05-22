@@ -13,15 +13,16 @@ import { getRecommendGoods } from '@/api/ProjectInfo';
 const ShoppingList = () => {
     const route = useRoute<RootRouteType<Views.ShoppingList>>();
     // TODO
-    const { goodsCategoryId } = route.params;
+    // const { goodsCategoryId } = route.params;
     const [listData, setListData] = useState<IProjectBlock[]>([]);
-    const [pageNum, setPageNum] = useState(1);
-
+    let [pageNum, setPageNum] = useState(1);
+    let [total, setTotal] = useState(Infinity);
     // 监听哪个分页数据
     useEffect(() => {
         async function fetchApi () {
             const res: any = await getRecommendGoods(pageNum, 8);
             setListData(prevData => [...prevData, ...res.list]);
+            setTotal(res.totalPage);
         }
 
         fetchApi().then();
@@ -32,7 +33,7 @@ const ShoppingList = () => {
         const offsetY = e.nativeEvent.contentOffset.y; //滑动距离
         const contentSizeHeight = e.nativeEvent.contentSize.height; //scrollView contentSize高度
         const forgeScrollHeight = e.nativeEvent.layoutMeasurement.height; //scrollView高度
-        if (offsetY + forgeScrollHeight >= contentSizeHeight) {
+        if (offsetY + forgeScrollHeight >= contentSizeHeight && pageNum < total) {
             setPageNum(prevState => prevState + 1);
         }
     }
@@ -59,7 +60,7 @@ const ShoppingList = () => {
                         }
                         <View style={ styles.hasInBottom }>
                             {
-                                pageNum > 2
+                                pageNum > total - 1
                                     ? <MyText text="-----  已经到底啦  -----" styles={ { fontSize: 16 } }/>
                                     : <MyText text="…… 加载中 ……" styles={ { fontSize: 16 } }/>
                             }

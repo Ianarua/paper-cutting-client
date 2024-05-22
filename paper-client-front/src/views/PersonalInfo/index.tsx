@@ -5,7 +5,7 @@ import TopPage from '@/components/TopPage';
 import { IPersonalInfoIn } from '@/interface/IPersonalInfo.ts';
 import { getShowInfo, postChangeInfo } from '@/api/buyerInfo';
 import { useIsFocused } from '@react-navigation/native';
-import Form, { FormField } from '@/components/Form';
+import Form, { IFormField } from '@/components/Form';
 
 const PersonalInfo = () => {
     const [personalInfoDataIn, setPersonalInfoDataIn] = useState<IPersonalInfoIn>({
@@ -51,7 +51,7 @@ const PersonalInfo = () => {
     const [isPass, setIsPass] = useState(false);
 
     // 表单配置
-    const formConfig: FormField[] = [
+    const formConfig: IFormField[] = [
         {
             name: 'buyerHobby',
             label: '爱好',

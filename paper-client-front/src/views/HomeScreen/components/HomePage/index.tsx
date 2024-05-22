@@ -26,10 +26,12 @@ const HomePage = () => {
     const [projectBlockData, setProjectBlockData] = useState<IProjectBlock[]>([]);
     // 应该查询哪个分页的数据
     let [pageNum, setPageNum] = useState(1);
+    let [total, setTotal] = useState(Infinity);
     useEffect(() => {
         async function fetchApi () {
             const res: any = await getRecommendGoods(pageNum, 6);
             setProjectBlockData(prevData => [...prevData, ...res.list]);
+            setTotal(res.totalPage);
         }
 
         fetchApi().then();
@@ -84,7 +86,7 @@ const HomePage = () => {
                 </View>
                 <View style={ styles.hasInBottom }>
                     {
-                        pageNum > 2
+                        pageNum > total - 1
                             ? <MyText text="-----  已经到底啦  -----" styles={ { fontSize: 16 } }/>
                             : <MyText text="…… 加载中 ……" styles={ { fontSize: 16 } }/>
                     }

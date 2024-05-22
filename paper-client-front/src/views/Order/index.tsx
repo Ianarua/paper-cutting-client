@@ -25,8 +25,7 @@ const Order = () => {
         const offsetY = e.nativeEvent.contentOffset.y; //滑动距离
         const contentSizeHeight = e.nativeEvent.contentSize.height; //scrollView contentSize高度
         const forgeScrollHeight = e.nativeEvent.layoutMeasurement.height; //scrollView高度
-        if (offsetY + forgeScrollHeight >= contentSizeHeight - 50) {
-            console.log('daodile');
+        if (offsetY + forgeScrollHeight >= contentSizeHeight - 50 && pageNum < total) {
             setPageNum(prevState => prevState + 1);
         }
     }
@@ -52,7 +51,7 @@ const Order = () => {
                 </View>
                 <View style={ styles.hasInBottom }>
                     {
-                        pageNum > total
+                        pageNum > total - 1
                             ? <MyText text="-----  已经到底啦  -----" styles={ { fontSize: 16 } }/>
                             : <MyText text="…… 加载中 ……" styles={ { fontSize: 16 } }/>
                     }

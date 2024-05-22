@@ -2,7 +2,7 @@ import { useState, useEffect, FC } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
 
-export interface FormField {
+export interface IFormField {
     name: string;
     label: string;
     maxLength?: number;
@@ -10,8 +10,8 @@ export interface FormField {
 }
 
 interface IProps {
-    formConfig: FormField[];
-    formData: { [key: string]: string };
+    formConfig: IFormField[];
+    formData: { [key: string]: string | number };
     isEditable: boolean;
     onInputChange: (fieldName: string, value: string) => void;
     verifiedPassedFunc: (isPass: boolean) => void;
@@ -42,7 +42,7 @@ const Form: FC<IProps> = ({ formConfig, formData, isEditable, onInputChange, ver
                         <TextInput
                             maxLength={ field.maxLength }
                             style={ [styles.input, errors[field.name] ? styles.inputError : null] }
-                            value={ formData[field.name] }
+                            value={ String(formData[field.name]) }  // 确保值为 string 类型
                             editable={ isEditable }
                             onChangeText={ (value) => onInputChange(field.name, value) }
                         />

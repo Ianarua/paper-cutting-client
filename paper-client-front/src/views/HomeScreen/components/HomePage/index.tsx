@@ -1,13 +1,11 @@
-import { Animated, Dimensions, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
-import Image = Animated.Image;
 import MyText from '@/components/MyText';
 import IProjectBlock from '@/interface/IProjectBlock.ts';
 import ProjectBlock from '@/components/ProjectBlock';
 import IMenu from '@/interface/IHomePage.ts';
 import { getRecommendGoods } from '@/api/ProjectInfo';
-import { postCreateCar } from '@/api/Car';
 
 const HomePage = () => {
     // 历史文化、制作工艺、专属定制  的菜单栏. 不变

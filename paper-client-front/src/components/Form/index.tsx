@@ -25,7 +25,7 @@ const Form: FC<IProps> = ({ formConfig, formData, isEditable, onInputChange, ver
         let isPass: boolean = true;
         formConfig.forEach((field) => {
             if (field.required && !formData[field.name]) {
-                newErrors[field.name] = '不能为空！';
+                newErrors[field.name] = '不能为空';
                 isPass = false;
             }
         });

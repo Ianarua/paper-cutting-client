@@ -97,15 +97,15 @@ const MineScreen = () => {
                         end={ { x: 1, y: 0 } }
                     >
                         <View style={ styles.headerInfoBtn }>
-                            {/*<Pressable*/}
-                            {/*    // @ts-ignore*/}
-                            {/*    onPress={ () => navigation.navigate('SignUp') }*/}
-                            {/*>*/}
-                            {/*    <Image*/}
-                            {/*        source={ require('@/assets/img/minePage/sign.png') }*/}
-                            {/*        style={ { width: 24, height: 24, objectFit: 'contain', marginRight: 20 } }*/}
-                            {/*    />*/}
-                            {/*</Pressable>*/}
+                            {/*<Pressable*/ }
+                            {/*    // @ts-ignore*/ }
+                            {/*    onPress={ () => navigation.navigate('SignUp') }*/ }
+                            {/*>*/ }
+                            {/*    <Image*/ }
+                            {/*        source={ require('@/assets/img/minePage/sign.png') }*/ }
+                            {/*        style={ { width: 24, height: 24, objectFit: 'contain', marginRight: 20 } }*/ }
+                            {/*    />*/ }
+                            {/*</Pressable>*/ }
                             <Pressable
                                 // @ts-ignore
                                 onPress={ () => navigation.navigate('PersonalInfo') }

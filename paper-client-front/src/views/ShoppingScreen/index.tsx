@@ -99,7 +99,7 @@ const ShoppingScreen = () => {
                                             style={ styles.sideMenuItem }
                                             onPress={ () => changeShopCategory(item.goodsCategoryId) }
                                         >
-                                            <Text style={{zIndex: -1}}>{ item.goodCategoryName }</Text>
+                                            <Text style={ { zIndex: -1 } }>{ item.goodCategoryName }</Text>
                                         </Pressable>
                                     </View>
                                 );

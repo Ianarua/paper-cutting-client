@@ -21,6 +21,8 @@ const PersonalInfo = () => {
     useEffect(() => {
         !(async function () {
             const res: any = await getShowInfo();
+            res.buyerHobby === null && (res.buyerHobby = '');
+            res.buyerAutograph === null && (res.buyerAutograph = '');
             setPersonalInfoDataIn(res);
         })();
     }, [isFocused]);

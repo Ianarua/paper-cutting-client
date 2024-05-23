@@ -17,7 +17,14 @@ tokenHead: 'Bearer '  #JWT负载中拿到开头
 knife4j：访问地址http://127.0.0.1:8082/doc.html
 
 ## 前端
+### 运行
 1. 下载gradle-8.3-all.zip压缩包、gradle-wrapper.jar,放在/paper-client-front/android/gradle/wrapper下
 2. npm i
 3. 连接虚拟机/真机
 4. 运行package.json中android脚本
+
+### 打包
+1. 进入/paper-client-front/android
+2. 运行`gradle clean`清除缓存
+3. 运行`gradle assembleRelease`打包
+4. 打包后的文件在/android/app/build/outputs/apk/release/app-release.apk

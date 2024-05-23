@@ -1,4 +1,4 @@
-import { Dimensions, Image, ImageBackground, Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { Dimensions, Image, ImageBackground, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import MyText from '@/components/MyText';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -99,7 +99,7 @@ const ShoppingScreen = () => {
                                             style={ styles.sideMenuItem }
                                             onPress={ () => changeShopCategory(item.goodsCategoryId) }
                                         >
-                                            <MyText text={ item.goodCategoryName }/>
+                                            <Text style={{zIndex: -1}}>{ item.goodCategoryName }</Text>
                                         </Pressable>
                                     </View>
                                 );
@@ -180,7 +180,6 @@ const styles = StyleSheet.create({
     sideMenuActive: {
         backgroundColor: '#f1ece6',
         position: 'relative',
-        zIndex: -1
     },
     sideMenuActiveBlock: {
         position: 'absolute',
@@ -191,6 +190,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#84321c'
     },
     sideMenuItem: {
+        position: 'relative',
         height: 50,
         marginLeft: 10,
         marginRight: 10,

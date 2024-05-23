@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { FC } from 'react';
 import { Asset, ImagePickerResponse, launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { postResourceImg } from '@/api/ImgResource';
+import { Toast } from '@pingtou/rn-vant';
 
 interface IProps {
     onCloseDrown: (imgBase64: string) => void, // 关闭底部选择弹窗
@@ -39,11 +40,17 @@ const Camera: FC<IProps> = (props) => {
             type: params.type,
             name: params.name,
         });
-        // 请求接口
-        const res: any = await postResourceImg(formData);
-        // resourcePath        resourceBase64
+        // 显示正在上传Toast
+        Toast.info({
+            message: '正在上传 ……',
+            duration: 0,
+            overlay: true,
+            closeOnClickOverlay: true
+        });
         // 关闭底部弹窗,传回图片的base64,展示用
         onCloseDrown(params.base64);
+        // 请求接口
+        const res: any = await postResourceImg(formData);
         // 打开居中弹窗,传回图片的path,为了调AI分析接口
         onOpenCenter(res.resourcePath);
     }
@@ -59,7 +66,10 @@ const Camera: FC<IProps> = (props) => {
                 base64: asset.base64!
             };
             // 调用上传图片函数
+            // Toast.message('正在上传 ……');
+
             await uploadImage(file);
+            Toast.clear();
         }
     }
 

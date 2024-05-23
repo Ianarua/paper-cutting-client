@@ -44,16 +44,16 @@ const HomeTop = (props: IProps) => {
         <View style={ styles.container }>
             {/* 签到,主页,社区 */ }
             <View style={ styles.topBtn }>
-                {/*<View style={ styles.btnSign }>*/}
-                {/*    <AntDesignIcon name="calendar"/>*/}
-                {/*    <Pressable*/}
-                {/*        hitSlop={ 10 }*/}
-                {/*        // @ts-ignore*/}
-                {/*        onPress={ () => navigation.navigate('SignUp') }*/}
-                {/*    >*/}
-                {/*        <Text style={ { fontSize: 10, fontWeight: 'bold' } }>签到</Text>*/}
-                {/*    </Pressable>*/}
-                {/*</View>*/}
+                {/*<View style={ styles.btnSign }>*/ }
+                {/*    <AntDesignIcon name="calendar"/>*/ }
+                {/*    <Pressable*/ }
+                {/*        hitSlop={ 10 }*/ }
+                {/*        // @ts-ignore*/ }
+                {/*        onPress={ () => navigation.navigate('SignUp') }*/ }
+                {/*    >*/ }
+                {/*        <Text style={ { fontSize: 10, fontWeight: 'bold' } }>签到</Text>*/ }
+                {/*    </Pressable>*/ }
+                {/*</View>*/ }
                 <View style={ styles.btnPage }>
                     <MyText
                         text="主页"
@@ -90,7 +90,7 @@ const HomeTop = (props: IProps) => {
                         placeholder={ '输入搜索内容' }
                         value={ searchValue }
                         onChangeText={ text => setSearchValue(text) }
-                        editable={false}
+                        editable={ false }
                     />
                     <AntDesignIcon
                         name={ 'scan1' }
@@ -138,7 +138,11 @@ const HomeTop = (props: IProps) => {
                     }
                 </ScrollView>
                 <Pressable
-                    onPress={ () => setIsShowCenter(false) }
+                    onPress={ () => {
+                        setIsShowCenter(false);
+                        setUnderstandContent('');
+                        setUnderstandContentImg('');
+                    } }
                     style={ {
                         width: '30%',
                         height: '10%',

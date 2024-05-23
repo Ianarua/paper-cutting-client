@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { login } from '@/api/login.ts';
 import storage from '@/utils/storage.ts';
 import { navigate, navigationRef } from '@/utils/navigation.ts';
+import { Toast } from '@pingtou/rn-vant';
 
 const Login = () => {
     const [loginData, setLoginData] = useState<ILogin>({
@@ -44,6 +45,10 @@ const Login = () => {
     // 登录
     async function loginHandle () {
         if (isPass) {
+            // Toast.info({
+            //     message: '登陆中 ……',
+            //     duration: 0
+            // })
             const res: any = await login(loginData.username, loginData.password);
             await storage.save({ key: 'token', data: res.token });
             navigate('Main');

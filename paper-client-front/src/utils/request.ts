@@ -10,12 +10,12 @@ export interface IResponse {
 }
 
 const request: AxiosInstance = axios.create({
-    // baseURL: 'http://43.143.208.148:8082',
-    baseURL: 'http://43.143.28.148:8082',
+    baseURL: 'http://43.143.208.148:8082',
+    // baseURL: 'http://43.143.28.148:8082',
     headers: {
         'Content-Type': 'application/json'
     },
-    timeout: 3000
+    timeout: 15000
 });
 
 request.interceptors.request.use(
@@ -29,6 +29,9 @@ request.interceptors.request.use(
         if (config.url === '/imageUnderstanding') {
             config.timeout = 30000;
         }
+        // if (config.url === '/resource/add') {
+        //     config.timeout = 10000;
+        // }
         return config;
     },
     (error: any) => {

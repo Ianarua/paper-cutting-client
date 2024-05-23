@@ -45,17 +45,17 @@ const Login = () => {
     ];
 
     // 登录
-    async function loginHandle () {
+    function loginHandle () {
         if (isPass) {
             // Toast.info({
             //     message: '登陆中 ……',
             //     duration: 0
             // })
             setIsLogin(true);
-            const res: any = await login(loginData.username, loginData.password);
-            setIsLogin(false);
-            await storage.save({ key: 'token', data: res.token });
-            navigate('Main');
+            login(loginData.username, loginData.password).then(async (res: any) => {
+                await storage.save({ key: 'token', data: res.token });
+                navigate('Main');
+            }).finally(() => setIsLogin(false));
         }
     }
 

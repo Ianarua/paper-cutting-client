@@ -4,8 +4,9 @@ import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import { ILogin } from '@/interface/ILogin.ts';
 import Form, { IFormField } from '@/components/Form';
 import LinearGradient from 'react-native-linear-gradient';
-import { register } from '@/api/login.ts';
+import { login, register } from '@/api/login.ts';
 import { navigate } from '@/utils/navigation.ts';
+import storage from '@/utils/storage.ts';
 
 const Register = () => {
     const [loginData, setLoginData] = useState<ILogin>({
@@ -40,13 +41,14 @@ const Register = () => {
         },
     ];
 
-    // 登录
+    // 注册
     async function registerHandle () {
         if (isPass) {
             setIsRegister(true);
-            await register(loginData.username, loginData.password);
-            setIsRegister(false);
-            navigate('Login');
+            register(loginData.username, loginData.password).then(async (res: any) => {
+                await storage.save({ key: 'token', data: res.token });
+                navigate('Main');
+            }).finally(() => setIsRegister(false));
         }
     }
 

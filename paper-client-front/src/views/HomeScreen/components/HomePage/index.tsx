@@ -112,7 +112,7 @@ const HomePage = () => {
             </ScrollView>
             {/*  历史文化居中弹窗  */ }
             <CenterModal isShow={ isShowHistory } onClose={ () => setIsShowHistory(false) } style={ { justifyContent: 'space-around' } }>
-                <Text style={ { fontSize: 20, color: '#84321c' } }>剪纸的历史文化</Text>
+                <Text style={ { fontSize: 20, color: '#666' } }>剪纸的历史文化</Text>
                 <ScrollView>
                     <Text
                         style={ { fontSize: 14, lineHeight: 25, marginTop: 15 } }
@@ -137,7 +137,7 @@ const HomePage = () => {
             </CenterModal>
             {/*  制作工艺居中弹窗  */ }
             <CenterModal isShow={ isShowArt } onClose={ () => setIsShowArt(false) } style={ { justifyContent: 'space-between' } }>
-                <Text style={ { fontSize: 20, color: '#84321c' } }>剪纸的制作工艺</Text>
+                <Text style={ { fontSize: 20, color: '#666' } }>剪纸的制作工艺</Text>
                 <ScrollView>
                     <Text
                         style={ { fontSize: 14, lineHeight: 25, marginTop: 15 } }

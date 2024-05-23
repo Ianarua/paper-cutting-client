@@ -15,6 +15,8 @@ const Login = () => {
         password: ''
     });
 
+    const [isLogin, setIsLogin] = useState(false);
+
     // 修改信息文本
     function changeInput (field: string, value: string) {
         setLoginData(prevState => ({
@@ -49,7 +51,9 @@ const Login = () => {
             //     message: '登陆中 ……',
             //     duration: 0
             // })
+            setIsLogin(true);
             const res: any = await login(loginData.username, loginData.password);
+            setIsLogin(false);
             await storage.save({ key: 'token', data: res.token });
             navigate('Main');
         }
@@ -76,9 +80,15 @@ const Login = () => {
                     start={ { x: 0, y: 0 } }
                     end={ { x: 1, y: 0 } }
                 >
-                    <Pressable onPress={ loginHandle }>
-                        <Text style={ { color: '#fff' } }>登录</Text>
-                    </Pressable>
+                    {
+                        !isLogin
+                            ? <Pressable onPress={ loginHandle }>
+                                <Text style={ { color: '#fff' } }>登录</Text>
+                            </Pressable>
+                            : <Pressable>
+                                <Text style={ { color: '#fff' } }>登陆中……</Text>
+                            </Pressable>
+                    }
                 </LinearGradient>
                 <Pressable
                     style={ styles.regBtn }

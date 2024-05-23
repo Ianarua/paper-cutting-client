@@ -1,8 +1,8 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import { ILogin } from '@/interface/ILogin.ts';
-import Form, { FormField } from '@/components/Form';
+import Form, { IFormField } from '@/components/Form';
 import LinearGradient from 'react-native-linear-gradient';
 import { register } from '@/api/login.ts';
 import { navigate } from '@/utils/navigation.ts';
@@ -25,7 +25,7 @@ const Register = () => {
     const [isPass, setIsPass] = useState(false);
 
     // 表单配置
-    const formConfig: FormField[] = [
+    const formConfig: IFormField[] = [
         {
             name: 'username',
             label: '账号',
@@ -43,10 +43,15 @@ const Register = () => {
     // 登录
     async function registerHandle () {
         if (isPass) {
+            setIsRegister(true);
             await register(loginData.username, loginData.password);
+            setIsRegister(false);
             navigate('Login');
         }
     }
+
+    const [isRegister, setIsRegister] = useState(false);
+
 
     return (
         <AddBackgroundHOC>
@@ -71,9 +76,15 @@ const Register = () => {
                     start={ { x: 0, y: 0 } }
                     end={ { x: 1, y: 0 } }
                 >
-                    <Pressable onPress={ registerHandle }>
-                        <Text style={ { color: '#fff' } }>注册</Text>
-                    </Pressable>
+                    {
+                        !isRegister
+                            ? <Pressable onPress={ registerHandle }>
+                                <Text style={ { color: '#fff' } }>注册</Text>
+                            </Pressable>
+                            : <Pressable>
+                                <Text style={ { color: '#fff' } }>注册中……</Text>
+                            </Pressable>
+                    }
                 </LinearGradient>
             </View>
         </AddBackgroundHOC>

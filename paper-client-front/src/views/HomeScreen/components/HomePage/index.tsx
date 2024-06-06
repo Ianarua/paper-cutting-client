@@ -7,7 +7,7 @@ import ProjectBlock from '@/components/ProjectBlock';
 import IMenu from '@/interface/IHomePage.ts';
 import { getRecommendGoods } from '@/api/ProjectInfo';
 import CenterModal from '@/components/Modal/CenterModal';
-import useStore from '@/store';
+import { useProjectStore } from '@/store';
 
 const HomePage = () => {
     // 历史文化、制作工艺、专属定制  的菜单栏. 不变
@@ -26,8 +26,8 @@ const HomePage = () => {
         }
     ];
     // const [projectBlockData, setProjectBlockData] = useState<IProjectBlock[]>([]);
-    const projectBlockData = useStore(state => state.projectBlockData);
-    const setProjectBlockData = useStore(state => state.setProjectBlockData);
+    const projectBlockData = useProjectStore(state => state.projectBlockData);
+    const setProjectBlockData = useProjectStore(state => state.setProjectBlockData);
     // 应该查询哪个分页的数据
     let [pageNum, setPageNum] = useState(1);
     let [total, setTotal] = useState(Infinity);

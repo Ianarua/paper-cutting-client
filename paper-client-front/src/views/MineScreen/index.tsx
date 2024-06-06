@@ -6,10 +6,8 @@ import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
 import ProjectBlock from '@/components/ProjectBlock';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { IPersonalInfoOut } from '@/interface/IPersonalInfo.ts';
-import { getRecommendGoods } from '@/api/ProjectInfo';
-import IProjectBlock from '@/interface/IProjectBlock.ts';
 import { getSimpleInfo } from '@/api/buyerInfo';
-import useStore from '@/store';
+import { useProjectStore} from '@/store';
 
 /*
     BottomTab我的
@@ -78,7 +76,7 @@ const MineScreen = () => {
 
     // 推荐商品
     // const [projectBlockData, setProjectBlockData] = useState<IProjectBlock[]>([]);
-    const projectBlockData = useStore(state => state.projectBlockData);
+    const projectBlockData = useProjectStore(state => state.projectBlockData);
     useEffect(() => {
         // recommend接口
         // !(async function () {

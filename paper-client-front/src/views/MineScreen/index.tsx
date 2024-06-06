@@ -4,12 +4,12 @@ import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import LinearGradient from 'react-native-linear-gradient';
 import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
 import ProjectBlock from '@/components/ProjectBlock';
-import MyText from '@/components/MyText';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { IPersonalInfoOut } from '@/interface/IPersonalInfo.ts';
 import { getRecommendGoods } from '@/api/ProjectInfo';
 import IProjectBlock from '@/interface/IProjectBlock.ts';
 import { getSimpleInfo } from '@/api/buyerInfo';
+import useStore from '@/store';
 
 /*
     BottomTab我的
@@ -77,13 +77,14 @@ const MineScreen = () => {
     ];
 
     // 推荐商品
-    const [projectBlockData, setProjectBlockData] = useState<IProjectBlock[]>([]);
+    // const [projectBlockData, setProjectBlockData] = useState<IProjectBlock[]>([]);
+    const projectBlockData = useStore(state => state.projectBlockData);
     useEffect(() => {
         // recommend接口
-        !(async function () {
-            const res: any = await getRecommendGoods(1, 4);
-            setProjectBlockData(res.list);
-        })();
+        // !(async function () {
+        //     const res: any = await getRecommendGoods(1, 4);
+        //     setProjectBlockData(res.list);
+        // })();
     }, []);
     const navigation = useNavigation();
     return (
@@ -193,7 +194,7 @@ const MineScreen = () => {
                         </View>
                         <View style={ styles.recommendInner }>
                             {
-                                projectBlockData.map((item, index) => {
+                                projectBlockData.slice(0, 4).map((item, index) => {
                                     return (
                                         <ProjectBlock
                                             key={ index }

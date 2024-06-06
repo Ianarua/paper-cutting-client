@@ -5,6 +5,7 @@ import TopPage from '@/components/TopPage';
 import { useNavigation } from '@react-navigation/native';
 import { navigate, navigationRef, reset } from '@/utils/navigation.ts';
 import { logout } from '@/api/login.ts';
+import storage from '@/utils/storage.ts';
 
 const SetUp = () => {
     const navigation = useNavigation();
@@ -39,6 +40,7 @@ const SetUp = () => {
         if (item.hasOwnProperty('page')) {
             if (item.title === '退出登录') {
                 await logout();
+                await storage.remove({ key: 'token' });
                 reset('Login'); // 清空栈并跳转到登录页面
             } else {
                 navigate(item.page);

@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect, FC, useRef } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
 
@@ -19,8 +19,13 @@ interface IProps {
 
 const Form: FC<IProps> = ({ formConfig, formData, isEditable, onInputChange, verifiedPassedFunc }) => {
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const isFirstRun = useRef(true);
 
     useEffect(() => {
+        if (isFirstRun.current) {
+            isFirstRun.current = false;
+            return;
+        }
         const newErrors: { [key: string]: string } = {};
         let isPass: boolean = true;
         formConfig.forEach((field) => {
@@ -29,6 +34,8 @@ const Form: FC<IProps> = ({ formConfig, formData, isEditable, onInputChange, ver
                 isPass = false;
             }
         });
+
+        // 更新错误状态和验证结果
         verifiedPassedFunc(isPass);
         setErrors(newErrors);
     }, [formData, formConfig]);

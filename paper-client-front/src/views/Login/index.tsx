@@ -86,7 +86,7 @@ const Login = () => {
                                 <Text style={ { color: '#fff' } }>登录</Text>
                             </Pressable>
                             : <Pressable>
-                                <Text style={ { color: '#fff' } }>登陆中……</Text>
+                                <Text style={ { color: '#fff' } }>登录中……</Text>
                             </Pressable>
                     }
                 </LinearGradient>

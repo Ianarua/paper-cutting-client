@@ -8,11 +8,13 @@ import { postCreateCar } from '@/api/Car';
 import IsRenderHOC from '@/components/HOC/IsRenderHOC.tsx';
 import { IBusinessInfo } from '@/interface/IBusinessPage.ts';
 import { getIdGoods } from '@/api/ProjectInfo';
+import ImgBase64 from '@/components/ImgBase64';
 
 const ProjectDetail = () => {
     const route = useRoute<RootRouteType<Views.ProjectDetail>>();
     const navigation = useNavigation();
     const { projectBlockData } = route.params;
+    console.log(projectBlockData);
     let [isJoinCart, setIsJoinCart] = useState(false);
     const [shopInfo, setShopInfo] = useState<IBusinessInfo>({
         picUrl: '',
@@ -43,12 +45,13 @@ const ProjectDetail = () => {
             <TopPage title="商品信息"/>
             <ScrollView style={ styles.content }>
                 <View style={ styles.inner }>
-                    <Image
-                        source={ { uri: `data:image/png;base64,${ projectBlockData.picUrl }` } }
-                        // source={ require('@/assets/img/logo.png') }
-                        style={ styles.image }
-                        resizeMode={ 'cover' }
-                    />
+                    {/*<Image*/ }
+                    {/*    source={ { uri: `data:image/png;base64,${ projectBlockData.picUrl }` } }*/ }
+                    {/*    // source={ require('@/assets/img/logo.png') }*/ }
+                    {/*    style={ styles.image }*/ }
+                    {/*    resizeMode={ 'cover' }*/ }
+                    {/*/>*/ }
+                    <ImgBase64 picUrl={ projectBlockData.picUrl } style={ styles.image }/>
                     <View style={ styles.price }>
                         <Text style={ { color: '#cd2929', fontSize: 20 } }>￥ { projectBlockData.promotionPrice }</Text>
                         <Text>已售 { projectBlockData.soldNumber } 件</Text>

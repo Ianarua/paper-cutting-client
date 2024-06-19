@@ -1,5 +1,5 @@
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import AddBackgroundHOC from '@/components/HOC/AddBackgroundHOC.tsx';
 import MyText from '@/components/MyText';
 import IProjectBlock from '@/interface/IProjectBlock.ts';
@@ -28,18 +28,21 @@ const HomePage = () => {
     // const [projectBlockData, setProjectBlockData] = useState<IProjectBlock[]>([]);
     const projectBlockData = useProjectStore(state => state.projectBlockData);
     const setProjectBlockData = useProjectStore(state => state.setProjectBlockData);
+    const isFirstRun = useRef(true);
+
     // 应该查询哪个分页的数据
-    let [pageNum, setPageNum] = useState(1);
+    let [pageNum, setPageNum] = useState(2);
     let [total, setTotal] = useState(Infinity);
     useEffect(() => {
-        async function fetchApi () {
-            const res: any = await getRecommendGoods(pageNum, 6);
-            // setProjectBlockData(prevData => [...prevData, ...res.list]);
-            setProjectBlockData(projectBlockData);
-            setTotal(res.totalPage);
+        if (isFirstRun.current) {
+            isFirstRun.current = false;
+            return;
         }
-
-        fetchApi().then();
+        !(pageNum > total - 1) && !(async function () {
+            const res: any = await getRecommendGoods(pageNum, 6);
+            setProjectBlockData(res.list);
+            setTotal(res.totalPage);
+        })();
     }, [pageNum]);
 
     function _contentViewScroll (e: any) {
@@ -108,7 +111,7 @@ const HomePage = () => {
                 </View>
                 <View style={ styles.hasInBottom }>
                     {
-                        pageNum > total - 1
+                        pageNum > total
                             ? <MyText text="-----  已经到底啦  -----" styles={ { fontSize: 16 } }/>
                             : <MyText text="…… 加载中 ……" styles={ { fontSize: 16 } }/>
                     }

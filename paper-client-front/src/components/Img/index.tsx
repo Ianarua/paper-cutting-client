@@ -34,7 +34,8 @@ const height = width * 1.2;
 const styles = StyleSheet.create({
     imgView: {
         // width: '100%',
-        height: '60%',
+        // height: '60%',
+        flex: 1,
         // paddingTop: 10,
         // paddingBottom: 10,
         display: 'flex',

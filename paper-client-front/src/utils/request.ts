@@ -20,7 +20,7 @@ const request: AxiosInstance = axios.create({
 
 request.interceptors.request.use(
     async (config) => {
-        if (config.url !== '/buyer/login') {
+        if (config.url !== '/buyer/login' && config.url !== '/buyer/register') {
             const token = await storage.load({ key: 'token' });
             if (token) {
                 config.headers.Authorization = `Bearer ${ token }`;
@@ -56,6 +56,7 @@ request.interceptors.response.use(
             // 处理其他状态码的情况
             if (responseData.code === 401) {
                 console.error(responseData.message);
+                await storage.remove({ key: 'token' });
                 // 跳转到登录页面
                 navigate('Login');
             }
@@ -67,7 +68,6 @@ request.interceptors.response.use(
     (error) => {
         // 请求失败，关闭loading提示
         Toast.clear();
-        console.error('err-------', error);
         // 对响应错误进行处理
         if (error.response) {
             // 服务器返回了错误状态码
@@ -97,8 +97,7 @@ request.interceptors.response.use(
             return Promise.reject('网络错误，请检查网络连接');
         } else {
             // 请求未能发送
-            Toast.fail('请求未能发送，请稍后重试');
-
+            // Toast.fail('请求未能发送，请稍后重试');
             return Promise.reject('请稍后重试');
         }
     }

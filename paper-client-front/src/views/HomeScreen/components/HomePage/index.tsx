@@ -111,7 +111,7 @@ const HomePage = () => {
                 </View>
                 <View style={ styles.hasInBottom }>
                     {
-                        pageNum > total
+                        pageNum > total - 1
                             ? <MyText text="-----  已经到底啦  -----" styles={ { fontSize: 16 } }/>
                             : <MyText text="…… 加载中 ……" styles={ { fontSize: 16 } }/>
                     }

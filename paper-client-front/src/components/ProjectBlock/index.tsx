@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         paddingTop: 10,
         paddingBottom: 10,
-        paddingLeft: 5,
+        paddingLeft: 15,
         paddingRight: 5,
         backgroundColor: '#fcfcfc',
     },

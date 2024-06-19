@@ -336,8 +336,8 @@ const styles = StyleSheet.create({
     },
     recommendTop: {
         height: 40,
-        marginLeft: 5,
-        marginRight: 5,
+        marginLeft: 15,
+        marginRight: 15,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',

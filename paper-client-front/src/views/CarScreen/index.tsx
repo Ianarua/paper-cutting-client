@@ -126,18 +126,22 @@ const CarScreen = () => {
                     contentContainerStyle={ { alignItems: 'center', paddingBottom: Dimensions.get('window').height * 0.08 } }
                 >
                     {
-                        carItemData.map((item, index) => {
-                            return (
-                                <CarItem
-                                    key={ index }
-                                    shopInfoVo={ item.shopInfoVo }
-                                    projectInfo={ item.projectInfo }
-                                    changeCheckedFunc={ changeCheckedFunc(index) }
-                                    isCheckedPar={ isCheckedArr[index] }
-                                    changeNumsFunc={ changeNumsFunc(index, item?.projectInfo?.cartId) }
-                                />
-                            );
-                        })
+                        carItemData.length > 0 ?
+
+                            carItemData.map((item, index) => {
+                                return (
+                                    <CarItem
+                                        key={ index }
+                                        shopInfoVo={ item.shopInfoVo }
+                                        projectInfo={ item.projectInfo }
+                                        changeCheckedFunc={ changeCheckedFunc(index) }
+                                        isCheckedPar={ isCheckedArr[index] }
+                                        changeNumsFunc={ changeNumsFunc(index, item?.projectInfo?.cartId) }
+                                    />
+                                );
+                            })
+                            : <Text style={ { fontSize: 16, marginTop: 30 } }>购物车空空如也~</Text>
+
                     }
 
                 </ScrollView>

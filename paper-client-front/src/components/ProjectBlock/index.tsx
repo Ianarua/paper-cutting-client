@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     },
     information: {
         // flex: 1,
-        height: '30%',
+        height: '40%',
         position: 'relative',
         paddingTop: 10,
         paddingBottom: 10,

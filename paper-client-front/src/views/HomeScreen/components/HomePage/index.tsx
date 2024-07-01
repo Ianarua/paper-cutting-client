@@ -28,6 +28,7 @@ const HomePage = () => {
     // const [projectBlockData, setProjectBlockData] = useState<IProjectBlock[]>([]);
     const projectBlockData = useProjectStore(state => state.projectBlockData);
     const setProjectBlockData = useProjectStore(state => state.setProjectBlockData);
+    // const isFirstLogin = useProjectStore(state => state.isFirstLogin)
     const isFirstRun = useRef(true);
 
     // 应该查询哪个分页的数据
@@ -37,6 +38,13 @@ const HomePage = () => {
         if (isFirstRun.current) {
             isFirstRun.current = false;
             return;
+        }
+        if (projectBlockData.length === 0) {
+            !(async function () {
+                const res: any = await getRecommendGoods(1, 6);
+                setProjectBlockData(res.list);
+                setTotal(res.totalPage);
+            })();
         }
         !(pageNum > total - 1) && !(async function () {
             const res: any = await getRecommendGoods(pageNum, 6);

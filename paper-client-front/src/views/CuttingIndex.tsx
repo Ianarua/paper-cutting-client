@@ -48,10 +48,10 @@ function CuttingIndex () {
                 networkPermission === PermissionsAndroid.RESULTS.GRANTED &&
                 cameraPermission === PermissionsAndroid.RESULTS.GRANTED
             ) {
-                console.log('权限已授予');
+                // console.log('权限已授予');
                 // 继续应用程序的正常逻辑
             } else {
-                console.log('用户拒绝了权限请求');
+                // console.log('用户拒绝了权限请求');
                 // 提示用户权限未授予，并提供说明或引导用户手动授予权限的方法
             }
         } catch (error) {

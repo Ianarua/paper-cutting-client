@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     },
     headerInfoUser: {
         width: '100%',
-        height: 50,
+        height: 40,
         marginBottom: 15,
         display: 'flex',
         flexDirection: 'row',
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     },
     headerBottomBtnText: {
         color: '#f8f8f8',
-        fontSize: 15,
+        fontSize: 12,
         marginTop: 5
     },
     headerBottomBtnSolid: {

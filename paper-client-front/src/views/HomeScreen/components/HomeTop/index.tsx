@@ -87,7 +87,7 @@ const HomeTop = (props: IProps) => {
                     />
                     <TextInput
                         style={ styles.searchBarInput }
-                        placeholder={ '输入搜索内容' }
+                        // placeholder={ '输入搜索内容' }
                         value={ searchValue }
                         onChangeText={ text => setSearchValue(text) }
                         editable={ false }

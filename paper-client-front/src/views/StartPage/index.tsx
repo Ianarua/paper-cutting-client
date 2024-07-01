@@ -8,38 +8,46 @@ import { useProjectStore } from '@/store';
 
 const StartPage = () => {
     const opacity = useRef(new Animated.Value(0)).current;
-    const projectBlockData = useProjectStore(state => state.projectBlockData);
+    const setIsFirstLogin = useProjectStore(state => state.setIsFirstLogin);
     const setProjectBlockData = useProjectStore(state => state.setProjectBlockData);
+
 
     useEffect(() => {
         let token = '';
         storage.load({ key: 'token' }).then(res => {
             token = res;
+            if (token) {
+                console.log('youtoken');
+                getRecommendGoods(1, 6).then(res => {
+                    // @ts-ignore
+                    setProjectBlockData(res.list);
+                });
+            }
         });
         const fadeIn = () => {
             Animated.timing(opacity, {
                 toValue: 1,
-                duration: 2000,
+                duration: 4000,
                 useNativeDriver: false
             }).start();
         };
         fadeIn();
         setTimeout(() => {
             if (!token) {
+                setIsFirstLogin(true);
                 navigate('Login');
             } else {
+                setIsFirstLogin(false);
                 navigate('Main');
+                // !(async function () {
+                //     const res: any = await getRecommendGoods(1, 6);
+                //     setProjectBlockData(res.list);
+                // })();
             }
-        }, 3000);
-        return () => {
-            console.log('卸载了');
-        };
+        }, 5000);
     }, []);
     useEffect(() => {
-        !(async function () {
-            const res: any = await getRecommendGoods(1, 6);
-            setProjectBlockData(res.list);
-        })();
+
     }, []);
     return (
         // <ImageBackground
@@ -58,7 +66,7 @@ const StartPage = () => {
 export default StartPage;
 const styles = StyleSheet.create({
     imgAnimate: {
-        width: Dimensions.get('window').width,
+        width: Dimensions.get('screen').width,
         height: '100%',
         objectFit: 'contain',
     }

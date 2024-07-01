@@ -14,7 +14,6 @@ const ProjectDetail = () => {
     const route = useRoute<RootRouteType<Views.ProjectDetail>>();
     const navigation = useNavigation();
     const { projectBlockData } = route.params;
-    console.log(projectBlockData);
     let [isJoinCart, setIsJoinCart] = useState(false);
     const [shopInfo, setShopInfo] = useState<IBusinessInfo>({
         picUrl: '',

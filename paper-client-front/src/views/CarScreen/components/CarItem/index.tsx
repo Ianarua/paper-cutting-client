@@ -44,7 +44,7 @@ const CarItem = (props: IProps) => {
                     <Image source={ require('@/assets/img/carPage/store.png') } style={ { width: 17, objectFit: 'contain', marginRight: 5 } }/>
                     <Text style={ { marginRight: 15 } }>{ shopInfoVo?.shopName }</Text>
                     {/*<Text style={ { marginRight: 15 } }>纸韵艺坊</Text>*/ }
-                    <Image source={ require('@/assets/img/carPage/greater.png') } style={ { width: 10, objectFit: 'contain' } }/>
+                    {/*<Image source={ require('@/assets/img/carPage/greater.png') } style={ { width: 10, objectFit: 'contain' } }/>*/}
                 </View>
                 <Pressable
                     style={ styles.headerRight }

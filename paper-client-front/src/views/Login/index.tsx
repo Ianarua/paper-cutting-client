@@ -6,8 +6,8 @@ import Form, { IFormField } from '@/components/Form';
 import LinearGradient from 'react-native-linear-gradient';
 import { login } from '@/api/login.ts';
 import storage from '@/utils/storage.ts';
-import { navigate, navigationRef, reset } from '@/utils/navigation.ts';
-import { Toast } from '@pingtou/rn-vant';
+import { navigate, reset } from '@/utils/navigation.ts';
+import { useProjectStore } from '@/store';
 
 const Login = () => {
     const [loginData, setLoginData] = useState<ILogin>({

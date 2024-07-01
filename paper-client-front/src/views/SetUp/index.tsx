@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { navigate, navigationRef, reset } from '@/utils/navigation.ts';
 import { logout } from '@/api/login.ts';
 import storage from '@/utils/storage.ts';
+import { useProjectStore } from '@/store';
 
 const SetUp = () => {
     const navigation = useNavigation();
@@ -35,12 +36,14 @@ const SetUp = () => {
         //     page: 'Register'
         // }
     ];
+    const clearProjectBlockData = useProjectStore(state => state.clearProjectBlockData);
 
     async function pressHandle (item: { title: string, page: string }) {
         if (item.hasOwnProperty('page')) {
             if (item.title === '退出登录') {
                 await logout();
                 await storage.remove({ key: 'token' });
+                clearProjectBlockData();
                 reset('Login'); // 清空栈并跳转到登录页面
             } else {
                 navigate(item.page);
@@ -71,7 +74,7 @@ const SetUp = () => {
                                     // item.hasOwnProperty('page') && page === 'Login'
                                     //     ? navigationRef(item.page)
                                     //     : navigationRef(item.page);
-                                    pressHandle(item);
+                                    pressHandle(item).then();
                                 } }
                             >
                                 <Text style={ { fontSize: 16, color: '#000' } }>{ item.title } </Text>

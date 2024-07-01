@@ -1,4 +1,4 @@
-import { Dimensions, Image, ImageBackground, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Dimensions, Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import MyText from '@/components/MyText';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -85,26 +85,29 @@ const ShoppingScreen = () => {
                 </View>
                 <View style={ styles.main }>
                     <View style={ styles.sideMenu }>
-                        {
-                            sideMenu?.map((item, index) => {
-                                return (
-                                    <View key={ index } style={ item.goodsCategoryId === shopItemActive?.goodsCategoryId && styles.sideMenuActive }>
-                                        <IsRenderHOC
-                                            isShow={ item.goodsCategoryId === shopItemActive?.goodsCategoryId }
-                                            style={ styles.sideMenuActiveBlock }
-                                        >
-                                            <View/>
-                                        </IsRenderHOC>
-                                        <Pressable
-                                            style={ styles.sideMenuItem }
-                                            onPress={ () => changeShopCategory(item.goodsCategoryId) }
-                                        >
-                                            <Text style={ { zIndex: -1 } }>{ item.goodCategoryName }</Text>
-                                        </Pressable>
-                                    </View>
-                                );
-                            })
-                        }
+                        <ScrollView>
+                            {
+                                sideMenu?.map((item, index) => {
+                                    return (
+                                        <View key={ index }
+                                              style={ item.goodsCategoryId === shopItemActive?.goodsCategoryId && styles.sideMenuActive }>
+                                            <IsRenderHOC
+                                                isShow={ item.goodsCategoryId === shopItemActive?.goodsCategoryId }
+                                                style={ styles.sideMenuActiveBlock }
+                                            >
+                                                <View/>
+                                            </IsRenderHOC>
+                                            <Pressable
+                                                style={ styles.sideMenuItem }
+                                                onPress={ () => changeShopCategory(item.goodsCategoryId) }
+                                            >
+                                                <Text style={ { zIndex: -1 } }>{ item.goodCategoryName }</Text>
+                                            </Pressable>
+                                        </View>
+                                    );
+                                })
+                            }
+                        </ScrollView>
                     </View>
 
                     <View style={ { flex: 1 } }>
